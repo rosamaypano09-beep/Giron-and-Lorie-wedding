@@ -136,7 +136,10 @@ function PlainStoryCard({
   const numberY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [70, -70])
   const cardY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [18, -18])
   const number = String(chapterIndex + 1).padStart(2, "0")
-  const tone = chapterIndex % 2 ? "blue" : "butter"
+  // Cards cycle through the five motif pastels, so every chapter wears the palette:
+  // blue → mint → butter → blush → lavender → blue …
+  const STORY_TONES = ["blue", "mint", "butter", "blush", "lavender"] as const
+  const tone = STORY_TONES[chapterIndex % STORY_TONES.length]
   // Alternate the floral pair so neighbouring cards don't mirror each other
   const cornerPair = corners
     ? chapterIndex % 2
@@ -150,19 +153,30 @@ function PlainStoryCard({
         ]
     : []
 
-  // Every card enters from the left and settles in place (left → right)
+  // Each side enters from its own edge: whatever sits on the LEFT slides in from the left,
+  // whatever sits on the RIGHT slides in from the right. The photo leads, the card follows.
+  // alignLeft → photo on the left, card on the right (and the reverse on the next chapter).
+  const cardFrom = alignLeft ? 1 : -1 // +1 = from the right, -1 = from the left
   const cardVariants: Variants = {
-    hidden: { opacity: 0, x: -64, scale: 0.97, filter: "blur(6px)" },
+    hidden: { opacity: 0, x: cardFrom * 90, rotate: cardFrom * 2.5, scale: 0.96, filter: "blur(6px)" },
     show: {
       opacity: 1,
       x: 0,
+      rotate: 0,
       scale: 1,
       filter: "blur(0px)",
-      transition: { duration: 0.9, ease: revealEase, staggerChildren: 0.12, delayChildren: 0.2 },
+      transition: {
+        x: { type: "spring", stiffness: 70, damping: 16, mass: 0.9, delay: 0.18 },
+        rotate: { type: "spring", stiffness: 70, damping: 14, delay: 0.18 },
+        default: { duration: 0.85, ease: revealEase, delay: 0.18 },
+        staggerChildren: 0.11,
+        delayChildren: 0.42,
+      },
     },
   }
+  // Lines inside the card glide in from the card's side too
   const lineVariants: Variants = {
-    hidden: { opacity: 0, x: -22 },
+    hidden: { opacity: 0, x: cardFrom * 26 },
     show: { opacity: 1, x: 0, transition: { duration: 0.7, ease: revealEase } },
   }
   // Florals bloom open once the card has landed
@@ -177,8 +191,21 @@ function PlainStoryCard({
   const [photoOpen, setPhotoOpen] = useState(false)
   const photoTilt = alignLeft ? -3 : 3
   const photoVariants: Variants = {
-    hidden: { opacity: 0, x: alignLeft ? -56 : 56, rotate: 0, scale: 0.94, zIndex: 0 },
-    show: { opacity: 1, x: 0, rotate: photoTilt, scale: 1, zIndex: 0, transition: { duration: 1, ease: revealEase } },
+    // Swings in from its own edge, over-rotated, and settles on its tilt
+    hidden: { opacity: 0, x: alignLeft ? -110 : 110, rotate: alignLeft ? -12 : 12, scale: 0.9, zIndex: 0 },
+    show: {
+      opacity: 1,
+      x: 0,
+      rotate: photoTilt,
+      scale: 1,
+      zIndex: 0,
+      transition: {
+        x: { type: "spring", stiffness: 65, damping: 15, mass: 0.9 },
+        rotate: { type: "spring", stiffness: 60, damping: 11 },
+        scale: { duration: 0.9, ease: revealEase },
+        opacity: { duration: 0.6, ease: "easeOut" },
+      },
+    },
     open: {
       opacity: 1,
       x: alignLeft ? "-8%" : "8%",
@@ -245,7 +272,7 @@ function PlainStoryCard({
           <motion.span
             className={`story-card-number ${alignLeft ? "story-card-number--right" : "story-card-number--left"}`}
             style={{ y: numberY }}
-            initial={reduceMotion ? false : { opacity: 0, x: -48 }}
+            initial={reduceMotion ? false : { opacity: 0, x: alignLeft ? 48 : -48 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-12%" }}
             transition={{ duration: 1.1, ease: revealEase }}
@@ -301,12 +328,12 @@ function PlainStoryCard({
 
       {showDivider && !isLast && (
         <div className="story-open-divider flex items-center justify-center gap-2" aria-hidden>
-          <span className="h-px w-12 sm:w-20" style={{ background: "linear-gradient(to right, transparent, #8FB0CF)" }} />
+          <span className="h-px w-12 sm:w-20" style={{ background: "linear-gradient(to right, transparent, #9EB9D4)" }} />
           {/* Navy heart — the one accent between chapters */}
           <svg viewBox="0 0 24 24" className="h-3 w-3 sm:h-3.5 sm:w-3.5" fill="#2F4A66">
             <path d={HEART_PATH} />
           </svg>
-          <span className="h-px w-12 sm:w-20" style={{ background: "linear-gradient(to left, transparent, #8FB0CF)" }} />
+          <span className="h-px w-12 sm:w-20" style={{ background: "linear-gradient(to left, transparent, #9EB9D4)" }} />
         </div>
       )}
     </div>

@@ -7,8 +7,9 @@ import localFont from "next/font/local"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { parseWeddingDate } from "@/lib/wedding-date"
 import Image from "next/image"
-import { GhostBackdrop, InvitePhotoBackdrop, PhotoBackground } from "@/components/loader/invite-photo-backdrop"
+import { GhostBackdrop, LoaderPhotoBackdrop, PhotoBackground } from "@/components/loader/invite-photo-backdrop"
 import { siteConfig as defaultSiteConfig } from "@/content/site"
+import { LeafParticles } from "@/components/loader/leaf-particles"
 import "@/components/loader/loading-screen.css"
 
 const theSeasons = localFont({
@@ -221,7 +222,8 @@ export function Hero() {
     () => backgroundPhotosDesktop.map((src) => encodeURI(src)),
     [backgroundPhotosDesktop],
   )
-  // Plain mode cover: one natural couple photograph beside the invitation wording
+  // Cover: one natural couple photograph beside the invitation wording (both displays;
+  // photos display shows it without the sprig — no decorations)
   const coverPhoto = loading.coverPhoto ?? defaultSiteConfig.loadingScreen.coverPhoto
   const coverPhotoAlt = loading.coverPhotoAlt ?? defaultSiteConfig.loadingScreen.coverPhotoAlt
   const reduceMotion = useReducedMotion()
@@ -286,22 +288,39 @@ export function Hero() {
           {showFrame && <div className="home-hero-plain-frame" aria-hidden="true" />}
         </>
       ) : (
+        // Same photo marquee + cream fades as the loader and envelope, so the envelope's
+        // reveal fades straight into an identical background — with the same falling
+        // pastel leaves and petals drifting over it
         <>
-          <div
-            className="invite-photo-backdrop-wrap invite-photo-backdrop-wrap--section"
-            aria-hidden="true"
-          >
-            <InvitePhotoBackdrop
-              className="invite-photo-backdrop--section"
-              photos={backgroundPhotos}
-            />
+          <LoaderPhotoBackdrop photos={plainPhotos} />
+          {!reduceMotion && <LeafParticles className="home-hero-leaves" />}
+          {/* Same four corner florals as the loader (content/site.ts → loadingScreen.cornerDecos) */}
+          <div className="ls-photo-corners home-hero-photo-corners" aria-hidden="true">
+            {(
+              [
+                { src: loading.cornerDecos?.topLeft, pos: "tl", delay: 0 },
+                { src: loading.cornerDecos?.topRight, pos: "tr", delay: -2000 },
+                { src: loading.cornerDecos?.bottomLeft, pos: "bl", delay: -4000 },
+                { src: loading.cornerDecos?.bottomRight, pos: "br", delay: -6000 },
+              ] as const
+            )
+              .filter(({ src }) => src)
+              .map(({ src, pos, delay }) => (
+                <span
+                  key={pos}
+                  className={`ls-photo-corner ls-photo-corner--${pos}`}
+                  style={{ "--ls-delay": `${delay}ms` } as React.CSSProperties}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={encodeURI(src as string)} alt="" className="ls-photo-corner__img" />
+                </span>
+              ))}
           </div>
-          <div className="home-hero-photo-scrim pointer-events-none absolute inset-0 z-[1]" aria-hidden="true" />
         </>
       )}
 
-      <div className={`home-hero-content relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col items-center justify-center px-5 pb-[clamp(1rem,4vh,2rem)] pt-[clamp(6rem,24vw,7.5rem)] sm:pb-[clamp(2.5rem,9vh,5rem)] sm:pt-[clamp(3.75rem,10vw,6rem)] text-center sm:px-8${isPlain && coverPhoto ? " home-hero-content--cover" : ""}`}>
-        {isPlain && coverPhoto && (
+      <div className={`home-hero-content relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col items-center justify-center px-5 pb-[clamp(1rem,4vh,2rem)] pt-[clamp(6rem,24vw,7.5rem)] sm:pb-[clamp(2.5rem,9vh,5rem)] sm:pt-[clamp(3.75rem,10vw,6rem)] text-center sm:px-8${coverPhoto ? " home-hero-content--cover" : ""}`}>
+        {coverPhoto && (
           <motion.figure className="home-hero-cover" {...fadeUp(0)}>
             <div className="home-hero-cover__frame">
               <Image
@@ -313,7 +332,7 @@ export function Hero() {
                 className="home-hero-cover__img"
               />
             </div>
-            {coverVine && (
+            {isPlain && coverVine && (
               // Sprig tucked under the photo (content/site.ts → homeHero.coverVine)
               // eslint-disable-next-line @next/next/no-img-element
               <img src={encodeURI(coverVine)} alt="" aria-hidden="true" className="home-hero-cover__vine" />

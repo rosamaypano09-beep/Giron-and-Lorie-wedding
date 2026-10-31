@@ -211,8 +211,12 @@ const HASHTAGS = ["#MYwedding"]
 //     highlight: phrase inside details shown bold + underlined ("" for none)
 // Guest dress code colors
 const DRESS_CODE_PALETTE: AttireColor[] = [
-  { name: "Butter Yellow", hex: "#FFF4C2" },
-  { name: "Pastel Blue", hex: "#D9EAF7" },
+  { name: "Pastel Blue", hex: "#C7DDF0" },
+  { name: "Mint Green", hex: "#D5E3D0" },
+  { name: "Sage Green", hex: "#A9B9A1" },
+  { name: "Butter Yellow", hex: "#F7E5A9" },
+  { name: "Blush Pink", hex: "#F3CED6" },
+  { name: "Lavender", hex: "#DCCFF0" },
 ];
 
 // Attire groups shown in the Details section (components/sections/details.tsx).
@@ -230,22 +234,23 @@ const ATTIRE = {
     title: "Entourage",
     dressCode: "Formal Attire",
     palette: [
-      { name: "Butter Yellow", hex: "#FFF4C2" },
-      { name: "Pastel Blue", hex: "#D9EAF7" },
-      { name: "Sky Blue", hex: "#B7D1E8" },
-      { name: "Cream", hex: "#F4EBDD" },
-      { name: "Soft Gold", hex: "#D6B779" },
+      { name: "Pastel Blue", hex: "#C7DDF0" },
+      { name: "Mint Green", hex: "#D5E3D0" },
+      { name: "Sage Green", hex: "#A9B9A1" },
+      { name: "Butter Yellow", hex: "#F7E5A9" },
+      { name: "Blush Pink", hex: "#F3CED6" },
+      { name: "Lavender", hex: "#DCCFF0" },
     ] as AttireColor[],
-    note: "Butter yellow beside pastel blue — the heart of our wedding palette, worn by the ones standing closest to us.",
+    note: "Soft pastels of blue, green, yellow, pink and violet — the heart of our wedding palette, worn by the ones standing closest to us.",
     ladies: {
       label: "Bridesmaids & Flower Girls",
-      details: "Floor-length butter yellow or pastel blue gowns in soft, flowing fabric, with sleeves or a matching shawl for the ceremony.",
-      highlight: "butter yellow or pastel blue gowns",
+      details: "Floor-length pastel gowns in blue, green, yellow, pink or violet, in soft, flowing fabric, with sleeves or a matching shawl for the ceremony.",
+      highlight: "pastel gowns in blue, green, yellow, pink or violet",
       roles: [] as { role: string; attire: string }[],
     },
     gentlemen: {
       label: "Groomsmen & Bearers",
-      details: "Pastel blue or cream suits over a white shirt, finished with a butter yellow or pastel blue necktie.",
+      details: "Pastel blue or cream suits over a white shirt, finished with a necktie in one of our pastels.",
       highlight: "Pastel blue or cream suits",
       roles: [] as { role: string; attire: string }[],
     },
@@ -287,7 +292,7 @@ const ATTIRE = {
       { name: "Ivory Cream", hex: "#F4EBDD" },
       { name: "Cream", hex: "#EADBC6" },
     ] as AttireColor[],
-    note: "Soft ivory and cream — a warm, timeless frame around our butter yellow and pastel blue celebration.",
+    note: "Soft ivory and cream — a warm, timeless frame around our pastel garden celebration.",
     ladies: {
       label: "Ninang",
       details: "An elegant long gown or formal dress with sleeves, in ivory or cream.",
@@ -309,7 +314,7 @@ const ATTIRE = {
     note: "Any shade from the palette below — mix and match, and come comfortable and lovely.",
     ladies: {
       label: "Ladies",
-      details: "A modest dress or skirt that falls below the knee, with sleeves, in butter yellow or pastel blue.",
+      details: "A modest dress or skirt that falls below the knee, with sleeves, in soft pastels of blue, green, yellow, pink or violet.",
       highlight: "modest dress or skirt",
       roles: [] as { role: string; attire: string }[],
     },
@@ -336,7 +341,7 @@ export const canonicalSiteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? SITE_URL).r
 // "plain"  = no couple photos on the loader, envelope and home hero (soft butter &
 //            pastel-blue backdrop, no envelope portraits, no cover photo)
 // "photos" = photo backgrounds on the loader, envelope and closing section
-const DISPLAY_MODE = "plain" as "photos" | "plain"
+const DISPLAY_MODE = "photos" as "photos" | "plain"
 const SHOW_PHOTOS = DISPLAY_MODE === "photos"
 
 // ── Shared images ───────────────────────────────────────────────────────────
@@ -356,18 +361,16 @@ const COUPLE_PHOTOS = Array.from(
 
 // Portraits for the envelope reveal + the main cover photo (soft natural light, no heavy filters)
 const COUPLE_PORTRAITS = {
-  groom: "/mobile-background/couples (2).webp", // left photo in the envelope
-  bride: "/mobile-background/couples (4).webp", // right photo in the envelope
-  cover: "/mobile-background/couples (8).webp", // photo pulled out of the envelope + home hero cover photo
+  groom: "/mobile-background/couples (52).webp", // left photo in the envelope
+  bride: "/mobile-background/couples (14).webp", // right photo in the envelope
+  cover: "/mobile-background/couples (9).webp", // main photo: pulled out of the envelope + home hero cover photo
 }
 
-// Sliding photo marquee behind the loader and envelope.
-// Phones use the portrait shots in /public/mobile-background, desktop the landscape
-// shots in /public/desktop-background — update the counts when files are added/removed.
-const MARQUEE_PHOTO_COUNT = 11
-const MARQUEE_PHOTOS = Array.from(
-  { length: MARQUEE_PHOTO_COUNT },
-  (_, i) => `/mobile-background/couples (${i + 1}).webp`,
+// Sliding photo marquee behind the loader and envelope (photos display) — hand-picked
+// portraits from /public/mobile-background, in order; alternated across the two rows.
+// Desktop (768px+) uses the landscape shots in /public/desktop-background — update the count when files change.
+const LOADER_MARQUEE_PHOTOS = [110, 106, 101, 71, 68, 67, 61, 58, 29, 16, 15, 12, 8].map(
+  (n) => `/mobile-background/couples (${n}).webp`,
 )
 const MARQUEE_PHOTO_COUNT_DESKTOP = 51
 const MARQUEE_PHOTOS_DESKTOP = Array.from(
@@ -379,10 +382,10 @@ const MARQUEE_PHOTOS_DESKTOP = Array.from(
 // Change a path here to swap it on every section at once.
 // To change ONE section only, override it there, e.g. decos: { ...SECTION_DECOS, footerVine: "" }
 const DECOR = {
-  cornerTopLeft: "/deco/lovestorydeco/cornerTopLeft.png",
-  cornerTopRight: "/deco/lovestorydeco/cornerTopRight.png",
-  cornerBottomLeft: "/deco/lovestorydeco/cornerBottomLeft.png",
-  cornerBottomRight: "/deco/lovestorydeco/cornerBottomRight.png",
+  cornerTopLeft: "/deco/lovestorydeco/top-left.png",
+  cornerTopRight: "/deco/lovestorydeco/top-right.png",
+  cornerBottomLeft: "/deco/lovestorydeco/bottom-left.png",
+  cornerBottomRight: "/deco/lovestorydeco/bottom-right.png",
   cornerOverlayTopLeft: "/deco/cornerOverlayTopLeft.png", // floral corner layered over the top vines (loader + envelope)
   cornerOverlayTopRight: "/deco/cornerOverlayTopRight.png",
   headerOrnament: "/deco/lovestorydeco/headerOrnament.png", // small sprig above titles
@@ -457,8 +460,8 @@ export const siteConfig = {
     time: TIMES.ceremony,
     venue: CEREMONY_VENUE.name,
     tagline: "are getting married!!!!!",
-    theme: "Butter Yellow & Pastel Blue",
-    motif: "#FFF4C2, #D9EAF7, #FFFBF0, #B7D1E8, #D6B779",
+    theme: "Pastel Garden — blue, green, yellow, pink & violet",
+    motif: "#C7DDF0, #D5E3D0, #A9B9A1, #F7E5A9, #F3CED6, #DCCFF0",
   },
   // Opening "Save the Date" loading screen (components/loader/LoadingScreen.tsx).
   // Couple names, wedding date and ceremony details come from couple / wedding / ceremony above.
@@ -475,7 +478,7 @@ export const siteConfig = {
     // Faint "ghost" illustration behind the loader, envelope and home hero ("" hides it)
     ghostImage: "/Details/church.png",
     // Sliding photo marquee behind the loader and envelope ("photos" display only); files live in /public
-    backgroundPhotos: SHOW_PHOTOS ? MARQUEE_PHOTOS : [],
+    backgroundPhotos: SHOW_PHOTOS ? LOADER_MARQUEE_PHOTOS : [],
     backgroundPhotosDesktop: SHOW_PHOTOS ? MARQUEE_PHOTOS_DESKTOP : [], // same marquee on screens 768px and up
     // Opening title on the loader and the envelope letter — short joining words ("of", "the") are set in script
     headline: "Save the Date", // "the" is set in the Brittany script (loader + envelope letter)
@@ -487,9 +490,9 @@ export const siteConfig = {
     coupleNameImage: BRAND.coupleNameImage,
     // Shown in the three date cards (Month / Day / Year), left to right (display: "photos")
     photos: [
-      "/frontboxes/couple (1).webp",
-      "/frontboxes/couple (2).webp",
-      "/frontboxes/couple (3).webp",
+      "/box/box-2.webp",
+      "/box/box-5.webp",
+      "/box/box-4.webp",
     ],
     dateLabels: ["Month", "Day", "Year"],
     // Plain mode invitation card — classic invitation wording around the couple's names ("" to hide a line)
@@ -507,7 +510,7 @@ export const siteConfig = {
       "Setting the table for you",
       "Crafting your invitation experience",
     ],
-    durationMs: 10000,
+    durationMs: 9000, // loader shows for 9s, then hands off to the envelope
     // Invitation envelope (components/loader/Hero.tsx) — shares display + photos with loader above
     hintText: "Tap the Seal to Open",
     enterButtonText: "View the Invitation",
@@ -560,15 +563,14 @@ export const siteConfig = {
   },
   // Thank-you messages to family and friends (components/sections/love-story.tsx + StorySection)
   loveStory: {
-    title: "With Gratitude",
-    subtitle: "to the people we love",
+    title: "Our Love Story",
+    subtitle: "how our forever began",
     // Short opening line under the title ("" hides it)
-    intro:
-      "Before we say “I do,” we want to say “thank you.” To our families, our friends and everyone who has loved, guided and prayed for us: this day is as much yours as it is ours, and we would be so happy to celebrate it with you.",
+    intro: "",
     // Small sprig above the title ("" hides it)
     headerOrnament: DECOR.headerOrnament,
     // Shown above a chapter's title when it has no date, e.g. "Chapter 03"
-    chapterLabel: "With Love",
+    chapterLabel: "Chapter",
     // Photo description used when a chapter has no imageAlt
     photoAlt: "{groom} and {bride}",
     // Large faint chapter number (01, 02 …) behind each chapter card
@@ -599,69 +601,83 @@ export const siteConfig = {
     // Add, remove or reorder chapters freely — photo and card swap sides on their own.
     chapters: [
       {
-        date: "To God",
-        title: "All Glory Belongs to Him",
-        image: "/mobile-background/couples (2).webp",
+        date: "November 2024",
+        title: "Where It All Began",
+        image: "/mobile-background/couples (29).webp",
         paragraphs: [
-          "Above all, we thank our Almighty God, who brought us together and has guided every step of our journey. It is by His will and grace that we stand before Him to be joined in marriage.",
-          "We pray that He will remain at the center of our home, today and for all the years to come.",
+          "It was a moment to remember in November 2024 when we first met in Mahayag renovation. My first assignment as a part of the construction group 2.",
         ],
       },
       {
-        date: "To Our Parents",
-        title: "Thank You for Everything",
-        image: "/mobile-background/couples (3).webp",
+        date: "Mahayag Renovation",
+        title: "A Sister, A Friend",
+        image: "/mobile-background/couples (19).webp",
         paragraphs: [
-          "Thank you for your unconditional love, your countless sacrifices and the faith you instilled in our hearts. You showed us what it means to love patiently and to stay together through every season.",
-          "Everything we bring into our marriage, we first learned from you. We hope to make you proud.",
+          "Bembem was one of the first batch of LDCVs who volunteered in Mahayag. When I saw her for the first time I told myself that this sister will be a good friend of mine because she is a jolly and  easy-going person. We became good friends as we work together in the site for the whole Mahayag renovation project.",
         ],
       },
       {
-        date: "To Our Families",
-        title: "Two Families, One Home",
-        image: "/mobile-background/couples (4).webp",
-        inviteTwoOnly: true,
+        date: "A Quiet Prayer",
+        title: "Seeing Her Heart",
+        image: "/mobile-background/couples (53).webp",
         paragraphs: [
-          "To our grandparents, aunts, uncles and cousins: thank you for the warmth, the laughter and the support you have always given us.",
-          "On this day our two families become one, and we are grateful to be welcomed with such open arms.",
-        ],
-      },
-      // {
-      //   date: "To Our Brethren",
-      //   title: "Our Family in Faith",
-      //   image: "/mobile-background/couples (5).webp",
-      //   paragraphs: [
-      //     "To our brethren in the Church, especially the Local Congregation of Santiago Norte: thank you for your prayers, your guidance and the encouragement you have shown us as we prepared for this day.",
-      //     "We are blessed to begin our married life surrounded by a family in faith.",
-      //   ],
-      // },
-      {
-        date: "To Our Sponsors",
-        title: "Our Guides and Mentors",
-        image: "/mobile-background/couples (6).webp",
-        paragraphs: [
-          "With heartfelt gratitude, we thank you for your guidance, love, and blessings as you become part of our journey into marriage. It is our honor to have you as our  sponsors."
+          "Nakita ko gid nga handa siya mag sakripisyo para sa pag-alagad kay Jehova, matutom, kag maayo siya nga ehemplo sa mga batan-on. It was at that time when I prayed to Jehovah specifically about Bembem. My feelings grew as I observed her and I wanted to see if she is the right one for me.",
         ],
       },
       {
-        date: "To Our Friends",
-        title: "Walking Beside Us",
-        image: "/mobile-background/couples (7).webp",
+        date: "Leon Postigo",
+        title: "Miles Apart, Still Close",
+        image: "/mobile-background/couples (107).webp",
         paragraphs: [
-          "Thank you for being part of our lives and our story. We’re happy to share this special milestone with you and hope you’ll celebrate this beautiful beginning with us!"
+          "I keep contacting her although I transferred to Leon Postigo. I wanted to get to know her more and I always pray to Jehovah for his guidance. I always call her in the morning after waking up, during work break, lunch time and in the evening.",
         ],
       },
       {
-        date: "Our Invitation",
-        title: "A Day of Love, A Lifetime of Memories",
+        date: "10:00 PM",
+        title: "The Late-Night Calls",
+        image: "/mobile-background/couples (112).webp",
+        paragraphs: [
+          "Dahil may trabaho siya from 5:00 pm to 10:00 pm hindi ko siya makakausap ng early evening kaya nag set ako ng alarm na 10:00 pm para magising ako at makausap siya ulit. Naging napakakomportable na namin sa isa't-isa kaya nakakapag share ako sa kanya tungkol sa maraming bagay sa buhay ko.",
+        ],
+      },
+      {
+        date: "Getting to Know Her",
+        title: "Learning Who She Is",
+        image: "/mobile-background/couples (101).webp",
+        paragraphs: [
+          "May mga time na tinatanong ko rin sa iba kung ano ang pagkakakilala nila kay Bembem dahil hindi naman ako taga roon kaya hindi ko pa siya kilala ng higit.",
+        ],
+      },
+      {
+        date: "Dinas",
+        title: "Welcomed Into the Family",
+        image: "/mobile-background/couples (110).webp",
+        paragraphs: [
+          "Kahit mahirap ang signal ng malipat ako sa Dinas napanatili pa rin namin ang regular na communication. Minsan pa ini-invite nila ako virtually sa family worship nila  kaya napakasaya ko. Na feel ko na tanggap nila ako.",
+        ],
+      },
+      {
+        date: "July 03, 2025",
+        title: "Finding the Courage",
         image: "/mobile-background/couples (8).webp",
         paragraphs: [
-          // **text** = bold with a gold underline
-          "With grateful hearts and a love made beautiful by God’s grace, we joyfully invite you to witness the beginning of our forever at the **Iglesia ni Cristo, Local Congregation of Santiago Norte, Ecclesiastical District of La Union**.",
-          "As we exchange our vows and begin this new chapter together, we would be honored to have you join us for the celebration that follows at **The Mansion Estates La Union**.",
-          "Your presence would make our day all the more meaningful as we gather in love, share in our joy and give thanks for the blessings that have brought us here.",
-          "With love and grateful hearts,",
-          "{groom} & {bride}",
+          "Sa tulong ni Jehova at ng mga kapatid mas naging disidido na ako na magpaalam sa kanya na manligaw. From many attempts it was on July 03, 2025 when I finally decided to confess to Bembem. I received a sudden assignment for a 10 minute talk in the week of June 30-July 6 about courtship. It was that part which pushed me to confess and pursue Bembem. It made me so happy to be able to openly show her how I admire her deeply.",
+        ],
+      },
+      {
+        date: "September 7, 2025",
+        title: "The Long-Awaited Yes",
+        image: "/mobile-background/couples (12).webp",
+        paragraphs: [
+          "Months passed sa ligawan stage. Biyahe na malayo pero sulit. Finally, I received the \"Yes\" with flowers delivered right thru my door on September 7, 2025. Ang araw na pinakahihintay ko we are officially a couple. We can now volunteer as a couple.",
+        ],
+      },
+      {
+        date: "Until Today",
+        title: "The Woman I Will Marry",
+        image: "/mobile-background/couples (71).webp",
+        paragraphs: [
+          "The long distance relationship wasn't easy but with Jehovah's help we made it until today. Gipakilala ko siya sa akon pamilya nga first, ang babaye nga nagustohan ko. Next, ang babaye nga gipangaluyagan ko. Then, ang babaye nga akon mega. Finally, ang babaye nga akon pangasaw-on.",
         ],
       },
     ] as StoryChapter[],
@@ -745,7 +761,7 @@ export const siteConfig = {
     // Cards, colors, images and which groups show → QUICK SETUP → ATTIRE
     attire: {
       title: "Attire Guidelines",
-      description: "Our day is dressed in soft butter yellows, pastel blues and warm creams, and we would love for you to wear them with us. As our ceremony is held in an Iglesia ni Cristo house of worship, we kindly ask that all attire be modest. Please find your role below.",
+      description: "Our day is dressed in soft pastels of blue, green, yellow, pink and violet, and we would love for you to wear them with us. As our ceremony is held in an Iglesia ni Cristo house of worship, we kindly ask that all attire be modest. Please find your role below.",
       image: ATTIRE.image,
       // Order and visibility come from ATTIRE.show (skips blanks, typos and repeats)
       groups: ATTIRE.show
@@ -1203,7 +1219,7 @@ export const siteConfig = {
       {
         question: "What should I wear?",
         answer:
-          "Please see the [attire guide](#details) in Event Details.\n\n• Guests: semi-formal, in butter yellow or pastel blue. Ladies, a modest dress or skirt below the knee, with sleeves; gentlemen, a collared polo or long-sleeve shirt with slacks.\n• Entourage: butter yellow or pastel blue gowns for the bridesmaids and flower girls; pastel blue or cream suits for the groomsmen and bearers.\n• Principal sponsors: Ninang in a long gown or formal dress in ivory or cream; Ninong in a long-sleeve Barong Tagalog with black slacks.\n\nAs our ceremony is held in an Iglesia ni Cristo house of worship, kindly keep attire modest, and please avoid casual wear and all-white outfits.",
+          "Please see the [attire guide](#details) in Event Details.\n\n• Guests: semi-formal, in soft pastels of blue, green, yellow, pink or violet. Ladies, a modest dress or skirt below the knee, with sleeves; gentlemen, a collared polo or long-sleeve shirt with slacks.\n• Entourage: pastel gowns for the bridesmaids and flower girls; pastel blue or cream suits for the groomsmen and bearers.\n• Principal sponsors: Ninang in a long gown or formal dress in ivory or cream; Ninong in a long-sleeve Barong Tagalog with black slacks.\n\nAs our ceremony is held in an Iglesia ni Cristo house of worship, kindly keep attire modest, and please avoid casual wear and all-white outfits.",
       },
       {
         question: "What if I have dietary restrictions or allergies?",
@@ -1578,7 +1594,7 @@ export const siteConfig = {
     // Event Details → attire: guests only (no entourage / principal sponsors)
     attireGroups: ["guests"] as AttireGroupId[],
     attireDescription:
-      "Our day is dressed in soft butter yellows, pastel blues and warm creams, and we would love for you to wear them with us. We kindly ask that all attire be modest.",
+      "Our day is dressed in soft pastels of blue, green, yellow, pink and violet, and we would love for you to wear them with us. We kindly ask that all attire be modest.",
     // Event Details → Gentle Reminders shown on /invitetwo instead of eventDetails.reminders.items
     reminders: [
       {
@@ -1651,7 +1667,7 @@ export const siteConfig = {
       {
         question: "What should I wear?",
         answer:
-          "Please see the [attire guide](#details) in Event Details.\n\n• Guests: semi-formal, in butter yellow or pastel blue. Ladies, a modest dress or skirt below the knee, with sleeves; gentlemen, a collared polo or long-sleeve shirt with slacks.\n\nKindly keep attire modest, and please avoid casual wear and all-white outfits.",
+          "Please see the [attire guide](#details) in Event Details.\n\n• Guests: semi-formal, in soft pastels of blue, green, yellow, pink or violet. Ladies, a modest dress or skirt below the knee, with sleeves; gentlemen, a collared polo or long-sleeve shirt with slacks.\n\nKindly keep attire modest, and please avoid casual wear and all-white outfits.",
       },
       {
         question: "What if I have dietary restrictions or allergies?",

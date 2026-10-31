@@ -19,10 +19,12 @@ import { useSiteConfig } from '@/hooks/use-site-config';
 import { siteConfig as defaultSiteConfig } from '@/content/site';
 import { parseWeddingDate } from '@/lib/wedding-date';
 import { InviteParticles } from '@/components/loader/InviteParticles';
-import { GhostBackdrop, InvitePhotoBackdrop, PhotoBackground } from '@/components/loader/invite-photo-backdrop';
+import { PhotoBackground } from '@/components/loader/invite-photo-backdrop';
 import { TintedDeco } from '@/components/tinted-deco';
 import { SectionBackdrop } from '@/components/section-backdrop';
+import { LeafParticles } from '@/components/loader/leaf-particles';
 import './envelope-invite.css';
+import './loading-screen.css';
 
 const theSeasons = localFont({
   src: '../../Font/Fontspring-DEMO-theseasons-reg.otf',
@@ -121,7 +123,13 @@ export const Hero: React.FC<HeroProps> = ({
 }) => {
   const siteConfig = useSiteConfig();
   const content = siteConfig.loadingScreen ?? defaultSiteConfig.loadingScreen;
-  const isPlain = content.display === 'plain';
+  // The envelope always uses the classic invitation look (envelope, ivory letter,
+  // portraits, wax seal) in both displays.
+  // Photos display: the loading screen's corner florals, but no frame, bouquets or wash —
+  // it sits directly on the page's shared photo marquee (invitation-page.tsx), in the
+  // loading screen's colours.
+  const isPhotosDisplay = content.display !== 'plain';
+  const isPlain = true;
   const plainTheme = content.plainTheme ?? defaultSiteConfig.loadingScreen.plainTheme;
   const cornerDecos = content.cornerDecos ?? defaultSiteConfig.loadingScreen.cornerDecos;
   const plainInvite = content.plainInvite ?? defaultSiteConfig.loadingScreen.plainInvite;
@@ -176,7 +184,6 @@ export const Hero: React.FC<HeroProps> = ({
     () => (content.backgroundPhotosDesktop ?? []).map((src) => encodeURI(src)),
     [content.backgroundPhotosDesktop],
   );
-  const showPhotoBackdrop = !isPlain && backgroundPhotos.length > 0;
 
   // One portrait of the groom (left) and one of the bride (right), revealed as the envelope opens
   const portraitPair = useMemo(() => {
@@ -594,7 +601,7 @@ export const Hero: React.FC<HeroProps> = ({
 
   return (
     <motion.div
-      className={`env-invite-screen${isPlain ? ' env-invite-screen--plain' : ''}${isPlain && enterFromLoading && visible && !reduceMotion ? ' is-arriving' : ''} ${visible ? '' : 'is-hidden'}`}
+      className={`env-invite-screen${isPlain ? ' env-invite-screen--plain' : ''}${isPhotosDisplay ? ' env-invite-screen--over-photos' : ''}${isPlain && enterFromLoading && visible && !reduceMotion ? ' is-arriving' : ''} ${visible ? '' : 'is-hidden'}`}
       // Photo reveal keeps the open-envelope look the whole time (letter stays under the pocket lip)
       data-phase={isExiting && !usePhotoExit ? 'exiting' : phase}
       aria-hidden={!visible}
@@ -627,16 +634,38 @@ export const Hero: React.FC<HeroProps> = ({
         }),
       } as React.CSSProperties}
     >
-      {showPhotoBackdrop && (
-        <div className="invite-photo-backdrop-wrap invite-photo-backdrop-wrap--envelope" aria-hidden="true">
-          <InvitePhotoBackdrop className="invite-photo-backdrop--envelope" photos={backgroundPhotos} />
+      {/* Photos display: nothing of its own behind the envelope — the page's shared photo
+          marquee + navy scrim (same as the loading screen) carries straight on underneath.
+          Same four corner florals as the loading screen, in exactly the same spots
+          (loading-screen.css → .ls-photo-corner), so they stay put through the handoff */}
+      {isPhotosDisplay && (
+        <div className="ls-photo-corners env-invite-photo-corners" aria-hidden="true">
+          {(
+            [
+              { src: cornerDecos.topLeft, pos: 'tl', delay: 0 },
+              { src: cornerDecos.topRight, pos: 'tr', delay: -2000 },
+              { src: cornerDecos.bottomLeft, pos: 'bl', delay: -4000 },
+              { src: cornerDecos.bottomRight, pos: 'br', delay: -6000 },
+            ] as const
+          )
+            .filter(({ src }) => src)
+            .map(({ src, pos, delay }) => (
+              <span
+                key={pos}
+                className={`ls-photo-corner ls-photo-corner--${pos}`}
+                style={{ '--ls-delay': `${delay}ms` } as React.CSSProperties}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={encodeURI(src)} alt="" className="ls-photo-corner__img" />
+              </span>
+            ))}
         </div>
       )}
-
-      {isPlain && (
+      {/* Photos display: the same falling pastel leaves as the loading screen */}
+      {isPhotosDisplay && !reduceMotion && <LeafParticles className="env-invite-leaves" />}
+      {isPlain && !isPhotosDisplay && (
         <>
           <PhotoBackground photos={backgroundPhotos} desktopPhotos={backgroundPhotosDesktop} />
-          <GhostBackdrop src={content.ghostImage} />
           <div className="env-invite-plain-corners" aria-hidden="true">
             {(
               [
@@ -657,15 +686,14 @@ export const Hero: React.FC<HeroProps> = ({
             ))}
           </div>
           <div className="env-invite-plain-frame" aria-hidden="true" />
-          {/* Paper grain + rising hearts, same as the loader and invitation sections
-              (section-backdrop.tsx); no extra wash — the backdrop (photos or plain paper) has the tint */}
+          {/* Paper grain + rising pink hearts, same as the loader and invitation sections
+              (section-backdrop.tsx); no extra wash — the photo background has its blush veil */}
           <SectionBackdrop wash={false} overlay />
         </>
       )}
 
-      {!isPlain && <div className="env-invite-readability-scrim" aria-hidden="true" />}
 
-      {!reduceMotion && (
+      {!reduceMotion && !isPhotosDisplay && (
         <div className="env-invite-particles pointer-events-none" aria-hidden="true">
           <InviteParticles count={28} />
         </div>
@@ -883,7 +911,7 @@ export const Hero: React.FC<HeroProps> = ({
                   >
                     <div className="env-invite-letter-frame" aria-hidden="true" />
                     <div className="env-invite-letter-inner">
-                      {isPlain && plainInvite.ornament && (
+                      {isPlain && !isPhotosDisplay && plainInvite.ornament && (
                         <TintedDeco src={plainInvite.ornament} className="env-invite-letter-ornament" />
                       )}
                       <span className="env-invite-letter-label" aria-label={content.headline}>
@@ -951,7 +979,7 @@ export const Hero: React.FC<HeroProps> = ({
                     </motion.div>
                   )}
 
-                  {isPlain && envelopeFlowers && (
+                  {isPlain && !isPhotosDisplay && envelopeFlowers && (
                     // Bouquet tucked inside the envelope — peeks out above the pocket once it opens
                     <div className="env-invite-inner-flowers" aria-hidden="true">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -1274,7 +1302,7 @@ type FoldGeo = {
   scale: number;
 };
 
-const FOLD_SHADE = '#1F3249';
+const FOLD_SHADE = '#2E2A2B';
 
 /** A paper fold: a crisp dark crease with light catching the edge just below it */
 function FoldCrease({ d }: { d: string }) {

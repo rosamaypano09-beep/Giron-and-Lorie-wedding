@@ -142,7 +142,6 @@ function chapterTextFromParagraphs(
 // skyBackdrop: false when a parent already paints one sky behind this and the previous section
 export function LoveStory({ skyBackdrop = true }: { skyBackdrop?: boolean } = {}) {
   const siteConfig = useSiteConfig()
-  const loading = siteConfig.loadingScreen ?? defaultSiteConfig.loadingScreen
   const loveStory = siteConfig.loveStory ?? defaultSiteConfig.loveStory
   // Corner florals + border live in content/site.ts → loveStory.decos / showFrame
   const corners = loveStory.decos ?? defaultSiteConfig.loveStory.decos
@@ -152,7 +151,9 @@ export function LoveStory({ skyBackdrop = true }: { skyBackdrop?: boolean } = {}
   const photoAlt = loveStory.photoAlt ?? defaultSiteConfig.loveStory.photoAlt
   const showChapterNumbers = loveStory.showChapterNumbers ?? defaultSiteConfig.loveStory.showChapterNumbers
   const showChapterDividers = loveStory.showChapterDividers ?? defaultSiteConfig.loveStory.showChapterDividers
-  const isPlain = loading.display === "plain"
+  // Always the plain (paper) story layout — cream paper, framed cards with corner florals,
+  // heart badges and tilted photos — even when the loader/envelope use the photos display
+  const isPlain = true
   const reduceMotion = useReducedMotion()
 
   const groom =

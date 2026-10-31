@@ -1,13 +1,27 @@
 "use client"
 
 import type React from "react"
+import { useRef } from "react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import type { TimelineIconName } from "@/content/site"
-import { motion } from "motion/react"
-import { cinzel } from "@/lib/fonts"
+import {
+  MotionConfig,
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type Variants,
+} from "motion/react"
+import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
+import Image from "next/image"
 import { TintedDeco } from "@/components/tinted-deco"
-import { HEART_PATH, RisingHearts } from "@/components/rising-hearts"
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+})
 
 const theSeasons = localFont({
   src: "../../Font/Fontspring-DEMO-theseasons-reg.otf",
@@ -24,15 +38,15 @@ const aboveTheBeyond = localFont({
 const CORNER_DECO_CLASS =
   "block h-auto w-auto max-w-[80px] sm:max-w-[120px] md:max-w-[170px] lg:max-w-[205px] xl:max-w-[245px] select-none"
 
-// All-white palette over a translucent scrim so text stays readable on the Silk backdrop.
-const INK = "#FFFFFF"
-const ROSE = "#FFFFFF"
-const SCRIPT = "#FFFFFF"
-const BODY = "#FFFFFF"
-const LINE = "rgba(255, 255, 255, 0.7)"
+// Light palette — the section has no background and sits on the dusty-blue Silk backdrop.
+// White titles, butter-yellow times (readable on blue), soft navy halos.
+const IVORY = "var(--color-motif-soft)"
+const CREAM = "var(--color-motif-cream)"
+const PALE = "var(--color-motif-silver)"
+const LINE = "color-mix(in srgb, var(--color-motif-soft) 70%, transparent)"
 const entryEase = [0.22, 1, 0.36, 1] as const
 
-// Charcoal halo keeps light text readable over the moving backdrop
+// Navy halo keeps light text readable over the moving backdrop
 const titleShadow =
   "0 1px 0 color-mix(in srgb, var(--color-welcome-navy) 45%, transparent), 0 2px 10px color-mix(in srgb, var(--color-welcome-navy) 40%, transparent), 0 8px 28px color-mix(in srgb, var(--color-welcome-navy) 28%, transparent)"
 const textShadow =
@@ -41,12 +55,24 @@ const textShadow =
 const lineRight = { background: `linear-gradient(to right, transparent, ${LINE})` } as const
 const lineLeft = { background: `linear-gradient(to left, transparent, ${LINE})` } as const
 const lineBoth = { background: `linear-gradient(to right, transparent, ${LINE}, transparent)` } as const
+// Connectors run from the image / details into the centre dot (solid at the dot end)
+// Same soft glow as the spine, so a 1px line still reads on the moving backdrop
+const CONNECTOR_GLOW = "0 0 6px color-mix(in srgb, var(--color-motif-soft) 75%, transparent)"
+const connectorToRight = {
+  background: "linear-gradient(to right, rgb(255 255 255 / 70%), #FFFFFF)",
+  boxShadow: CONNECTOR_GLOW,
+} as const
+const connectorToLeft = {
+  background: "linear-gradient(to left, rgb(255 255 255 / 70%), #FFFFFF)",
+  boxShadow: CONNECTOR_GLOW,
+} as const
 
 type TimelineIcon = React.ComponentType<React.SVGProps<SVGSVGElement>>
 
 interface TimelineEvent {
   time: string
   title: string
+  description?: string
   location?: string
   icon: TimelineIcon
   imageSrc?: string
@@ -78,9 +104,7 @@ function OutsideDivider() {
   return (
     <div className="flex items-center justify-center gap-2">
       <span className="h-px w-10 sm:w-16" style={lineRight} />
-      <svg viewBox="0 0 24 24" className="h-3 w-3 sm:h-3.5 sm:w-3.5" fill="var(--color-motif-accent)" aria-hidden>
-        <path d={HEART_PATH} />
-      </svg>
+      <span className="h-1.5 w-1.5 rotate-45" style={{ background: "var(--color-motif-accent)" }} aria-hidden />
       <span className="h-px w-10 sm:w-16" style={lineLeft} />
     </div>
   )
@@ -101,7 +125,7 @@ function TimelineKicker({ text }: { text: string }) {
   return (
     <p
       className={`${cinzel.className} mx-auto mt-4 max-w-[20rem] px-2 text-[0.6875rem] font-semibold leading-snug tracking-[0.12em] min-[400px]:max-w-none min-[400px]:text-[0.75rem] min-[400px]:tracking-[0.16em] sm:mt-6 sm:text-[0.875rem] sm:tracking-[0.2em] md:text-[0.9375rem] md:tracking-[0.22em]`}
-      style={{ color: ROSE, textShadow }}
+      style={{ color: PALE, textShadow }}
     >
       {text}
     </p>
@@ -125,7 +149,7 @@ function TimelineTitle({ title, subtitle }: { title: string; subtitle: string })
         className={`${theSeasons.className} block uppercase leading-[0.9] tracking-[0.04em] min-[400px]:tracking-[0.08em] sm:tracking-[0.12em] md:tracking-[0.14em]`}
         style={{
           fontSize: "var(--title-size)",
-          color: INK,
+          color: IVORY,
           textShadow: titleShadow,
         }}
       >
@@ -136,7 +160,7 @@ function TimelineTitle({ title, subtitle }: { title: string; subtitle: string })
         className={`${aboveTheBeyond.className} relative z-10 mx-auto mt-1.5 block w-fit max-w-[min(100%,22rem)] px-1 leading-[0.88] sm:mt-2 sm:max-w-none sm:leading-[0.9]`}
         style={{
           fontSize: "var(--script-size)",
-          color: SCRIPT,
+          color: CREAM,
           textShadow: titleShadow,
         }}
       >
@@ -172,22 +196,19 @@ export function WeddingTimeline() {
     .map((event) => ({
     time: event.time,
     title: event.title,
+    description: event.description || undefined,
     location: event.location ? fillVenue(event.location) : undefined,
     icon: ICONS[event.icon] ?? RingsIcon,
     imageSrc: event.image || undefined,
   }))
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative w-full bg-transparent`}>
     <section
       id="wedding-timeline"
       className="relative z-10 overflow-hidden py-10 sm:py-12 md:py-16 lg:py-20"
     >
-      {/* Readability scrim — translucent so the background still shows through */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-black/35" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <RisingHearts tone="butter" fill />
-      </div>
       {/* Corner decorations (optional, from site.ts) */}
       <div className="pointer-events-none absolute left-0 top-0 z-10">
         <DecoImg src={decos.topLeft} className={CORNER_DECO_CLASS} />
@@ -202,169 +223,293 @@ export function WeddingTimeline() {
         <DecoImg src={decos.bottomRight} className={CORNER_DECO_CLASS} />
       </div>
 
-      {/* Header */}
-      <div className="relative z-20 mx-auto mb-8 max-w-5xl px-3 text-center @container/timeline sm:mb-10 sm:px-4 md:mb-12">
-        <div className="mx-auto mb-4 sm:mb-5 md:mb-6">
+      {/* Header — divider draws open, kicker letters gather, title comes into focus,
+          then the description and rule follow */}
+      <motion.div
+        className="relative z-20 mx-auto mb-8 max-w-5xl px-3 text-center @container/timeline sm:mb-10 sm:px-4 md:mb-12"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.4 }}
+        variants={headerStagger}
+      >
+        <motion.div className="mx-auto mb-4 sm:mb-5 md:mb-6" variants={lineDraw}>
           <OutsideDivider />
-        </div>
-        <div className="mx-auto">
+        </motion.div>
+        <motion.div className="mx-auto" variants={trackIn}>
           <TimelineKicker text={content.kicker} />
-        </div>
-        <div className="mx-auto mt-3 sm:mt-4 md:mt-5">
+        </motion.div>
+        <motion.div className="mx-auto mt-3 sm:mt-4 md:mt-5" variants={focusIn}>
           <TimelineTitle title={content.title} subtitle={content.subtitle} />
-        </div>
-        <p
+        </motion.div>
+        <motion.p
           className={`font-goudy-italic mx-auto mt-4 max-w-xl px-2 sm:mt-5 md:mt-6 ${timelineType.textRelaxed}`}
-          style={{ color: BODY, textShadow }}
+          style={{ color: IVORY, textShadow }}
+          variants={riseIn}
         >
           {content.description}
-        </p>
-        <div className="mt-4 flex items-center justify-center sm:mt-5">
+        </motion.p>
+        <motion.div className="mt-4 flex items-center justify-center sm:mt-5" variants={lineDraw}>
           <span className="h-px w-16 sm:w-24 md:w-32" style={lineBoth} />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Timeline */}
       <div className="relative z-20 mx-auto max-w-6xl px-3 sm:px-5 lg:px-8">
-        <motion.div
-          className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-px origin-top -translate-x-1/2"
-          initial={{ scaleY: 0, opacity: 0 }}
-          whileInView={{ scaleY: 1, opacity: 1 }}
-          viewport={{ once: true, amount: 0.12 }}
-          transition={{ duration: 1.2, ease: entryEase }}
-          style={{ background: `linear-gradient(to bottom, transparent, ${LINE}, transparent)` }}
-        />
-
-        <div className="space-y-7 sm:space-y-8 md:space-y-10 lg:space-y-12">
-          {timelineEvents.map((event, index) => (
-            <TimelineItem key={`${event.title}-${event.time}-${index}`} event={event} index={index} />
-          ))}
-        </div>
+        <TimelineSpine>
+          <div className="space-y-7 sm:space-y-8 md:space-y-10 lg:space-y-12">
+            {timelineEvents.map((event, index) => (
+              <TimelineItem key={`${event.title}-${event.time}-${index}`} event={event} index={index} />
+            ))}
+          </div>
+        </TimelineSpine>
       </div>
 
       {content.quote ? (
-        <div className="relative z-20 mx-auto mt-8 max-w-xl px-3 text-center sm:mt-10 md:mt-12">
-          <div className="mb-5 flex items-center justify-center sm:mb-6">
+        <motion.div
+          className="relative z-20 mx-auto mt-8 max-w-xl px-3 text-center sm:mt-10 md:mt-12"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={headerStagger}
+        >
+          <motion.div className="mb-5 flex items-center justify-center sm:mb-6" variants={lineDraw}>
             <span className="h-px w-16 sm:w-24 md:w-32" style={lineBoth} />
-          </div>
-          <blockquote>
+          </motion.div>
+          <motion.blockquote variants={focusIn}>
             <p
               className={`font-goudy-italic ${timelineType.textRelaxed} italic leading-relaxed`}
-              style={{ color: BODY, textShadow }}
+              style={{ color: IVORY, textShadow }}
             >
               &ldquo;{content.quote}&rdquo;
             </p>
             {content.quoteCitation ? (
               <footer
                 className={`font-goudy-italic mt-2 sm:mt-3 ${timelineType.label} not-italic tracking-wide`}
-                style={{ color: ROSE, textShadow }}
+                style={{ color: PALE, textShadow }}
               >
                 — {content.quoteCitation}
               </footer>
             ) : null}
-          </blockquote>
-        </div>
+          </motion.blockquote>
+        </motion.div>
       ) : null}
     </section>
     </div>
+    </MotionConfig>
   )
+}
+
+// Faint track + a fill that follows the scroll, led by a glowing spark
+function TimelineSpine({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const reduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 75%", "end 55%"] })
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.4 })
+  const sparkTop = useTransform(progress, (v) => `${v * 100}%`)
+  const sparkOpacity = useTransform(progress, [0, 0.03, 0.97, 1], [0, 1, 1, 0])
+
+  return (
+    <div ref={ref} className="relative">
+      <div className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-px -translate-x-1/2" aria-hidden>
+        {/* Track */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(to bottom, transparent, color-mix(in srgb, var(--color-motif-soft) 26%, transparent) 8%, color-mix(in srgb, var(--color-motif-soft) 26%, transparent) 92%, transparent)`,
+          }}
+        />
+        {/* Fill */}
+        <motion.div
+          className="absolute inset-x-[-0.5px] top-0 h-full origin-top"
+          style={{
+            scaleY: reduceMotion ? 1 : progress,
+            background: `linear-gradient(to bottom, transparent, ${IVORY} 6%, ${PALE} 70%, ${IVORY})`,
+            boxShadow: "0 0 8px color-mix(in srgb, var(--color-motif-soft) 70%, transparent)",
+          }}
+        />
+        {/* Spark */}
+        {!reduceMotion && (
+          <motion.span
+            className="absolute left-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
+            style={{
+              top: sparkTop,
+              opacity: sparkOpacity,
+              background: "#FFFFFF",
+              boxShadow:
+                "0 0 0 3px color-mix(in srgb, var(--color-motif-soft) 35%, transparent), 0 0 14px 4px color-mix(in srgb, var(--color-motif-silver) 80%, transparent), 0 0 32px 8px color-mix(in srgb, var(--color-motif-soft) 45%, transparent)",
+            }}
+          />
+        )}
+      </div>
+      {children}
+    </div>
+  )
+}
+
+// ── Header / quote reveal ──
+const headerStagger: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.14, delayChildren: 0.05 } },
+}
+
+const lineDraw: Variants = {
+  hidden: { opacity: 0, scaleX: 0 },
+  show: { opacity: 1, scaleX: 1, transition: { duration: 0.9, ease: entryEase } },
+}
+
+// Small caps drift down into place, coming into focus
+const trackIn: Variants = {
+  hidden: { opacity: 0, y: -8, filter: "blur(4px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.95, ease: entryEase } },
+}
+
+// Title comes into focus while settling from slightly larger
+const focusIn: Variants = {
+  hidden: { opacity: 0, scale: 1.06, y: -8, filter: "blur(10px)" },
+  show: { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", transition: { duration: 1.2, ease: entryEase } },
+}
+
+const riseIn: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.85, ease: entryEase } },
+}
+
+// ── Each timeline moment, in order: the dot lights up on the spine → a ring pulses out →
+// both connectors draw outward from the dot → the icon blooms and the details unfold
+// line by line, gliding away from the spine ──
+const itemSequence: Variants = {
+  hidden: {},
+  show: {},
+}
+
+const dotPop: Variants = {
+  hidden: { scale: 0, opacity: 0 },
+  show: { scale: [0, 1.35, 1], opacity: 1, transition: { duration: 0.6, times: [0, 0.6, 1], ease: "easeOut" } },
+}
+
+const dotRing: Variants = {
+  hidden: { scale: 0.6, opacity: 0 },
+  show: {
+    scale: [0.6, 3],
+    opacity: [0.8, 0],
+    transition: { duration: 1.4, ease: "easeOut", delay: 0.2 },
+  },
+}
+
+const connectorDraw: Variants = {
+  hidden: { scaleX: 0, opacity: 0 },
+  show: { scaleX: 1, opacity: 1, transition: { duration: 0.6, ease: entryEase, delay: 0.25 } },
+}
+
+const iconIn: Variants = {
+  hidden: { opacity: 0, scale: 0.6, rotate: -12, y: 10, filter: "blur(8px)" },
+  show: {
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { type: "spring", stiffness: 150, damping: 14, delay: 0.55 },
+  },
+}
+
+// Details container: glides outward, away from the spine, then reveals its lines in turn
+const textIn: Variants = {
+  hidden: (fromRight: boolean) => ({ opacity: 0, x: fromRight ? 32 : -32 }),
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.85, ease: entryEase, delay: 0.5, staggerChildren: 0.11, delayChildren: 0.55 },
+  },
+}
+
+const lineIn: Variants = {
+  hidden: { opacity: 0, y: 10, filter: "blur(5px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: entryEase } },
+}
+
+// The event time draws together from wide tracking
+const timeIn: Variants = {
+  hidden: { opacity: 0, letterSpacing: "0.5em" },
+  show: { opacity: 1, letterSpacing: "0.2em", transition: { duration: 0.9, ease: entryEase } },
 }
 
 function TimelineItem({ event, index }: { event: TimelineEvent; index: number }) {
   const Icon = event.icon
   const isEven = index % 2 === 0
-  const fromX = isEven ? -36 : 36
+  // Each width = the old stub + the old column gap, so the image / details stay put and the line reaches the dot
+  const connector = "relative h-px w-[1.375rem] shrink-0 sm:w-11 md:w-6 lg:w-24"
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: fromX, y: 18, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, amount: 0.35, margin: "0px 0px -8% 0px" }}
-      transition={{ duration: 0.78, ease: entryEase }}
-      className="relative z-10"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.45, margin: "0px 0px -6% 0px" }}
+      variants={itemSequence}
+      className="relative z-10 grid grid-cols-[1fr_auto_1fr] items-center"
     >
-      <div className="hidden md:grid grid-cols-[1fr_auto_1fr] items-center gap-x-10 lg:gap-x-14">
-        <div className={isEven ? "" : "text-right"}>
-          <div className="flex items-center justify-end gap-4">
-            {!isEven ? (
+      <div className={isEven ? "" : "text-right"}>
+        <div className="flex items-center justify-end gap-2 sm:gap-3 md:gap-4">
+          {!isEven ? (
+            <motion.div variants={textIn} custom={false}>
               <TimelineText event={event} align="right" />
-            ) : (
+            </motion.div>
+          ) : (
+            <motion.div variants={iconIn}>
               <IconMark Icon={Icon} imageSrc={event.imageSrc} />
-            )}
-            <div
-              className="hidden h-px w-10 lg:block"
-              style={lineRight}
-            />
-          </div>
-        </div>
-
-        <div className="relative flex items-center justify-center">
-          <span
-            className="absolute h-4 w-4 rounded-full"
-            style={{ background: "color-mix(in srgb, var(--color-motif-soft) 28%, transparent)" }}
-          />
-          <div
-            className="relative h-2 w-2 rounded-full"
-            style={{ background: "var(--color-motif-accent)", boxShadow: "0 0 0 2px #FFFFFF, 0 0 10px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent)" }}
-          />
-        </div>
-
-        <div>
-          <div className="flex items-center justify-start gap-4">
-            <div
-              className="hidden h-px w-10 lg:block"
-              style={lineLeft}
-            />
-            {isEven ? (
-              <TimelineText event={event} align="left" />
-            ) : (
-              <IconMark Icon={Icon} imageSrc={event.imageSrc} />
-            )}
-          </div>
+            </motion.div>
+          )}
+          <motion.div variants={connectorDraw} className={`${connector} origin-right`} style={connectorToRight}>
+            <ConnectorCap side="left" />
+          </motion.div>
         </div>
       </div>
 
-      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-x-2.5 sm:gap-x-5 md:hidden">
-        <div className={isEven ? "" : "text-right"}>
-          <div className="flex items-center justify-end gap-2 sm:gap-3">
-            {!isEven ? (
-              <TimelineText event={event} align="right" />
-            ) : (
-              <IconMark Icon={Icon} imageSrc={event.imageSrc} mobile />
-            )}
-            <div
-              className="h-px w-3 shrink-0 sm:w-6"
-              style={lineRight}
-            />
-          </div>
-        </div>
+      <motion.div variants={dotPop} className="relative flex items-center justify-center">
+        <motion.span
+          variants={dotRing}
+          className="absolute h-4 w-4 rounded-full"
+          style={{ boxShadow: "0 0 0 1px color-mix(in srgb, var(--color-motif-soft) 80%, transparent)" }}
+          aria-hidden
+        />
+        <span
+          className="absolute h-4 w-4 rounded-full"
+          style={{ background: "color-mix(in srgb, var(--color-motif-soft) 28%, transparent)" }}
+        />
+        <div
+          className="relative h-2 w-2 rounded-full"
+          style={{ background: "var(--color-motif-accent)", boxShadow: "0 0 0 2px #FFFFFF, 0 0 10px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent)" }}
+        />
+      </motion.div>
 
-        <div className="relative flex items-center justify-center">
-          <span
-            className="absolute h-4 w-4 rounded-full"
-            style={{ background: "color-mix(in srgb, var(--color-motif-soft) 28%, transparent)" }}
-          />
-          <div
-            className="relative h-2 w-2 rounded-full"
-            style={{ background: "var(--color-motif-accent)", boxShadow: "0 0 0 2px #FFFFFF, 0 0 10px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent)" }}
-          />
-        </div>
-
-        <div>
-          <div className="flex items-center justify-start gap-2 sm:gap-3">
-            <div
-              className="h-px w-3 shrink-0 sm:w-6"
-              style={lineLeft}
-            />
-            {isEven ? (
+      <div>
+        <div className="flex items-center justify-start gap-2 sm:gap-3 md:gap-4">
+          <motion.div variants={connectorDraw} className={`${connector} origin-left`} style={connectorToLeft}>
+            <ConnectorCap side="right" />
+          </motion.div>
+          {isEven ? (
+            <motion.div variants={textIn} custom>
               <TimelineText event={event} align="left" />
-            ) : (
-              <IconMark Icon={Icon} imageSrc={event.imageSrc} mobile />
-            )}
-          </div>
+            </motion.div>
+          ) : (
+            <motion.div variants={iconIn}>
+              <IconMark Icon={Icon} imageSrc={event.imageSrc} />
+            </motion.div>
+          )}
         </div>
       </div>
     </motion.div>
+  )
+}
+
+// Small bead where a connector meets the image / details
+function ConnectorCap({ side }: { side: "left" | "right" }) {
+  return (
+    <span
+      className={`absolute top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full ${side === "left" ? "left-0" : "right-0"}`}
+      style={{ background: "#FFFFFF", boxShadow: "0 0 8px color-mix(in srgb, var(--color-motif-soft) 80%, transparent)" }}
+      aria-hidden
+    />
   )
 }
 
@@ -379,26 +524,39 @@ function TimelineText({
 
   return (
     <div className={`max-w-md ${textAlign} ${align === "right" ? "ml-auto" : "mr-auto"}`}>
-      <p
+      <motion.p
         className={`${cinzel.className} ${timelineType.label} font-semibold tracking-[0.2em] uppercase`}
-        style={{ color: ROSE, textShadow }}
+        style={{ color: PALE, textShadow }}
+        variants={timeIn}
       >
         {event.time}
-      </p>
-      <p
+      </motion.p>
+      <motion.p
         className={`${theSeasons.className} mt-1 text-[1.15rem] leading-tight tracking-[0.04em] sm:text-[1.25rem] md:text-[1.175rem]`}
-        style={{ color: INK, textShadow: titleShadow }}
+        style={{ color: IVORY, textShadow: titleShadow }}
+        variants={lineIn}
       >
         <SpecialCharFont text={event.title} />
-      </p>
+      </motion.p>
+
+      {event.description && (
+        <motion.p
+          className={`font-goudy-italic ${timelineType.textRelaxed} mt-1.5`}
+          style={{ color: CREAM, textShadow }}
+          variants={lineIn}
+        >
+          {event.description}
+        </motion.p>
+      )}
 
       {event.location && (
-        <p
+        <motion.p
           className={`font-goudy-italic ${timelineType.text} mt-1.5 leading-relaxed`}
-          style={{ color: SCRIPT, textShadow }}
+          style={{ color: CREAM, textShadow }}
+          variants={lineIn}
         >
           {event.location}
-        </p>
+        </motion.p>
       )}
     </div>
   )
@@ -406,43 +564,34 @@ function TimelineText({
 
 function IconMark({
   Icon,
-  mobile,
   imageSrc,
 }: {
   Icon: TimelineIcon
-  mobile?: boolean
   imageSrc?: string
 }) {
   if (imageSrc) {
-    // Black line art painted ivory through the image's alpha (mask), with a soft charcoal halo
-    const mask = `url("${encodeURI(imageSrc)}") center / contain no-repeat`
     return (
-      <span
-        aria-hidden
-        className={`${mobile ? "h-24 w-24 sm:h-28 sm:w-28" : "h-18 w-18 lg:h-22 lg:w-22"} block shrink-0`}
-        style={{
-          background: INK,
-          WebkitMask: mask,
-          mask,
-          filter: "drop-shadow(0 2px 6px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent))",
-        }}
+      <Image
+        src={imageSrc}
+        alt=""
+        width={160}
+        height={160}
+        className="h-24 w-24 object-contain sm:h-28 sm:w-28 md:h-18 md:w-18 lg:h-22 lg:w-22"
+        // Black line art → white, with a soft navy halo
+        style={{ filter: "brightness(0) invert(1) drop-shadow(0 2px 6px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent))" }}
       />
     )
   }
 
   return (
     <div
-      className={`${
-        mobile ? "h-20 w-20 sm:h-24 sm:w-24" : "h-16 w-16 lg:h-18 lg:w-18"
-      } flex items-center justify-center rounded-full border`}
+      className="flex h-20 w-20 items-center justify-center rounded-full border sm:h-24 sm:w-24 md:h-16 md:w-16 lg:h-18 lg:w-18"
       style={{
         background: "color-mix(in srgb, var(--color-motif-soft) 14%, transparent)",
         borderColor: LINE,
       }}
     >
-      <Icon
-        className={`${mobile ? "h-10 w-10" : "h-8 w-8 lg:h-9 lg:w-9"}`}
-      />
+      <Icon className="h-10 w-10 md:h-8 md:w-8 lg:h-9 lg:w-9" />
     </div>
   )
 }
@@ -459,8 +608,6 @@ function ArrivalIcon(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
-// Guests arriving: two figures under a small heart (no building — ceremony and
-// reception share one venue)
 function GuestsIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 32 32" fill="none" stroke={iconStroke} strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" {...props}>

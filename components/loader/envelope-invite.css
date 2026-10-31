@@ -2748,13 +2748,13 @@
    one touch of sunshine (the glow around the wax seal).
    ========================================================================== */
 .env-invite-screen--plain {
-  --env-sky: var(--color-motif-medium);        /* #8FB0CF */
+  --env-sky: var(--color-motif-medium);        /* #9A9294 */
   --env-blue: var(--color-welcome-heading);    /* #4F6578 */
-  --env-navy: var(--color-welcome-navy);       /* #1F3249 */
-  --env-ink: var(--color-welcome-text);        /* #2F4A66 */
-  --env-leaf: var(--color-motif-yellow);       /* #8FB0CF sage */
-  --env-leaf-ink: color-mix(in srgb, var(--color-motif-yellow) 55%, #2F4A66);
-  --env-sun: var(--color-motif-blush);         /* #D9EAF7 — keyboard focus ring */
+  --env-navy: var(--color-welcome-navy);       /* #2E2A2B */
+  --env-ink: var(--color-welcome-text);        /* #4A4546 */
+  --env-leaf: var(--color-motif-yellow);       /* #9A9294 sage */
+  --env-leaf-ink: color-mix(in srgb, var(--color-motif-yellow) 55%, #4A4546);
+  --env-sun: var(--color-motif-blush);         /* #EBCBCF — keyboard focus ring */
   --env-shadow-tint: var(--env-navy);
 }
 
@@ -2797,7 +2797,7 @@
 
 /* Fine peach-beige stitched border inside the envelope front */
 .env-invite-screen--plain .env-invite-front-closed::after {
-  border: 1px dashed rgb(217 234 247 / 60%);
+  border: 1px dashed rgb(235 203 207 / 60%);
   border-radius: 8px;
   box-shadow: none;
 }
@@ -2805,7 +2805,7 @@
 /* Flap: brighter top edge like light catching the paper */
 .env-invite-screen--plain .env-invite-flap {
   background:
-    linear-gradient(145deg, rgb(217 234 247 / 28%) 0%, transparent 42%),
+    linear-gradient(145deg, rgb(235 203 207 / 28%) 0%, transparent 42%),
     linear-gradient(160deg, var(--env-highlight) 0%, var(--env-base) 55%, var(--env-fold) 100%);
   box-shadow:
     inset 0 -10px 18px color-mix(in srgb, var(--env-navy) 14%, transparent),
@@ -2920,22 +2920,22 @@
    and one of the bride rise out on either side of the letter.
    ========================================================================== */
 .env-invite-screen--plain {
-  --env-sky: #8FB0CF;
-  --env-blue: #5B7FA6;
-  --env-navy: #2F4A66;
-  --env-ink: #4A5A6B;
-  --env-leaf: #B7D1E8;
-  --env-leaf-ink: #8FB0CF;
-  --env-sun: #8FB0CF;
-  --env-shadow-tint: #2F4A66;
-  --env-plain-bg: #FFF4C2;
-  --env-plain-accent: #8FB0CF;
-  --env-paper: #FFFBF0;
-  --env-base: color-mix(in srgb, #D9EAF7 88%, #8FB0CF);
-  --env-highlight: #FFF4C2;
-  --env-fold: color-mix(in srgb, #D9EAF7 70%, #8FB0CF);
-  --env-envelope: #D9EAF7;
-  --env-border: color-mix(in srgb, #8FB0CF 45%, transparent);
+  --env-sky: #E9CAD2;
+  --env-blue: #C58F9D;
+  --env-navy: #172D4E;
+  --env-ink: #172D4E;
+  --env-leaf: #D4B47C;
+  --env-leaf-ink: #C58F9D;
+  --env-sun: #D4B47C;
+  --env-shadow-tint: #172D4E;
+  --env-plain-bg: #F8F3F1;
+  --env-plain-accent: #D4B47C;
+  --env-paper: #F8F3F1;
+  --env-base: color-mix(in srgb, #E9CAD2 88%, #C58F9D);
+  --env-highlight: #F8F3F1;
+  --env-fold: color-mix(in srgb, #E9CAD2 70%, #C58F9D);
+  --env-envelope: #E9CAD2;
+  --env-border: color-mix(in srgb, #D4B47C 45%, transparent);
 }
 
 .env-invite-screen--plain::before {
@@ -2944,12 +2944,12 @@
 
 .env-invite-screen--plain .env-invite-envelope {
   filter:
-    drop-shadow(0 26px 40px color-mix(in srgb, #2F4A66 14%, transparent))
-    drop-shadow(0 8px 14px color-mix(in srgb, #8FB0CF 22%, transparent));
+    drop-shadow(0 26px 40px color-mix(in srgb, #4A4546 14%, transparent))
+    drop-shadow(0 8px 14px color-mix(in srgb, #9A9294 22%, transparent));
 }
 
 .env-invite-screen--plain .env-invite-front-closed::after {
-  border-color: color-mix(in srgb, #FFFBF0 75%, transparent);
+  border-color: color-mix(in srgb, #FBF7F5 75%, transparent);
 }
 
 .env-invite-screen--plain .env-invite-flap {
@@ -2957,14 +2957,14 @@
     linear-gradient(145deg, rgb(247 244 239 / 55%) 0%, transparent 42%),
     linear-gradient(160deg, var(--env-highlight) 0%, var(--env-base) 55%, var(--env-fold) 100%);
   box-shadow:
-    inset 0 -10px 18px color-mix(in srgb, #8FB0CF 18%, transparent),
+    inset 0 -10px 18px color-mix(in srgb, #9A9294 18%, transparent),
     inset 0 2px 0 rgb(255 255 255 / 45%);
 }
 
 .env-invite-screen--plain .env-invite-seal-btn {
   filter:
-    drop-shadow(0 8px 14px color-mix(in srgb, #2F4A66 22%, transparent))
-    drop-shadow(0 2px 4px color-mix(in srgb, #2F4A66 14%, transparent));
+    drop-shadow(0 8px 14px color-mix(in srgb, #4A4546 22%, transparent))
+    drop-shadow(0 2px 4px color-mix(in srgb, #4A4546 14%, transparent));
 }
 
 .env-invite-screen--plain .env-invite-hint {
@@ -2975,27 +2975,27 @@
 
 .env-invite-screen--plain .env-invite-letter {
   background:
-    radial-gradient(85% 35% at 50% 0%, rgb(255 255 255 / 95%) 0%, transparent 72%),
-    linear-gradient(180deg, #FFFBF0 0%, #FFFBF0 60%, color-mix(in srgb, #D9EAF7 55%, #FFFBF0) 100%);
-  border: 1px solid color-mix(in srgb, #8FB0CF 45%, transparent);
+    radial-gradient(85% 35% at 50% 0%, rgb(248 243 241 / 95%) 0%, transparent 72%),
+    linear-gradient(180deg, #F8F3F1 0%, #F8F3F1 60%, color-mix(in srgb, #E9CAD2 55%, #F8F3F1) 100%);
+  border: 1px solid color-mix(in srgb, #D4B47C 45%, transparent);
   box-shadow:
-    0 18px 40px color-mix(in srgb, #2F4A66 12%, transparent),
-    0 6px 14px color-mix(in srgb, #8FB0CF 16%, transparent),
-    inset 0 1px 0 rgb(255 255 255 / 90%);
+    0 18px 40px color-mix(in srgb, #172D4E 12%, transparent),
+    0 6px 14px color-mix(in srgb, #C58F9D 16%, transparent),
+    inset 0 1px 0 rgb(248 243 241 / 90%);
 }
 
 .env-invite-screen--plain .env-invite-letter-frame {
-  border-color: color-mix(in srgb, #8FB0CF 45%, transparent);
+  border-color: color-mix(in srgb, #D4B47C 45%, transparent);
 }
 
 .env-invite-screen--plain .env-invite-letter-frame::after {
-  border-color: color-mix(in srgb, #B7D1E8 40%, transparent);
+  border-color: color-mix(in srgb, #D4B47C 40%, transparent);
 }
 
 .env-invite-screen--plain .env-invite-days-to-go,
 .env-invite-screen--plain .env-invite-reveal-copy h2,
 .env-invite-screen--plain .env-invite-reveal-copy p {
-  text-shadow: 0 0 12px rgb(247 244 239 / 90%);
+  text-shadow: 0 0 12px rgb(248 243 241 / 90%);
 }
 
 .env-invite-screen--plain .env-invite-reveal-copy h2 {
@@ -3004,20 +3004,20 @@
 
 /* "View the invitation": burgundy pill, the one strong accent on screen */
 .env-invite-screen--plain .env-invite-enter-btn {
-  color: #FFFBF0;
-  background: #2F4A66;
-  border: 1px solid color-mix(in srgb, #8FB0CF 55%, transparent);
+  color: #F8F3F1;
+  background: #172D4E;
+  border: 1px solid color-mix(in srgb, #D4B47C 55%, transparent);
   box-shadow:
-    0 0 0 4px rgb(247 244 239 / 60%),
-    0 12px 26px color-mix(in srgb, #2F4A66 22%, transparent);
+    0 0 0 4px rgb(248 243 241 / 60%),
+    0 12px 26px color-mix(in srgb, #172D4E 22%, transparent);
 }
 
 .env-invite-screen--plain .env-invite-enter-btn:hover {
-  background: color-mix(in srgb, #2F4A66 88%, #8FB0CF);
+  background: color-mix(in srgb, #172D4E 88%, #C58F9D);
 }
 
 .env-invite-screen--plain .env-invite-ghost-date {
-  color: #8FB0CF;
+  color: #D4B47C;
 }
 
 /* Corner florals + double border — identical to the loading screen
@@ -3085,11 +3085,11 @@
   width: var(--env-portrait-w, clamp(92px, calc(var(--env-width) * 0.3), 170px));
   padding: 5px 5px 7px;
   border-radius: 999px 999px 6px 6px;
-  border: 1px solid color-mix(in srgb, #8FB0CF 50%, transparent);
-  background: #FFFBF0;
+  border: 1px solid color-mix(in srgb, #9A9294 50%, transparent);
+  background: #FBF7F5;
   box-shadow:
-    0 18px 32px -14px color-mix(in srgb, #2F4A66 30%, transparent),
-    0 4px 10px color-mix(in srgb, #8FB0CF 18%, transparent);
+    0 18px 32px -14px color-mix(in srgb, #4A4546 30%, transparent),
+    0 4px 10px color-mix(in srgb, #9A9294 18%, transparent);
 }
 
 .env-invite-screen--plain .env-invite-photos-emerge--portraits .env-invite-polaroid--envelope-pair::before,
@@ -3102,7 +3102,7 @@
   aspect-ratio: 3 / 4.2;
   border: 0;
   border-radius: 999px 999px 3px 3px;
-  background: #D9EAF7;
+  background: #EBCBCF;
 }
 
 .env-invite-screen--plain .env-invite-photos-emerge--portraits .env-invite-polaroid-photo::after {
@@ -3153,8 +3153,8 @@
 
 .env-invite-screen--plain .env-invite-letter-label__word {
   background: none;
-  color: #2F4A66;
-  -webkit-text-fill-color: #2F4A66;
+  color: #172D4E;
+  -webkit-text-fill-color: #172D4E;
 }
 
 /* Mobile: keep both portraits inside the screen, a little higher above the pocket */
@@ -3204,11 +3204,11 @@
   width: var(--env-portrait-w, calc(var(--env-letter-w) * 0.46));
   padding: 6px;
   border-radius: 3px;
-  border: 1px solid color-mix(in srgb, #8FB0CF 40%, transparent);
-  background: #FFFBF0;
+  border: 1px solid color-mix(in srgb, #9A9294 40%, transparent);
+  background: #FBF7F5;
   box-shadow:
-    0 14px 26px -12px color-mix(in srgb, #2F4A66 28%, transparent),
-    0 3px 8px color-mix(in srgb, #8FB0CF 16%, transparent);
+    0 14px 26px -12px color-mix(in srgb, #4A4546 28%, transparent),
+    0 3px 8px color-mix(in srgb, #9A9294 16%, transparent);
 }
 
 .env-invite-screen--plain .env-invite-photos-emerge--portraits .env-invite-polaroid-photo {
@@ -3228,14 +3228,14 @@
 }
 
 .env-invite-inner-flowers__img {
-  --env-flowers-w: calc(var(--env-letter-w) * 0.95);
+  --env-flowers-w: calc(var(--env-letter-w) * 0.6);
   --env-flowers-inset: 0px; /* bloom distance in from the letter's side edge */
   position: absolute;
   bottom: var(--env-flowers-bottom, -28%);
   width: var(--env-flowers-w);
   max-width: none;
   height: auto;
-  filter: drop-shadow(0 6px 10px color-mix(in srgb, #2F4A66 14%, transparent));
+  filter: drop-shadow(0 6px 10px color-mix(in srgb, #4A4546 14%, transparent));
   /* Entrance: hidden inside the pocket until the photos come out */
   opacity: 0;
   transform: translateY(70%);
@@ -3265,8 +3265,8 @@
 @media (min-width: 768px) {
   .env-invite-screen--plain {
     --env-portrait-w: calc(var(--env-letter-w) * 0.46);
-    --env-portrait-bottom: 30%;
-    --env-flowers-bottom: -16%;
+    --env-portrait-bottom: 16%;
+    --env-flowers-bottom: -28%;
   }
 }
 
@@ -3319,30 +3319,30 @@
 
 /* ==========================================================================
    warm gray crumpled-paper envelope (plain). Kept last so it wins.
-   Paper built around light sky blue #BFE6FF, deepening toward dusty blue #8FB0CF in the
+   Paper built around warm gray #9A9294, deepening toward slate #A8606F in the
    folds, with a fine grain and a soft crumpled relief (light ridges, slate
    creases) on every panel.
    ========================================================================== */
 .env-invite-screen--plain {
-  --env-paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.17 0 0 0 0 0.24 0 0 0 0 0.31 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  --env-paper-mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016 0.022' numOctaves='5' seed='11' stitchTiles='stitch' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='2' lighting-color='%23fff' result='l'%3E%3CfeDistantLight azimuth='225' elevation='52'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix in='l' result='dark' values='0 0 0 0 0.12 0 0 0 0 0.18 0 0 0 0 0.24 -0.75 0 0 0 0.5'/%3E%3CfeColorMatrix in='l' result='lite' values='0 0 0 0 0.96 0 0 0 0 0.97 0 0 0 0 1 0.9 0 0 0 -0.72'/%3E%3CfeMerge%3E%3CfeMergeNode in='dark'/%3E%3CfeMergeNode in='lite'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
-  --env-highlight: color-mix(in srgb, #BFE6FF 70%, #FFFFFF);
-  --env-base: #BFE6FF;
-  --env-fold: color-mix(in srgb, #BFE6FF 78%, #8FB0CF);
-  --env-shadow: color-mix(in srgb, #BFE6FF 55%, #8FB0CF);
-  --env-envelope: #BFE6FF;
-  --env-border: color-mix(in srgb, #5B7FA6 40%, transparent);
+  --env-paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.18 0 0 0 0 0.31 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --env-paper-mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016 0.022' numOctaves='5' seed='11' stitchTiles='stitch' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='2' lighting-color='%23F8F3F1' result='l'%3E%3CfeDistantLight azimuth='225' elevation='52'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix in='l' result='dark' values='0 0 0 0 0.09 0 0 0 0 0.18 0 0 0 0 0.31 -0.75 0 0 0 0.5'/%3E%3CfeColorMatrix in='l' result='lite' values='0 0 0 0 0.97 0 0 0 0 0.95 0 0 0 0 0.95 0.9 0 0 0 -0.72'/%3E%3CfeMerge%3E%3CfeMergeNode in='dark'/%3E%3CfeMergeNode in='lite'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
+  --env-highlight: color-mix(in srgb, #172D4E 82%, #D4B47C);
+  --env-base: #172D4E;
+  --env-fold: color-mix(in srgb, #172D4E 88%, #C58F9D);
+  --env-shadow: color-mix(in srgb, #172D4E 92%, #C58F9D);
+  --env-envelope: #172D4E;
+  --env-border: color-mix(in srgb, #D4B47C 40%, transparent);
 }
 
 .env-invite-screen--plain .env-invite-envelope {
-  --env-highlight: color-mix(in srgb, #BFE6FF 70%, #FFFFFF);
-  --env-base: #BFE6FF;
-  --env-fold: color-mix(in srgb, #BFE6FF 78%, #8FB0CF);
-  --env-shadow: color-mix(in srgb, #BFE6FF 55%, #8FB0CF);
-  --env-envelope: #BFE6FF;
+  --env-highlight: color-mix(in srgb, #172D4E 82%, #D4B47C);
+  --env-base: #172D4E;
+  --env-fold: color-mix(in srgb, #172D4E 88%, #C58F9D);
+  --env-shadow: color-mix(in srgb, #172D4E 92%, #C58F9D);
+  --env-envelope: #172D4E;
   filter:
-    drop-shadow(0 26px 40px color-mix(in srgb, #2F4A66 22%, transparent))
-    drop-shadow(0 8px 14px color-mix(in srgb, #5B7FA6 22%, transparent));
+    drop-shadow(0 26px 40px color-mix(in srgb, #172D4E 22%, transparent))
+    drop-shadow(0 8px 14px color-mix(in srgb, #C58F9D 22%, transparent));
 }
 
 /* One paper surface for every panel (front, inside, flap, pocket) so the
@@ -3352,7 +3352,7 @@
   --env-paper-surface:
     var(--env-paper-grain),
     var(--env-paper-mottle),
-    radial-gradient(ellipse 70% 55% at 18% 18%, rgb(255 255 255 / 14%) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 55% at 18% 18%, rgb(248 243 241 / 14%) 0%, transparent 60%),
     linear-gradient(170deg, var(--env-highlight) 0%, var(--env-base) 45%, var(--env-fold) 100%);
 }
 
@@ -3371,13 +3371,13 @@
 .env-invite-screen--plain .env-invite-front-closed::before {
   opacity: 0.7;
   background:
-    repeating-linear-gradient(90deg, transparent 0 2px, rgb(255 255 255 / 7%) 2px 3px),
-    repeating-linear-gradient(0deg, transparent 0 3px, rgb(47 74 102 / 4%) 3px 4px);
+    repeating-linear-gradient(90deg, transparent 0 2px, rgb(248 243 241 / 7%) 2px 3px),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgb(23 45 78 / 4%) 3px 4px);
 }
 
 /* Ivory stitched border */
 .env-invite-screen--plain .env-invite-front-closed::after {
-  border: 1px dashed color-mix(in srgb, #FFFBF0 70%, transparent);
+  border: 1px dashed color-mix(in srgb, #D4B47C 70%, transparent);
   box-shadow: none;
 }
 
@@ -3388,30 +3388,30 @@
 /* Depth comes from soft shadows only, never a different paper color */
 .env-invite-screen--plain .env-invite-flap {
   box-shadow:
-    inset 0 -10px 18px color-mix(in srgb, #5B7FA6 18%, transparent),
-    inset 0 2px 0 rgb(255 255 255 / 40%);
+    inset 0 -10px 18px color-mix(in srgb, #C58F9D 18%, transparent),
+    inset 0 2px 0 rgb(248 243 241 / 40%);
 }
 
 .env-invite-screen--plain .env-invite-pocket-front {
-  box-shadow: inset 0 10px 16px color-mix(in srgb, #5B7FA6 14%, transparent);
+  box-shadow: inset 0 10px 16px color-mix(in srgb, #C58F9D 14%, transparent);
 }
 
 .env-invite-screen--plain .env-invite-pocket-left {
-  box-shadow: inset -4px 0 10px color-mix(in srgb, #5B7FA6 10%, transparent);
+  box-shadow: inset -4px 0 10px color-mix(in srgb, #C58F9D 10%, transparent);
 }
 
 .env-invite-screen--plain .env-invite-pocket-right {
-  box-shadow: inset 4px 0 10px color-mix(in srgb, #5B7FA6 10%, transparent);
+  box-shadow: inset 4px 0 10px color-mix(in srgb, #C58F9D 10%, transparent);
 }
 
 /* Crease lines: deeper rose so they read on the pink paper */
 .env-invite-screen--plain .env-invite-creases line {
-  stroke: color-mix(in srgb, #5B7FA6 38%, transparent);
+  stroke: color-mix(in srgb, #D4B47C 38%, transparent);
 }
 
 .env-invite-screen--plain .env-invite-creases line:nth-child(1),
 .env-invite-screen--plain .env-invite-creases line:nth-child(2) {
-  stroke: rgb(255 255 255 / 45%);
+  stroke: rgb(248 243 241 / 45%);
 }
 
 /* Wax seal stays after opening: it glides from the flap tip down onto the
@@ -3442,15 +3442,15 @@
   background: none;
   border: none;
   box-shadow: none;
-  color: #2A2627;
-  -webkit-text-fill-color: #2A2627;
+  color: #172D4E;
+  -webkit-text-fill-color: #172D4E;
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
   text-shadow:
-    0 0 1px rgb(251 247 245 / 75%),
-    0 0 3px rgb(251 247 245 / 60%),
-    0 0 9px rgb(251 247 245 / 45%),
-    0 1px 2px rgb(42 38 39 / 12%);
+    0 0 1px rgb(248 243 241 / 75%),
+    0 0 3px rgb(248 243 241 / 60%),
+    0 0 9px rgb(248 243 241 / 45%),
+    0 1px 2px rgb(23 45 78 / 12%);
 }
 
 .env-invite-screen--plain .env-invite-hint {
@@ -3460,8 +3460,8 @@
 }
 
 .env-invite-screen--plain .env-invite-days-to-go {
-  color: #7E3F4D;
-  -webkit-text-fill-color: #7E3F4D;
+  color: #C58F9D;
+  -webkit-text-fill-color: #C58F9D;
   font-size: clamp(1.05rem, 4.5vw, 1.42rem);
   letter-spacing: 0.1em;
 }
@@ -3501,8 +3501,8 @@
 @media (max-width: 767px) {
   .env-invite-screen--plain {
     --env-portrait-w: calc(var(--env-width) * 0.3);
-    --env-portrait-bottom: 36%;
-    --env-flowers-bottom: 26%;
+    --env-portrait-bottom: 22%;
+    --env-flowers-bottom: 16%;
   }
 
   .env-invite-screen--plain .env-invite-photos-emerge--portraits {
@@ -3516,7 +3516,7 @@
 
   .env-invite-inner-flowers__img {
     /* Blooms sit inside the envelope, at each photo's inner lower corner */
-    --env-flowers-w: calc(var(--env-letter-w) * 0.52);
+    --env-flowers-w: calc(var(--env-letter-w) * 0.3);
     --env-flowers-inset: calc(var(--env-letter-w) * 0.15);
   }
 
@@ -3535,10 +3535,10 @@
 /* "View the invitation" — photo card slides out of the pocket, then opens to full screen */
 .env-invite-exit-card {
   padding: 6px;
-  background: #FFFBF0;
-  border: 1px solid color-mix(in srgb, #8FB0CF 45%, transparent);
+  background: #FBF7F5;
+  border: 1px solid color-mix(in srgb, #9A9294 45%, transparent);
   box-shadow:
-    0 18px 36px -14px rgb(47 74 102 / 40%),
+    0 18px 36px -14px rgb(74 69 70 / 40%),
     0 4px 10px rgb(154 146 148 / 25%);
 }
 
@@ -3572,8 +3572,8 @@
   z-index: 70;
   overflow: hidden;
   pointer-events: none;
-  background: #FFFBF0;
-  box-shadow: 0 40px 90px -30px rgb(47 74 102 / 55%);
+  background: #FBF7F5;
+  box-shadow: 0 40px 90px -30px rgb(74 69 70 / 55%);
   will-change: top, left, width, height;
 }
 
@@ -3587,7 +3587,7 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(120% 90% at 50% 45%, transparent 55%, rgb(47 74 102 / 24%) 100%),
+    radial-gradient(120% 90% at 50% 45%, transparent 55%, rgb(74 69 70 / 24%) 100%),
     linear-gradient(180deg, rgb(245 241 235 / 12%) 0%, transparent 30%, transparent 70%, rgb(245 241 235 / 18%) 100%);
 }
 
@@ -3597,7 +3597,7 @@
   inset: 0;
   z-index: 69;
   pointer-events: none;
-  background: radial-gradient(circle at 50% 45%, rgb(247 244 239 / 95%) 0%, rgb(217 234 247 / 70%) 30%, transparent 65%);
+  background: radial-gradient(circle at 50% 45%, rgb(247 244 239 / 95%) 0%, rgb(235 203 207 / 70%) 30%, transparent 65%);
 }
 
 .env-invite-exit-preload {
@@ -3622,7 +3622,7 @@
   inset: 0;
   z-index: 68;
   pointer-events: none;
-  background: radial-gradient(circle at 50% 50%, rgb(243 238 231 / 55%) 0%, rgb(47 74 102 / 35%) 100%);
+  background: radial-gradient(circle at 50% 50%, rgb(243 238 231 / 55%) 0%, rgb(74 69 70 / 35%) 100%);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
 }
@@ -3639,8 +3639,8 @@
   border-radius: 4px;
   filter:
     drop-shadow(0 1px 1px rgb(31 45 58 / 22%))
-    drop-shadow(0 6px 10px rgb(31 45 58 / 16%))
-    drop-shadow(0 22px 34px rgb(31 45 58 / 22%));
+    drop-shadow(0 6px 10px rgb(23 45 78 / 16%))
+    drop-shadow(0 22px 34px rgb(23 45 78 / 22%));
 }
 
 .env-invite-screen--plain .env-invite-back,
@@ -3651,8 +3651,8 @@
 /* Paper edge: a hairline of light on top, a slightly darker cut edge all round */
 .env-invite-screen--plain .env-invite-front-closed {
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 38%),
-    inset 0 0 0 1px rgb(31 45 58 / 14%);
+    inset 0 1px 0 rgb(248 243 241 / 38%),
+    inset 0 0 0 1px rgb(23 45 78 / 14%);
 }
 
 /* One paper for every panel, closed or open: grain + crumple + soft studio
@@ -3664,8 +3664,8 @@
   --env-paper-surface:
     var(--env-paper-grain),
     var(--env-paper-mottle),
-    radial-gradient(120% 90% at 18% 6%, rgb(255 255 255 / 22%) 0%, transparent 55%),
-    radial-gradient(110% 80% at 90% 100%, rgb(31 45 58 / 16%) 0%, transparent 60%),
+    radial-gradient(120% 90% at 18% 6%, rgb(248 243 241 / 22%) 0%, transparent 55%),
+    radial-gradient(110% 80% at 90% 100%, rgb(23 45 78 / 16%) 0%, transparent 60%),
     linear-gradient(170deg, var(--env-highlight) 0%, var(--env-base) 45%, var(--env-fold) 100%);
 }
 
@@ -3717,8 +3717,8 @@
 .env-invite-screen--plain .env-invite-back {
   border: none;
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 38%),
-    inset 0 0 0 1px rgb(31 45 58 / 14%);
+    inset 0 1px 0 rgb(248 243 241 / 38%),
+    inset 0 0 0 1px rgb(23 45 78 / 14%);
 }
 
 /* No stitched border — real envelopes are clean paper */
@@ -3738,7 +3738,7 @@
 
 .env-invite-paper-folds__shadow {
   fill: none;
-  stroke: #1F3249;
+  stroke: #2E2A2B;
   stroke-opacity: 0.32;
 }
 
@@ -3781,11 +3781,11 @@
 
 .env-invite-screen--plain .env-invite-flap::after {
   background:
-    linear-gradient(180deg, transparent 50%, rgb(31 45 58 / 10%) 100%),
-    radial-gradient(60% 40% at 50% 100%, rgb(31 45 58 / 10%) 0%, transparent 70%);
+    linear-gradient(180deg, transparent 50%, rgb(23 45 78 / 10%) 100%),
+    radial-gradient(60% 40% at 50% 100%, rgb(23 45 78 / 10%) 0%, transparent 70%);
 }
 
-/* Liner: blush-pink patterned paper inside the flap. It swaps in at the
+/* Liner: navy patterned paper inside the flap. It swaps in at the
    halfway point of the flap's swing (flapEase is 1.1s), when the inside
    starts facing the viewer. */
 .env-invite-flap-liner {
@@ -3794,8 +3794,8 @@
   pointer-events: none;
   opacity: 0;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='7' cy='7' r='1.3' fill='%23435B70' fill-opacity='0.28'/%3E%3Ccircle cx='21' cy='21' r='1.3' fill='%23435B70' fill-opacity='0.28'/%3E%3Cpath d='M14 3.5 l1.2 2.3 -1.2 2.3 -1.2 -2.3z M14 17.5 l1.2 2.3 -1.2 2.3 -1.2 -2.3z' fill='%23FFFFFF' fill-opacity='0.55'/%3E%3C/svg%3E"),
-    linear-gradient(0deg, #D9EAF7 0%, color-mix(in srgb, #D9EAF7 80%, #FFFBF0) 100%);
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Ccircle cx='7' cy='7' r='1.3' fill='%23172D4E' fill-opacity='0.28'/%3E%3Ccircle cx='21' cy='21' r='1.3' fill='%23172D4E' fill-opacity='0.28'/%3E%3Cpath d='M14 3.5 l1.2 2.3 -1.2 2.3 -1.2 -2.3z M14 17.5 l1.2 2.3 -1.2 2.3 -1.2 -2.3z' fill='%23F8F3F1' fill-opacity='0.55'/%3E%3C/svg%3E"),
+    linear-gradient(0deg, #172D4E 0%, color-mix(in srgb, #172D4E 80%, #F8F3F1) 100%);
   background-size: 28px 28px, 100% 100%;
   box-shadow: inset 0 0 0 4px var(--env-base);
   transition: opacity 0s linear 0.55s;
@@ -3824,11 +3824,11 @@
 .env-invite-screen--plain[data-phase="revealed"] .env-invite-back,
 .env-invite-screen--plain[data-phase="cta"] .env-invite-back {
   background:
-    linear-gradient(180deg, rgb(31 45 58 / 30%) 0%, rgb(31 45 58 / 8%) 22%, transparent 45%),
+    linear-gradient(180deg, rgb(23 45 78 / 30%) 0%, rgb(23 45 78 / 8%) 22%, transparent 45%),
     var(--env-paper-surface);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 38%),
-    inset 0 0 0 1px rgb(31 45 58 / 14%);
+    inset 0 1px 0 rgb(248 243 241 / 38%),
+    inset 0 0 0 1px rgb(23 45 78 / 14%);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3836,4 +3836,507 @@
   .env-invite-flap-edge {
     transition: none;
   }
+}
+
+/* ==========================================================================
+   Photos display — the envelope over the page's shared photo marquee
+   (invitation-page.tsx → LoaderPhotoBackdrop), in the LOADING SCREEN's palette:
+   the same navy scrim behind, ivory type, champagne-gold accents, pastel blue.
+   No corner florals, frame, wash or particles. Kept last so it wins.
+   ========================================================================== */
+.env-invite-screen--over-photos {
+  --ov-navy: var(--color-welcome-navy);
+  --ov-navy-deep: color-mix(in srgb, var(--color-welcome-navy) 82%, black);
+  --ov-blue: var(--color-motif-medium);
+  --ov-ivory: var(--color-motif-soft);
+  --ov-gold: color-mix(in srgb, var(--color-welcome-gold) 78%, white); /* loader's name accent */
+  --ov-gold-deep: var(--color-welcome-gold);
+  background: transparent;
+}
+
+.env-invite-screen--over-photos::before,
+.env-invite-screen--over-photos .env-invite-bg-glow,
+.env-invite-screen--over-photos .env-invite-ghost-date {
+  display: none;
+}
+
+/* ── Envelope paper: deep navy with a soft pastel-blue sheen and gold edges ── */
+.env-invite-screen--over-photos .env-invite-envelope {
+  --env-highlight: color-mix(in srgb, var(--ov-navy) 72%, var(--ov-blue));
+  --env-base: var(--ov-navy);
+  --env-fold: var(--ov-navy-deep);
+  --env-shadow: color-mix(in srgb, var(--ov-navy-deep) 85%, black);
+  --env-envelope: var(--ov-navy);
+  --env-border: color-mix(in srgb, var(--ov-gold-deep) 45%, transparent);
+  filter:
+    drop-shadow(0 1px 1px rgb(0 0 0 / 25%))
+    drop-shadow(0 10px 18px color-mix(in srgb, var(--ov-navy-deep) 45%, transparent))
+    drop-shadow(0 28px 44px color-mix(in srgb, var(--ov-navy-deep) 40%, transparent));
+}
+
+/* Thin gold hairline around the paper */
+.env-invite-screen--over-photos .env-invite-front-closed,
+.env-invite-screen--over-photos .env-invite-back {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--ov-gold) 35%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--ov-gold-deep) 30%, transparent);
+}
+
+.env-invite-screen--over-photos .env-invite-paper-folds__crease {
+  stroke: color-mix(in srgb, var(--ov-gold-deep) 45%, transparent);
+}
+
+.env-invite-screen--over-photos .env-invite-paper-folds__edge,
+.env-invite-screen--over-photos .env-invite-flap-edge polyline {
+  stroke: color-mix(in srgb, var(--ov-gold) 40%, transparent);
+}
+
+/* Inside of the flap: navy lining with a gold lattice — fine diamond trellis, a four-point
+   gold star at each centre, pastel-blue pearls on the corners — under a soft sheen that
+   catches the light toward the fold, framed by a gold inner border */
+.env-invite-screen--over-photos .env-invite-flap-liner {
+  background:
+    radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--ov-ivory) 14%, transparent) 0%, transparent 60%),
+    linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--ov-navy-deep) 55%, transparent) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cg fill='none' stroke='%23D6B779' stroke-opacity='0.42' stroke-width='0.7'%3E%3Cpath d='M0 22 L22 0 L44 22 L22 44 Z'/%3E%3C/g%3E%3Cg fill='%23E6CF9E' fill-opacity='0.75'%3E%3Cpath d='M22 16.5 C23.4 19.6 24.4 20.6 27.5 22 C24.4 23.4 23.4 24.4 22 27.5 C20.6 24.4 19.6 23.4 16.5 22 C19.6 20.6 20.6 19.6 22 16.5 Z'/%3E%3C/g%3E%3Ccircle cx='22' cy='22' r='1.1' fill='%232F4A66'/%3E%3Cg fill='%238FB0CF' fill-opacity='0.55'%3E%3Ccircle cx='0' cy='0' r='1.3'/%3E%3Ccircle cx='44' cy='0' r='1.3'/%3E%3Ccircle cx='0' cy='44' r='1.3'/%3E%3Ccircle cx='44' cy='44' r='1.3'/%3E%3C/g%3E%3Cg fill='%23D6B779' fill-opacity='0.5'%3E%3Ccircle cx='11' cy='11' r='0.8'/%3E%3Ccircle cx='33' cy='11' r='0.8'/%3E%3Ccircle cx='11' cy='33' r='0.8'/%3E%3Ccircle cx='33' cy='33' r='0.8'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(0deg, var(--ov-navy-deep) 0%, color-mix(in srgb, var(--ov-navy) 88%, var(--ov-blue)) 100%);
+  background-size: 100% 100%, 100% 100%, 44px 44px, 100% 100%;
+  background-position: 0 0, 0 0, center top, 0 0;
+  box-shadow:
+    inset 0 0 0 5px var(--ov-navy),
+    inset 0 0 0 6px color-mix(in srgb, var(--ov-gold-deep) 60%, transparent),
+    inset 0 0 0 9px var(--ov-navy),
+    inset 0 0 0 10px color-mix(in srgb, var(--ov-gold-deep) 30%, transparent);
+}
+
+/* ── Letter: ivory paper fading to a whisper of pastel blue, gold double frame ── */
+.env-invite-screen--over-photos .env-invite-letter {
+  background:
+    radial-gradient(85% 35% at 50% 0%, rgb(255 255 255 / 90%) 0%, transparent 72%),
+    linear-gradient(180deg, var(--ov-ivory) 0%, var(--ov-ivory) 60%, color-mix(in srgb, var(--color-motif-blush) 55%, var(--ov-ivory)) 100%);
+  border: 1px solid color-mix(in srgb, var(--ov-gold-deep) 50%, transparent);
+  box-shadow:
+    0 18px 40px color-mix(in srgb, var(--ov-navy-deep) 30%, transparent),
+    0 6px 14px color-mix(in srgb, var(--ov-navy) 18%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 90%);
+}
+
+.env-invite-screen--over-photos .env-invite-letter-frame {
+  border-color: color-mix(in srgb, var(--ov-gold-deep) 55%, transparent);
+}
+
+.env-invite-screen--over-photos .env-invite-letter-frame::after {
+  border-color: color-mix(in srgb, var(--ov-blue) 45%, transparent);
+}
+
+.env-invite-screen--over-photos .env-invite-letter-label__word,
+.env-invite-screen--over-photos .env-invite-letter-invited,
+.env-invite-screen--over-photos .env-invite-names__nick {
+  color: var(--ov-navy);
+  -webkit-text-fill-color: var(--ov-navy);
+}
+
+.env-invite-screen--over-photos .env-invite-letter-label__script,
+.env-invite-screen--over-photos .env-invite-names__and,
+.env-invite-screen--over-photos .env-invite-letter-date {
+  color: var(--ov-gold-deep);
+  -webkit-text-fill-color: var(--ov-gold-deep);
+}
+
+/* Portraits: ivory mat with a gold hairline */
+.env-invite-screen--over-photos .env-invite-photos-emerge--portraits .env-invite-polaroid--envelope-pair {
+  background: var(--ov-ivory);
+  border-color: color-mix(in srgb, var(--ov-gold-deep) 50%, transparent);
+  box-shadow:
+    0 14px 26px -12px color-mix(in srgb, var(--ov-navy-deep) 45%, transparent),
+    0 3px 8px color-mix(in srgb, var(--ov-navy) 20%, transparent);
+}
+
+/* ── Text on the photos: same as the loading screen (ivory + champagne, navy shadow) ── */
+.env-invite-screen--over-photos .env-invite-hint,
+.env-invite-screen--over-photos .env-invite-reveal-copy h2,
+.env-invite-screen--over-photos .env-invite-reveal-copy p {
+  color: var(--ov-ivory);
+  -webkit-text-fill-color: var(--ov-ivory);
+  font-weight: 600;
+  text-shadow:
+    0 1px 2px color-mix(in srgb, var(--ov-navy) 70%, transparent),
+    0 4px 16px color-mix(in srgb, var(--ov-navy) 60%, transparent);
+}
+
+.env-invite-screen--over-photos .env-invite-days-to-go {
+  color: var(--ov-gold);
+  -webkit-text-fill-color: var(--ov-gold);
+  text-shadow:
+    0 1px 2px color-mix(in srgb, var(--ov-navy) 70%, transparent),
+    0 4px 16px color-mix(in srgb, var(--ov-navy) 60%, transparent);
+}
+
+/* Button: champagne-gold, like the loader's progress bar, with navy type */
+.env-invite-screen--over-photos .env-invite-enter-btn {
+  border-radius: 999px;
+  color: var(--ov-navy);
+  background: linear-gradient(180deg, var(--ov-gold) 0%, var(--ov-gold-deep) 100%);
+  border: 1px solid color-mix(in srgb, var(--ov-ivory) 70%, transparent);
+  text-shadow: none;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--ov-ivory) 22%, transparent),
+    0 12px 26px color-mix(in srgb, var(--ov-navy-deep) 45%, transparent);
+}
+
+.env-invite-screen--over-photos .env-invite-enter-btn:hover {
+  color: var(--ov-navy);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ov-gold) 85%, white) 0%, var(--ov-gold) 100%);
+}
+
+.env-invite-screen--over-photos .env-invite-enter-btn:focus-visible {
+  outline: 2px solid var(--ov-ivory);
+  outline-offset: 4px;
+}
+
+/* "View the invitation" reveal: navy/ivory light instead of blush */
+.env-invite-screen--over-photos .env-invite-exit-dim {
+  background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--ov-navy) 25%, transparent) 0%, color-mix(in srgb, var(--ov-navy-deep) 60%, transparent) 100%);
+}
+
+.env-invite-screen--over-photos .env-invite-exit-glow {
+  background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--ov-ivory) 85%, transparent) 0%, color-mix(in srgb, var(--color-motif-blush) 55%, transparent) 30%, transparent 65%);
+}
+
+.env-invite-screen--over-photos .env-invite-exit-card,
+.env-invite-screen--over-photos .env-invite-exit-photo {
+  background: var(--ov-ivory);
+}
+
+
+/* ==========================================================================
+   Photos display — envelope entrance (arriving from the loading screen).
+   The photo marquee behind never moves. The envelope arrives as ONE piece — the
+   wax seal stays fixed in its place on the flap the whole time:
+     0.1s   it rises up out of the photos, tipped back, and swings upright into
+            place with a soft settle (seal included)
+     1.3s   the seal catches the light — a warm gold glow, and a gold ring ripples
+            out from it
+     1.45s  a band of gold light glides across the paper
+     1.8s   "Tap the seal to open" rises in
+   `backwards` fill: nothing lingers on the elements once it has played.
+   ========================================================================== */
+.env-invite-screen--over-photos.is-arriving .env-invite-stage {
+  animation: none; /* replaces the plain-mode drop */
+}
+
+.env-invite-screen--over-photos.is-arriving .env-invite-scene {
+  animation: env-ov-envelope-in 1.6s cubic-bezier(0.2, 0.9, 0.25, 1) 0.1s backwards;
+  transform-origin: 50% 100%;
+}
+
+@keyframes env-ov-envelope-in {
+  0% {
+    opacity: 0;
+    transform: perspective(1100px) translateY(12vh) rotateX(32deg) scale(0.86);
+    filter: blur(5px);
+  }
+  40% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  68% {
+    transform: perspective(1100px) translateY(-1.2vh) rotateX(-4deg) scale(1.01);
+  }
+  86% {
+    transform: perspective(1100px) translateY(0.3vh) rotateX(1deg) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* The seal never leaves the flap — once the envelope has settled it simply glows */
+.env-invite-screen--over-photos.is-arriving .env-invite-seal-img {
+  animation: env-ov-seal-glint 1.1s ease-in-out 1.3s;
+}
+
+@keyframes env-ov-seal-glint {
+  0%,
+  100% {
+    filter: none;
+  }
+  45% {
+    filter: brightness(1.28) saturate(1.1)
+      drop-shadow(0 0 10px color-mix(in srgb, var(--ov-gold) 75%, transparent));
+  }
+}
+
+/* Gold ring rippling out from the seal */
+.env-invite-screen--over-photos.is-arriving .env-invite-seal-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--ov-gold) 85%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--ov-gold) 55%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  animation: env-ov-seal-ripple 1.2s cubic-bezier(0.22, 1, 0.36, 1) 1.35s;
+}
+
+@keyframes env-ov-seal-ripple {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+
+/* A band of gold light glides once across the closed envelope */
+.env-invite-screen--over-photos.is-arriving .env-invite-front-closed::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0; /* only visible while the sweep plays */
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    color-mix(in srgb, var(--ov-gold) 30%, transparent) 50%,
+    color-mix(in srgb, var(--ov-ivory) 16%, transparent) 54%,
+    transparent 66%
+  );
+  background-size: 250% 100%;
+  background-position: 120% 0;
+  animation: env-ov-sheen 1.3s ease-in-out 1.45s backwards;
+}
+
+@keyframes env-ov-sheen {
+  from {
+    opacity: 1;
+    background-position: 120% 0;
+  }
+  to {
+    opacity: 1;
+    background-position: -20% 0;
+  }
+}
+
+/* Hint rises in last */
+.env-invite-screen--over-photos.is-arriving .env-invite-hint {
+  animation: env-ov-hint-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1.8s backwards;
+}
+
+@keyframes env-ov-hint-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.9rem);
+    letter-spacing: 0.36em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .env-invite-screen--over-photos.is-arriving .env-invite-scene,
+  .env-invite-screen--over-photos.is-arriving .env-invite-seal-img,
+  .env-invite-screen--over-photos.is-arriving .env-invite-seal-wrap::after,
+  .env-invite-screen--over-photos.is-arriving .env-invite-front-closed::before,
+  .env-invite-screen--over-photos.is-arriving .env-invite-hint {
+    animation: none;
+  }
+}
+
+/* ---- Photos display: envelope portraits a little higher and a little closer to the
+   centre (kept last so it wins over the portrait placement rules above) ---- */
+.env-invite-screen--over-photos {
+  --env-portrait-bottom: 23%;
+}
+
+/* Taller portrait frames */
+.env-invite-screen--over-photos .env-invite-photos-emerge--portraits .env-invite-polaroid-photo {
+  aspect-ratio: 4 / 5.8;
+}
+
+.env-invite-screen--over-photos .env-invite-photos-emerge--portraits {
+  width: calc(var(--env-letter-w) * 1.66);
+}
+
+@media (max-width: 767px) {
+  .env-invite-screen--over-photos {
+    --env-portrait-bottom: 31%;
+  }
+
+  .env-invite-screen--over-photos .env-invite-photos-emerge--portraits {
+    width: calc(var(--env-width) - 52px);
+  }
+}
+
+/* ---- Photos display: corner florals behind the envelope + bottom CTA
+   (shared .ls-photo-corner styles in loading-screen.css) ---- */
+.env-invite-screen--over-photos .env-invite-photo-corners {
+  position: fixed;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Photos display — pastel lavender envelope (#DCCFF0), to sit on the watercolor
+   backdrop. Lilac paper lifted toward white on the lit folds and deepening to a
+   soft violet in the creases, champagne-gold hairlines, and a pastel lining
+   inside the flap. Kept last so it wins over the navy envelope above.
+   ========================================================================== */
+.env-invite-screen--over-photos .env-invite-envelope {
+  --env-highlight: color-mix(in srgb, #DCCFF0 55%, #FFFFFF);
+  --env-base: #DCCFF0;
+  --env-fold: color-mix(in srgb, #DCCFF0 84%, #8E7BB8);
+  --env-shadow: color-mix(in srgb, #DCCFF0 70%, #7A68A6);
+  --env-envelope: #DCCFF0;
+  --env-border: color-mix(in srgb, #C9A24E 45%, transparent);
+  filter:
+    drop-shadow(0 1px 1px rgb(110 92 154 / 22%))
+    drop-shadow(0 10px 18px rgb(110 92 154 / 22%))
+    drop-shadow(0 26px 40px rgb(47 74 102 / 14%));
+}
+
+/* Gold hairline around the paper, white light on the top edge */
+.env-invite-screen--over-photos .env-invite-front-closed,
+.env-invite-screen--over-photos .env-invite-back {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 70%),
+    inset 0 0 0 1px color-mix(in srgb, #C9A24E 40%, transparent);
+}
+
+.env-invite-screen--over-photos .env-invite-paper-folds__crease {
+  stroke: color-mix(in srgb, #8E7BB8 45%, transparent);
+}
+
+.env-invite-screen--over-photos .env-invite-paper-folds__edge,
+.env-invite-screen--over-photos .env-invite-flap-edge polyline {
+  stroke: rgb(255 255 255 / 70%);
+}
+
+/* Inside of the flap: blush-to-lavender lining with a fine gold, blue and mint pattern */
+.env-invite-screen--over-photos .env-invite-flap-liner {
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgb(255 255 255 / 45%) 0%, transparent 60%),
+    radial-gradient(circle at 25% 25%, color-mix(in srgb, #C9A24E 70%, transparent) 0 1.2px, transparent 1.6px),
+    radial-gradient(circle at 75% 75%, color-mix(in srgb, #C7DDF0 95%, transparent) 0 1.6px, transparent 2px),
+    radial-gradient(circle at 75% 25%, color-mix(in srgb, #D5E3D0 95%, transparent) 0 1.2px, transparent 1.6px),
+    linear-gradient(0deg, color-mix(in srgb, #DCCFF0 80%, #8E7BB8) 0%, #F3CED6 100%);
+  background-size: 100% 100%, 22px 22px, 22px 22px, 22px 22px, 100% 100%;
+  box-shadow:
+    inset 0 0 0 5px #DCCFF0,
+    inset 0 0 0 6px color-mix(in srgb, #C9A24E 60%, transparent),
+    inset 0 0 0 9px #DCCFF0,
+    inset 0 0 0 10px color-mix(in srgb, #C9A24E 30%, transparent);
+}
+
+/* Letter frame + portraits: lavender accents with gold */
+.env-invite-screen--over-photos .env-invite-letter-frame::after {
+  border-color: color-mix(in srgb, #B8A3E6 55%, transparent);
+}
+
+.env-invite-screen--over-photos .env-invite-letter {
+  box-shadow:
+    0 18px 40px rgb(110 92 154 / 22%),
+    0 6px 14px rgb(110 92 154 / 14%),
+    inset 0 1px 0 rgb(255 255 255 / 90%);
+}
+
+.env-invite-screen--over-photos .env-invite-photos-emerge--portraits .env-invite-polaroid--envelope-pair {
+  box-shadow:
+    0 14px 26px -12px rgb(110 92 154 / 40%),
+    0 3px 8px rgb(110 92 154 / 18%);
+}
+
+/* Gold light band on entry, tuned for the lighter paper */
+.env-invite-screen--over-photos.is-arriving .env-invite-front-closed::before {
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgb(255 255 255 / 55%) 48%,
+    color-mix(in srgb, #F7E5A9 55%, transparent) 54%,
+    transparent 66%
+  );
+  background-size: 250% 100%;
+  background-position: 120% 0;
+}
+
+/* ---- Envelope screen text on the photos: deep blue lettering, no container and no
+   outline — just a soft cream glow ("Tap the seal to open", countdown, message) ---- */
+.env-invite-screen.env-invite-screen--over-photos .env-invite-hint,
+.env-invite-screen.env-invite-screen--over-photos .env-invite-days-to-go,
+.env-invite-screen.env-invite-screen--over-photos .env-invite-reveal-copy h2,
+.env-invite-screen.env-invite-screen--over-photos .env-invite-reveal-copy p {
+  color: #24405F;
+  -webkit-text-fill-color: #24405F;
+  font-weight: 600;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  text-shadow:
+    0 0 6px rgb(255 251 240 / 95%),
+    0 0 14px rgb(255 251 240 / 85%),
+    0 0 28px rgb(255 251 240 / 65%);
+}
+
+.env-invite-screen.env-invite-screen--over-photos .env-invite-hint {
+  font-size: clamp(0.76rem, 3vw, 0.92rem);
+}
+
+/* ---- "Tap the seal to open" (photos display): larger, stronger deep blue, sitting on a
+   soft pool of cream light that melts into the photos (a blurred glow, not a box) ---- */
+.env-invite-screen.env-invite-screen--over-photos .env-invite-hint {
+  z-index: 32;
+  overflow: visible;
+  max-height: 3.5rem;
+  font-size: clamp(0.9rem, 3.9vw, 1.08rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #1F3249;
+  -webkit-text-fill-color: #1F3249;
+  text-shadow:
+    0 0 4px rgb(255 255 255 / 100%),
+    0 0 10px rgb(255 251 240 / 95%),
+    0 0 20px rgb(255 251 240 / 80%);
+}
+
+.env-invite-screen.env-invite-screen--over-photos .env-invite-hint::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: min(92vw, 22rem);
+  height: 3.2em;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgb(255 251 240 / 92%) 0%,
+    rgb(255 251 240 / 70%) 45%,
+    rgb(255 251 240 / 0%) 100%
+  );
+  filter: blur(6px);
+}
+
+/* Phones: the hint sits in flow under the envelope (desktop keeps its absolute spot) */
+@media (max-width: 767px) {
+  .env-invite-screen.env-invite-screen--over-photos .env-invite-hint {
+    position: relative;
+  }
+}
+
+/* ---- Envelope entrance (photos display): no shine — the gold light band that swept
+   across the paper and the seal's glow are switched off. The envelope still rises
+   into place and the seal ring still ripples; the photo card's shine on
+   "View the invitation" is unaffected. ---- */
+.env-invite-screen.env-invite-screen--over-photos.is-arriving .env-invite-front-closed::before {
+  content: none;
+  animation: none;
+}
+
+.env-invite-screen.env-invite-screen--over-photos.is-arriving .env-invite-seal-img {
+  animation: none;
 }

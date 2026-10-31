@@ -10,7 +10,8 @@
 }
 
 .loading-screen,
-.invite-photo-backdrop {
+.invite-photo-backdrop,
+.ls-photo-backdrop {
   /* Champagne beige brown — aligned with app/globals.css motif + welcome tokens */
   --ls-warm-base: var(--color-welcome-navy);
   --ls-warm-mid: var(--color-motif-blush);
@@ -3464,11 +3465,11 @@
    Sunshine yellow is used once — the glowing dot on the progress bar.
    ========================================================================== */
 .loading-screen--plain {
-  --ls-sky: var(--color-motif-medium);          /* #8FB0CF */
+  --ls-sky: var(--color-motif-medium);          /* #9EB9D4 */
   --ls-blue: var(--color-welcome-heading);      /* #4F6578 */
   --ls-navy: var(--color-welcome-navy);         /* #1F3249 */
   --ls-ink: var(--color-welcome-text);          /* #2F4A66 */
-  --ls-leaf: var(--color-motif-yellow);         /* #8FB0CF sage */
+  --ls-leaf: var(--color-motif-yellow);         /* #9EB9D4 sage */
   --ls-leaf-ink: color-mix(in srgb, var(--color-motif-yellow) 78%, #3C4424);
   --ls-sun: var(--color-motif-accent);          /* #4F6578 */
 
@@ -3581,9 +3582,9 @@
   --hh-navy: var(--color-welcome-navy);       /* #1F3249 */
   --hh-blue: var(--color-welcome-heading);    /* #4F6578 */
   --hh-ink: var(--color-welcome-text);        /* #2F4A66 */
-  --hh-sky: var(--color-motif-medium);        /* #8FB0CF */
-  --hh-leaf: var(--color-motif-yellow);       /* #8FB0CF */
-  --hh-butter: var(--color-motif-silver);     /* #D9EAF7 */
+  --hh-sky: var(--color-motif-medium);        /* #9EB9D4 */
+  --hh-leaf: var(--color-motif-yellow);       /* #9EB9D4 */
+  --hh-butter: var(--color-motif-silver);     /* #C7DDF0 */
   /* Tight white edge: keeps thin strokes crisp instead of washing them out */
   --hh-edge:
     0 0 1px rgb(255 255 255 / 100%),
@@ -3972,13 +3973,13 @@
    dusty blue script and small caps, sky-blue hairlines.
    ========================================================================== */
 .loading-screen--plain {
-  --ls-blush: #D9EAF7;
-  --ls-pastel: #FFF4C2;
+  --ls-blush: #C7DDF0;
+  --ls-pastel: #F7E5A9;
   --ls-ivory: #FFFBF0;
   --ls-burgundy: #2F4A66;
-  --ls-rose: #8FB0CF;
+  --ls-rose: #9EB9D4;
   --ls-rose-ink: #5B7FA6;
-  --ls-sage: #B7D1E8;
+  --ls-sage: #C7DDF0;
 
   --ls-sky: var(--ls-rose);
   --ls-blue: var(--ls-rose-ink);
@@ -4054,11 +4055,11 @@
   --hh-navy: #2F4A66;
   --hh-blue: #5B7FA6;
   --hh-ink: #4A5A6B;
-  --hh-sky: #8FB0CF;
-  --hh-leaf: #B7D1E8;
-  --hh-butter: #D9EAF7;
+  --hh-sky: #9EB9D4;
+  --hh-leaf: #C7DDF0;
+  --hh-butter: #C7DDF0;
   --hh-edge: none;
-  background: #FFF4C2;
+  background: #F7E5A9;
 }
 
 .home-hero--plain .home-hero-title-main,
@@ -4069,8 +4070,8 @@
 }
 
 .home-hero--plain .home-hero-title-script {
-  color: #8FB0CF;
-  -webkit-text-fill-color: #8FB0CF;
+  color: #9EB9D4;
+  -webkit-text-fill-color: #9EB9D4;
   text-shadow: none;
 }
 
@@ -4124,7 +4125,7 @@
   aspect-ratio: 3 / 4;
   width: calc(100% + 18px);
   border-radius: 999px 999px 22px 22px;
-  border: 1px solid color-mix(in srgb, #8FB0CF 55%, transparent);
+  border: 1px solid color-mix(in srgb, #9EB9D4 55%, transparent);
   pointer-events: none;
 }
 
@@ -4134,12 +4135,12 @@
   aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: 999px 999px 16px 16px;
-  background: #D9EAF7;
+  background: #C7DDF0;
   border: 5px solid #FFFBF0;
   box-shadow:
-    0 0 0 1px color-mix(in srgb, #8FB0CF 35%, transparent),
+    0 0 0 1px color-mix(in srgb, #9EB9D4 35%, transparent),
     0 30px 55px -30px color-mix(in srgb, #2F4A66 40%, transparent),
-    0 10px 24px -14px color-mix(in srgb, #8FB0CF 45%, transparent);
+    0 10px 24px -14px color-mix(in srgb, #9EB9D4 45%, transparent);
 }
 
 /* Soft blush vignette at the base so the photo melts into the frame */
@@ -4149,7 +4150,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, #FFF4C2 35%, transparent) 100%);
+  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, #F7E5A9 35%, transparent) 100%);
 }
 
 /* Natural colour, only the faintest warm lift — no heavy filter */
@@ -4258,8 +4259,8 @@
      behind the section shows through softly */
   background:
     radial-gradient(90% 16% at 50% 0%, rgb(255 255 255 / 65%) 0%, transparent 70%),
-    radial-gradient(60% 14% at 0% 30%, color-mix(in srgb, #D9EAF7 30%, transparent) 0%, transparent 70%),
-    radial-gradient(60% 14% at 100% 62%, color-mix(in srgb, #D9EAF7 26%, transparent) 0%, transparent 70%),
+    radial-gradient(60% 14% at 0% 30%, color-mix(in srgb, #C7DDF0 30%, transparent) 0%, transparent 70%),
+    radial-gradient(60% 14% at 100% 62%, color-mix(in srgb, #C7DDF0 26%, transparent) 0%, transparent 70%),
     linear-gradient(
       180deg,
       rgb(255 255 255 / 58%) 0%,
@@ -4343,12 +4344,12 @@
 
 .story-open-wash--left {
   left: -18%;
-  background: radial-gradient(closest-side, color-mix(in srgb, #8FB0CF 30%, transparent) 0%, color-mix(in srgb, #D9EAF7 50%, transparent) 55%, transparent 100%);
+  background: radial-gradient(closest-side, color-mix(in srgb, #9EB9D4 30%, transparent) 0%, color-mix(in srgb, #C7DDF0 50%, transparent) 55%, transparent 100%);
 }
 
 .story-open-wash--right {
   right: -18%;
-  background: radial-gradient(closest-side, color-mix(in srgb, #8FB0CF 30%, transparent) 0%, color-mix(in srgb, #D9EAF7 50%, transparent) 55%, transparent 100%);
+  background: radial-gradient(closest-side, color-mix(in srgb, #9EB9D4 30%, transparent) 0%, color-mix(in srgb, #C7DDF0 50%, transparent) 55%, transparent 100%);
 }
 
 /* Text colors (loading screen palette): charcoal title, slate details, warm-gray rule */
@@ -4362,7 +4363,7 @@
 }
 
 .story-open-rule {
-  background: #8FB0CF;
+  background: #9EB9D4;
 }
 
 .story-open-text {
@@ -4371,14 +4372,14 @@
 }
 
 .story-open-number {
-  color: color-mix(in srgb, #8FB0CF 30%, transparent);
+  color: color-mix(in srgb, #9EB9D4 30%, transparent);
 }
 
 /* Photo frame: light paper mat with a warm-gray edge */
 .story-open-photo {
   background: #FFFBF0;
   box-shadow:
-    0 0 0 1px color-mix(in srgb, #8FB0CF 35%, transparent),
+    0 0 0 1px color-mix(in srgb, #9EB9D4 35%, transparent),
     0 18px 34px -16px color-mix(in srgb, #2F4A66 32%, transparent);
 }
 
@@ -4825,4 +4826,1993 @@
   .loading-screen--plain .loading-screen__std-venue-name {
     margin-top: 0.4rem;
   }
+}
+
+/* ---- Photos loader: couple names in type, not the image-lettering plate ---- */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-names--text {
+  background: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* ---- Date boxes rise in on CSS delays (visible before hydration) ---- */
+.ls-box-in {
+  opacity: 0;
+  transform: perspective(700px) translateY(34px) rotateX(16deg) scale(0.92);
+  transform-origin: 50% 100%;
+  animation: ls-box-in 1s cubic-bezier(0.16, 1, 0.3, 1) var(--ls-delay, 0ms) forwards;
+}
+
+@keyframes ls-box-in {
+  60% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: perspective(700px) translateY(0) rotateX(0) scale(1);
+  }
+}
+
+.loading-screen.is-reduced-motion .ls-box-in {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-box-in {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* ---- No page scrollbar while the loader is up (works before hydration too) ---- */
+/* Covers the loader, the handoff and the envelope screen: the loader's unmount
+   clears the inline overflow lock, so CSS keeps the page from scrolling (and the
+   scrollbar hidden) for as long as either screen is showing. */
+html:has(.loading-screen),
+html:has(.loading-screen) body,
+html:has(.env-invite-screen:not(.is-hidden)),
+html:has(.env-invite-screen:not(.is-hidden)) body {
+  overflow: hidden;
+  scrollbar-width: none;
+}
+
+html:has(.loading-screen)::-webkit-scrollbar,
+html:has(.loading-screen) body::-webkit-scrollbar,
+html:has(.env-invite-screen:not(.is-hidden))::-webkit-scrollbar,
+html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}
+
+/* ---- Photos loader: keep the sliding photo marquee on phones too ---- */
+@media (max-width: 767px) {
+  .loading-screen--invitation:not(.loading-screen--plain) .loading-screen__backdrop {
+    display: block;
+  }
+}
+
+/* =====================================================================
+   Photos loader — refreshed look (kept last so it wins)
+   Photos stay visible behind a light top/bottom scrim; names set in solid
+   ivory with a soft shadow (no clipped gradient, which looked muddy).
+   ===================================================================== */
+.loading-screen--invitation:not(.loading-screen--plain) {
+  --ls-name-ink: var(--color-motif-soft);
+  --ls-name-accent: color-mix(in srgb, var(--color-welcome-gold) 78%, white);
+  --ls-name-shadow:
+    0 1px 2px color-mix(in srgb, var(--ls-shadow) 55%, transparent),
+    0 4px 22px color-mix(in srgb, var(--ls-shadow) 60%, transparent);
+}
+
+/* Photos show as soon as the browser has them (no wait for the fade-in script) */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__slide-photo > img {
+  opacity: 1;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__slide-photo {
+  background: var(--color-welcome-navy);
+  filter: saturate(0.95) contrast(1.02);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__marquee {
+  gap: 0;
+}
+
+/* Lighter veil: clear through the middle, deeper at top (headline) and bottom (boxes + status) */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__backdrop-veil {
+  background: radial-gradient(
+    ellipse 120% 80% at 50% 45%,
+    transparent 35%,
+    color-mix(in srgb, var(--ls-shadow) 35%, transparent) 100%
+  );
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__readability-scrim {
+  opacity: 1;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ls-shadow) 72%, transparent) 0%,
+    color-mix(in srgb, var(--ls-shadow) 38%, transparent) 20%,
+    color-mix(in srgb, var(--ls-shadow) 30%, transparent) 40%,
+    color-mix(in srgb, var(--ls-shadow) 30%, transparent) 55%,
+    color-mix(in srgb, var(--ls-shadow) 55%, transparent) 72%,
+    color-mix(in srgb, var(--ls-shadow) 82%, transparent) 100%
+  );
+}
+
+/* Soft halo behind the names instead of the dark smudge */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-names-slot::before {
+  width: min(100%, 26rem);
+  height: min(100%, 16rem);
+  background: radial-gradient(
+    ellipse 60% 55% at 50% 50%,
+    color-mix(in srgb, var(--ls-shadow) 45%, transparent) 0%,
+    color-mix(in srgb, var(--ls-shadow) 18%, transparent) 55%,
+    transparent 78%
+  );
+  filter: blur(6px);
+}
+
+/* Names: solid ivory serif, generous size, light tracking */
+.loading-screen--invitation:not(.loading-screen--plain) .ls-names__nick {
+  background: none;
+  color: var(--ls-name-ink);
+  -webkit-text-fill-color: var(--ls-name-ink);
+  font-size: clamp(3.1rem, 16cqi, 5.6rem);
+  line-height: 0.95;
+  letter-spacing: 0.035em;
+  white-space: nowrap;
+  text-shadow: var(--ls-name-shadow);
+}
+
+/* "and": champagne script between two hairlines */
+.loading-screen--invitation:not(.loading-screen--plain) .ls-names__and {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  margin: 0.05em 0 0.12em;
+  font-size: clamp(1.9rem, 9cqi, 3rem);
+  line-height: 1.1;
+  color: var(--ls-name-accent);
+  -webkit-text-fill-color: var(--ls-name-accent);
+  text-shadow: 0 2px 14px color-mix(in srgb, var(--ls-shadow) 65%, transparent);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-names__and::before,
+.loading-screen--invitation:not(.loading-screen--plain) .ls-names__and::after {
+  content: "";
+  width: clamp(2rem, 12cqi, 3.5rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ls-name-accent));
+  box-shadow: 0 1px 6px color-mix(in srgb, var(--ls-shadow) 50%, transparent);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-names__and::after {
+  background: linear-gradient(90deg, var(--ls-name-accent), transparent);
+}
+
+/* Date boxes: thin champagne edge + deeper bottom fade so the numbers read cleanly */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box {
+  border: 1px solid color-mix(in srgb, var(--ls-name-accent) 55%, transparent);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--ls-shadow) 45%, transparent);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-overlay {
+  background: linear-gradient(
+    180deg,
+    transparent 45%,
+    color-mix(in srgb, var(--ls-shadow) 35%, transparent) 70%,
+    color-mix(in srgb, var(--ls-shadow) 80%, transparent) 100%
+  );
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-num {
+  font-family: var(--font-cinzel, "Cinzel", serif);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-label {
+  color: var(--ls-name-accent);
+}
+
+/* "You are invited" in champagne, message a touch larger */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-eyebrow {
+  margin-top: 0.4rem;
+  color: var(--ls-name-accent);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-copy {
+  font-size: clamp(1.05rem, 4vw, 1.3rem);
+}
+
+/* ---- Photos loader: date text inside the boxes ----
+   Frosted band at the foot of each photo; number in Cinzel sized to the box
+   width (container units) so DEC / 21 / 2026 all fit and read evenly. */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box {
+  container-type: inline-size;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-text {
+  z-index: 2;
+  gap: 0.3rem;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-num {
+  /* Playfair Display: high-contrast lining figures made for display numbers */
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(1.5rem, 28cqi, 2.8rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  padding-left: 0.02em;
+  color: var(--ls-name-ink);
+  font-variant-numeric: lining-nums proportional-nums;
+  text-shadow:
+    0 1px 2px color-mix(in srgb, var(--ls-shadow) 80%, transparent),
+    0 2px 14px color-mix(in srgb, var(--ls-shadow) 70%, transparent);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-top: 0;
+  font-family: var(--font-cinzel, "Cinzel", serif);
+  font-size: clamp(0.5rem, 8.5cqi, 0.68rem);
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  padding-left: 0.26em;
+  color: var(--ls-name-accent);
+  text-shadow: 0 1px 6px color-mix(in srgb, var(--ls-shadow) 70%, transparent);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-label::before,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-label::after {
+  content: "";
+  width: 0.9em;
+  height: 1px;
+  background: color-mix(in srgb, var(--ls-name-accent) 70%, transparent);
+}
+
+/* Inner frame line sits above the photo but below the text band */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box::after {
+  z-index: 3;
+}
+
+/* ---- Photos loader marquee: portrait tiles sliding in two rows ----
+   Each tile keeps a portrait 3:4 shape (sized from the row height) so several
+   photos are in view at once and the faces aren't cropped to a sliver. */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__marquee--loader {
+  gap: 0;
+  padding: 0;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__marquee--loader .loading-screen__slide-strip {
+  gap: 0;
+  padding-right: 0;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__marquee--loader .loading-screen__slide-photo {
+  width: auto;
+  aspect-ratio: 3 / 4;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__marquee--loader .loading-screen__slide-photo > img {
+  object-position: center 25%;
+}
+
+/* Gentle but visible drift; the rows run opposite ways at slightly different speeds */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__marquee--loader .loading-screen__marquee-row--left .loading-screen__slide-track {
+  animation-duration: 60s;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__marquee--loader .loading-screen__marquee-row--right .loading-screen__slide-track {
+  animation-duration: 70s;
+}
+
+/* =====================================================================
+   Photos loader — entrance choreography (delays set in LoadingScreen.tsx → PHOTO_IN)
+   ===================================================================== */
+.ls-backdrop-in {
+  animation: ls-backdrop-in 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ls-backdrop-in {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ls-in {
+  opacity: 0;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-delay: var(--ls-delay, 0ms);
+  animation-fill-mode: forwards;
+}
+
+/* Headline: comes into focus while settling down from a touch larger */
+.ls-in--headline {
+  animation-name: ls-in-headline;
+  animation-duration: 1.4s;
+}
+
+@keyframes ls-in-headline {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(1.06);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* Small caps lines: letters draw together from wide tracking */
+.ls-in--track {
+  animation-name: ls-in-track;
+  animation-duration: 1.2s;
+}
+
+@keyframes ls-in-track {
+  from {
+    opacity: 0;
+    letter-spacing: 0.6em;
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+.ls-in--up {
+  animation-name: ls-in-up;
+  animation-duration: 0.9s;
+}
+
+@keyframes ls-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ls-in--fade {
+  animation-name: ls-in-fade;
+  animation-duration: 0.8s;
+}
+
+@keyframes ls-in-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Names: groom from the left, bride from the right, both coming into focus */
+.ls-in--from-left {
+  animation-name: ls-in-from-left;
+  animation-duration: 1.3s;
+}
+
+.ls-in--from-right {
+  animation-name: ls-in-from-right;
+  animation-duration: 1.3s;
+}
+
+@keyframes ls-in-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-36px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes ls-in-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(36px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* "and": blooms in, then its hairlines draw outward */
+.ls-in--bloom {
+  animation-name: ls-in-bloom;
+  animation-duration: 1.1s;
+}
+
+@keyframes ls-in-bloom {
+  from {
+    opacity: 0;
+    transform: scale(0.6) rotate(-6deg);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-in--bloom::before,
+.loading-screen--invitation:not(.loading-screen--plain) .ls-in--bloom::after {
+  transform: scaleX(0);
+  animation: ls-in-line 0.9s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--ls-delay, 0ms) + 450ms) forwards;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-in--bloom::before {
+  transform-origin: right center;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-in--bloom::after {
+  transform-origin: left center;
+}
+
+/* Divider rule above the status: draws out from the centre */
+.ls-in--line {
+  transform: scaleX(0);
+  animation-name: ls-in-line;
+}
+
+@keyframes ls-in-line {
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* Box photos settle from a slow zoom as each box lands */
+.loading-screen--invitation:not(.loading-screen--plain) .ls-box-in .loading-screen__std-box-img {
+  animation: ls-box-img-in 2.4s cubic-bezier(0.22, 1, 0.36, 1) var(--ls-delay, 0ms) both;
+}
+
+@keyframes ls-box-img-in {
+  from {
+    transform: scale(1.22);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+/* Reduced motion: everything is simply there */
+.loading-screen.is-reduced-motion .ls-in,
+.loading-screen.is-reduced-motion .ls-backdrop-in,
+.loading-screen.is-reduced-motion .ls-in--bloom::before,
+.loading-screen.is-reduced-motion .ls-in--bloom::after,
+.loading-screen.is-reduced-motion .loading-screen__std-status {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-in,
+  .ls-backdrop-in,
+  .ls-in--bloom::before,
+  .ls-in--bloom::after {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
+  }
+}
+
+/* =====================================================================
+   Photos loader — progress bar
+   Slim champagne bar on a frosted hairline track, a glowing head that
+   leads the fill, a light sweep running across it, and a % counter.
+   ===================================================================== */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-track {
+  position: relative;
+  height: 4px;
+  overflow: visible;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-motif-soft) 22%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--color-motif-soft) 28%, transparent),
+    0 1px 6px color-mix(in srgb, var(--ls-shadow) 40%, transparent);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-bar {
+  position: relative;
+  width: 0;
+  transform: none;
+  animation-name: ls-progress-fill;
+  animation-timing-function: cubic-bezier(0.45, 0.05, 0.35, 1);
+  animation-fill-mode: forwards;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-welcome-gold) 55%, transparent) 0%,
+    var(--color-welcome-gold) 45%,
+    color-mix(in srgb, var(--color-motif-yellow) 80%, white) 100%
+  );
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-welcome-gold) 60%, transparent);
+}
+
+@keyframes ls-progress-fill {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Light sweep gliding across the filled part */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, white 75%, transparent) 50%,
+    transparent 100%
+  );
+  background-size: 40px 100%;
+  background-repeat: no-repeat;
+  animation: ls-progress-sheen 1.8s ease-in-out infinite;
+}
+
+@keyframes ls-progress-sheen {
+  from {
+    background-position: -40px 0;
+  }
+  to {
+    background-position: calc(100% + 40px) 0;
+  }
+}
+
+/* Glowing head at the leading edge */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-bar::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  transform: translate(50%, -50%);
+  background: color-mix(in srgb, var(--color-motif-soft) 92%, var(--color-welcome-gold));
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--color-welcome-gold) 45%, transparent),
+    0 0 10px 2px color-mix(in srgb, var(--color-welcome-gold) 75%, transparent),
+    0 0 22px 6px color-mix(in srgb, var(--color-motif-yellow) 35%, transparent);
+  animation: ls-progress-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes ls-progress-pulse {
+  50% {
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--color-welcome-gold) 30%, transparent),
+      0 0 14px 3px color-mix(in srgb, var(--color-welcome-gold) 90%, transparent),
+      0 0 28px 8px color-mix(in srgb, var(--color-motif-yellow) 45%, transparent);
+  }
+}
+
+/* Percentage counter under the bar */
+@property --ls-pct {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+
+.ls-progress-pct {
+  display: block;
+  margin-top: 0.55rem;
+  text-align: center;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  padding-left: 0.18em;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: color-mix(in srgb, var(--color-welcome-gold) 78%, white);
+  text-shadow: 0 1px 8px color-mix(in srgb, var(--ls-shadow) 70%, transparent);
+  counter-reset: ls-pct var(--ls-pct);
+  animation-name: ls-progress-count;
+  animation-timing-function: cubic-bezier(0.45, 0.05, 0.35, 1);
+  animation-fill-mode: forwards;
+}
+
+.ls-progress-pct::after {
+  content: counter(ls-pct) "%";
+}
+
+@keyframes ls-progress-count {
+  from {
+    --ls-pct: 0;
+  }
+  to {
+    --ls-pct: 100;
+  }
+}
+
+.loading-screen.is-reduced-motion .loading-screen__std-bar::before,
+.loading-screen.is-reduced-motion .loading-screen__std-bar::after {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-bar::before,
+  .loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-bar::after {
+    animation: none;
+  }
+}
+
+/* ---- Shared photo backdrop (loader + envelope → LoaderPhotoBackdrop) ---- */
+.ls-photo-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--color-welcome-bg);
+}
+
+/* ---- Shared photo marquee behind the loader + envelope (invitation-page.tsx) ---- */
+.ls-shared-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 49;
+  pointer-events: none;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ls-shared-backdrop.is-leaving {
+  opacity: 0;
+}
+
+/* The loader itself is see-through in photos mode: the marquee lives underneath it */
+.loading-screen.loading-screen--invitation:not(.loading-screen--plain) {
+  background: transparent;
+}
+
+/* ---- Home hero, photos display: cover photo beside the wording, in the loader's
+   palette (ivory mat, champagne-gold hairlines) — no sprig or other decoration ---- */
+.home-hero--photos .home-hero-cover::before {
+  border-color: color-mix(in srgb, var(--color-welcome-gold) 60%, transparent);
+}
+
+.home-hero--photos .home-hero-cover__frame {
+  background: var(--color-welcome-navy);
+  border-color: var(--color-motif-soft);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-welcome-gold) 55%, transparent),
+    0 30px 55px -26px color-mix(in srgb, var(--color-welcome-navy) 70%, transparent),
+    0 10px 24px -12px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent);
+}
+
+.home-hero--photos .home-hero-cover__frame::after {
+  background: linear-gradient(180deg, transparent 75%, color-mix(in srgb, var(--color-welcome-navy) 22%, transparent) 100%);
+}
+
+.home-hero--photos .home-hero-cover::after,
+.home-hero--photos .home-hero-cover__vine {
+  display: none;
+}
+
+.home-hero--photos .home-hero-date-day {
+  color: var(--color-motif-soft);
+  text-shadow: 0 2px 16px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent);
+}
+
+.home-hero--photos .home-hero-date-weekday,
+.home-hero--photos .home-hero-date-side,
+.home-hero--photos .home-hero-meta-time {
+  color: color-mix(in srgb, var(--color-welcome-gold) 78%, white);
+}
+
+/* ==========================================================================
+   Opening curtains — photos loader (LoadingScreen.tsx → .ls-curtains)
+   Each side is a row of shaded velvet folds hung from a track, in the site's
+   navy with champagne-gold trim. Inner folds are pulled first and travel
+   furthest, so the fabric bunches toward the wings; the hem trails the top
+   (skew from the top edge) and settles as the folds gather. Then the gathered
+   drapes slide off into the wings and dissolve.
+   ========================================================================== */
+.ls-curtains {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+  animation: ls-curtain-hide 0s linear 3.45s forwards;
+}
+
+.ls-curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  display: flex;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  animation: ls-curtain-exit-left 0.85s cubic-bezier(0.55, 0, 0.7, 0.2) 2.55s forwards;
+}
+
+.ls-curtain--left {
+  left: 0;
+}
+
+.ls-curtain--right {
+  right: 0;
+  flex-direction: row-reverse;
+  animation-name: ls-curtain-exit-right;
+}
+
+.ls-curtain__fold {
+  --tx: calc(var(--i) * -88%);
+  --skew: calc(var(--i) * 0.9deg + 2deg);
+  position: relative;
+  flex: 0 0 12.5%;
+  height: 104%;
+  margin-top: -2%;
+  background:
+    linear-gradient(180deg, rgb(0 0 0 / 42%) 0%, transparent 16%, transparent 78%, rgb(0 0 0 / 50%) 100%),
+    linear-gradient(
+      90deg,
+      #0c1726 0%,
+      #1a2d46 16%,
+      #2c476a 38%,
+      #4a6c92 49%,
+      #2c476a 60%,
+      #1a2d46 84%,
+      #0c1726 100%
+    );
+  box-shadow: -6px 0 14px rgb(0 0 0 / 35%);
+  transform-origin: 0 0;
+  will-change: transform;
+  backface-visibility: hidden;
+  animation: ls-curtain-fold 2.2s cubic-bezier(0.6, 0, 0.22, 1) calc(380ms + var(--inner) * 45ms) forwards;
+}
+
+.ls-curtain--right .ls-curtain__fold {
+  --tx: calc(var(--i) * 88%);
+  --skew: calc(var(--i) * -0.9deg - 2deg);
+  transform-origin: 100% 0;
+  box-shadow: 6px 0 14px rgb(0 0 0 / 35%);
+}
+
+/* Gold bullion fringe along the hem */
+.ls-curtain__fold::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2%;
+  height: clamp(9px, 1.5dvh, 15px);
+  background:
+    linear-gradient(180deg, #f6e2a8, #b8893a) top / 100% 2px no-repeat,
+    repeating-linear-gradient(90deg, rgb(236 202 130 / 95%) 0 1.5px, transparent 1.5px 4px);
+}
+
+/* Gold trim down the meeting edges */
+.ls-curtain__fold:last-child::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #f6e2a8, #b8893a 50%, #f6e2a8);
+  box-shadow: 0 0 10px rgb(243 220 159 / 60%);
+}
+
+.ls-curtain--left .ls-curtain__fold:last-child::before {
+  right: 0;
+}
+
+.ls-curtain--right .ls-curtain__fold:last-child::before {
+  left: 0;
+}
+
+/* Light leaking through the seam just before the curtains part */
+.ls-curtains__seam {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: linear-gradient(180deg, transparent, #fff3cf 25%, #f3dc9f 75%, transparent);
+  box-shadow: 0 0 24px 6px rgb(255 215 160 / 55%);
+  opacity: 0;
+  animation: ls-curtain-seam 1.4s ease-out 0.05s forwards;
+}
+
+/* Phones: lighter fold shadows keep 16 skewing layers smooth */
+@media (max-width: 640px) {
+  .ls-curtain__fold {
+    box-shadow: -3px 0 8px rgb(0 0 0 / 30%);
+  }
+
+  .ls-curtain--right .ls-curtain__fold {
+    box-shadow: 3px 0 8px rgb(0 0 0 / 30%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-curtains {
+    display: none;
+  }
+}
+
+@keyframes ls-curtain-fold {
+  0% {
+    transform: none;
+  }
+  55% {
+    transform: translateX(calc(var(--tx) * 0.62)) skewX(var(--skew)) scaleX(0.82);
+  }
+  100% {
+    transform: translateX(var(--tx)) skewX(0deg) scaleX(0.55);
+  }
+}
+
+@keyframes ls-curtain-exit-left {
+  60% {
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(-32%, 0, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes ls-curtain-exit-right {
+  60% {
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(32%, 0, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes ls-curtain-seam {
+  0% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(40);
+  }
+}
+
+@keyframes ls-curtain-hide {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* ---- Curtains: pastel-blue silk (#C7DDF0) with a pastel vibe ----
+   Soft folds shaded from a deeper powder blue to near-white highlights, a gentle
+   lavender / blush sheen, butter-and-blush tassel fringe, and a pearly trim down
+   the meeting edges. Shadows are soft blue-grey instead of black. */
+.ls-curtain__fold {
+  background:
+    /* top + hem shade */
+    linear-gradient(180deg, rgb(91 127 166 / 22%) 0%, transparent 14%, transparent 80%, rgb(91 127 166 / 26%) 100%),
+    /* faint pastel sheen drifting across the fabric */
+    linear-gradient(160deg, color-mix(in srgb, #DCCFF0 35%, transparent) 0%, transparent 40%, color-mix(in srgb, #F3CED6 30%, transparent) 100%),
+    /* the fold itself */
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, #C7DDF0 70%, #5B7FA6) 0%,
+      color-mix(in srgb, #C7DDF0 86%, #5B7FA6) 16%,
+      #C7DDF0 36%,
+      color-mix(in srgb, #C7DDF0 45%, white) 49%,
+      #C7DDF0 62%,
+      color-mix(in srgb, #C7DDF0 86%, #5B7FA6) 84%,
+      color-mix(in srgb, #C7DDF0 70%, #5B7FA6) 100%
+    );
+  box-shadow: -6px 0 14px rgb(47 74 102 / 16%);
+}
+
+.ls-curtain--right .ls-curtain__fold {
+  box-shadow: 6px 0 14px rgb(47 74 102 / 16%);
+}
+
+/* Fringe: a pearly band with butter / blush / lavender / mint tassels */
+.ls-curtain__fold::after {
+  height: clamp(10px, 1.6dvh, 16px);
+  background:
+    linear-gradient(180deg, #FFFBF0, color-mix(in srgb, #F7E5A9 80%, white)) top / 100% 2px no-repeat,
+    repeating-linear-gradient(
+      90deg,
+      #F7E5A9 0 2px,
+      transparent 2px 4px,
+      #F3CED6 4px 6px,
+      transparent 6px 8px,
+      #DCCFF0 8px 10px,
+      transparent 10px 12px,
+      #D5E3D0 12px 14px,
+      transparent 14px 16px
+    );
+  filter: drop-shadow(0 1px 1px rgb(47 74 102 / 18%));
+}
+
+/* Meeting edges: pearly ribbon trim with a soft blush glow */
+.ls-curtain__fold:last-child::before {
+  width: 3px;
+  background: linear-gradient(180deg, #FFFBF0, #F3CED6 30%, #F7E5A9 55%, #DCCFF0 80%, #FFFBF0);
+  box-shadow: 0 0 10px color-mix(in srgb, #F3CED6 70%, transparent);
+}
+
+/* Light through the seam: soft white with a blush-lavender halo */
+.ls-curtains__seam {
+  background: linear-gradient(180deg, transparent, #FFFFFF 25%, #FFFBF0 75%, transparent);
+  box-shadow:
+    0 0 22px 6px color-mix(in srgb, #F3CED6 60%, transparent),
+    0 0 40px 12px color-mix(in srgb, #DCCFF0 40%, transparent);
+}
+
+@media (max-width: 640px) {
+  .ls-curtain__fold {
+    box-shadow: -3px 0 8px rgb(47 74 102 / 14%);
+  }
+
+  .ls-curtain--right .ls-curtain__fold {
+    box-shadow: 3px 0 8px rgb(47 74 102 / 14%);
+  }
+}
+
+/* ==========================================================================
+   Photos loader — corner florals (LoadingScreen.tsx → .ls-photo-corners)
+   Sit above the photo marquee and under the text; bloom in from their corner
+   as the curtains part (--ls-delay), then sway very gently.
+   ========================================================================== */
+.ls-photo-corners {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ls-photo-corner {
+  position: absolute;
+  display: block;
+  opacity: 0;
+  animation:
+    ls-photo-corner-in 1.4s cubic-bezier(0.22, 1, 0.36, 1) var(--ls-delay, 0ms) forwards,
+    ls-photo-corner-sway 8s ease-in-out calc(var(--ls-delay, 0ms) + 1.4s) infinite alternate;
+}
+
+.ls-photo-corner--tl { left: 0; top: 0; width: min(40vw, 230px); transform-origin: top left; --from: translate(-14%, -14%); }
+.ls-photo-corner--tr { right: 0; top: 0; width: min(40vw, 230px); transform-origin: top right; --from: translate(14%, -14%); }
+.ls-photo-corner--bl { left: 0; bottom: 0; width: min(44vw, 260px); transform-origin: bottom left; --from: translate(-14%, 14%); }
+.ls-photo-corner--br { right: 0; bottom: 0; width: min(44vw, 260px); transform-origin: bottom right; --from: translate(14%, 14%); }
+
+@media (min-width: 768px) {
+  .ls-photo-corner--tl,
+  .ls-photo-corner--tr { width: clamp(220px, 22vw, 320px); }
+  .ls-photo-corner--bl,
+  .ls-photo-corner--br { width: clamp(240px, 24vw, 360px); }
+}
+
+.ls-photo-corner .ls-photo-corner__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  /* site-wide deco tint + a soft navy shadow so the florals sit on the photos */
+  filter: var(--deco-filter, none) drop-shadow(0 6px 14px color-mix(in srgb, var(--color-welcome-navy) 35%, transparent));
+}
+
+@keyframes ls-photo-corner-in {
+  from {
+    opacity: 0;
+    transform: var(--from) scale(0.85);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes ls-photo-corner-sway {
+  from {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(1.5deg) scale(1.02);
+  }
+}
+
+.loading-screen.is-reduced-motion .ls-photo-corner {
+  opacity: 1;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-photo-corner {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* ---- Photos loader: corner florals tucked further into the corners, already in
+   place when the curtains open (no entrance), and the text kept clear of them ---- */
+.ls-photo-corner {
+  opacity: 1;
+  animation: ls-photo-corner-sway 8s ease-in-out var(--ls-delay, 0ms) infinite alternate;
+}
+
+/* Pushed past the screen edges so only the blooms show in each corner */
+.ls-photo-corner--tl { width: min(34vw, 200px); margin: calc(min(34vw, 200px) * -0.16) 0 0 calc(min(34vw, 200px) * -0.2); }
+.ls-photo-corner--tr { width: min(34vw, 200px); margin: calc(min(34vw, 200px) * -0.16) calc(min(34vw, 200px) * -0.2) 0 0; }
+.ls-photo-corner--bl { width: min(38vw, 220px); margin: 0 0 calc(min(38vw, 220px) * -0.16) calc(min(38vw, 220px) * -0.2); }
+.ls-photo-corner--br { width: min(38vw, 220px); margin: 0 calc(min(38vw, 220px) * -0.2) calc(min(38vw, 220px) * -0.16) 0; }
+
+@media (min-width: 768px) {
+  .ls-photo-corner--tl,
+  .ls-photo-corner--tr {
+    width: clamp(200px, 20vw, 300px);
+    margin-top: calc(clamp(200px, 20vw, 300px) * -0.16);
+  }
+  .ls-photo-corner--tl { margin-left: calc(clamp(200px, 20vw, 300px) * -0.2); }
+  .ls-photo-corner--tr { margin-right: calc(clamp(200px, 20vw, 300px) * -0.2); }
+
+  .ls-photo-corner--bl,
+  .ls-photo-corner--br {
+    width: clamp(220px, 22vw, 330px);
+    margin-bottom: calc(clamp(220px, 22vw, 330px) * -0.16);
+  }
+  .ls-photo-corner--bl { margin-left: calc(clamp(220px, 22vw, 330px) * -0.2); }
+  .ls-photo-corner--br { margin-right: calc(clamp(220px, 22vw, 330px) * -0.2); }
+}
+
+/* Text clears the corners: the headline starts below the top florals, the status +
+   progress bar end above the bottom ones */
+.ls-photo-header {
+  padding-top: clamp(4.25rem, 19vw, 6.5rem);
+}
+
+.ls-photo-footer {
+  padding-bottom: max(clamp(4.5rem, 21vw, 6.75rem), calc(1rem + env(safe-area-inset-bottom, 0px)));
+}
+
+@media (min-width: 768px) {
+  .ls-photo-header {
+    padding-top: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  .ls-photo-footer {
+    padding-bottom: clamp(3rem, 7vw, 5.5rem);
+  }
+}
+
+/* Short phones: tighten so everything still fits between the corners */
+@media (max-height: 700px) and (max-width: 767px) {
+  .ls-photo-header {
+    padding-top: clamp(3.5rem, 15vw, 4.75rem);
+  }
+
+  .ls-photo-footer {
+    padding-bottom: clamp(3.5rem, 17vw, 5rem);
+  }
+}
+
+/* ---- Photos loader: bigger corner florals (still tucked into the corners) ---- */
+.ls-photo-corner--tl { width: min(44vw, 260px); margin: calc(min(44vw, 260px) * -0.14) 0 0 calc(min(44vw, 260px) * -0.18); }
+.ls-photo-corner--tr { width: min(44vw, 260px); margin: calc(min(44vw, 260px) * -0.14) calc(min(44vw, 260px) * -0.18) 0 0; }
+.ls-photo-corner--bl { width: min(48vw, 285px); margin: 0 0 calc(min(48vw, 285px) * -0.14) calc(min(48vw, 285px) * -0.18); }
+.ls-photo-corner--br { width: min(48vw, 285px); margin: 0 calc(min(48vw, 285px) * -0.18) calc(min(48vw, 285px) * -0.14) 0; }
+
+@media (min-width: 768px) {
+  .ls-photo-corner--tl,
+  .ls-photo-corner--tr {
+    width: clamp(260px, 26vw, 380px);
+    margin-top: calc(clamp(260px, 26vw, 380px) * -0.14);
+  }
+  .ls-photo-corner--tl { margin-left: calc(clamp(260px, 26vw, 380px) * -0.18); }
+  .ls-photo-corner--tr { margin-right: calc(clamp(260px, 26vw, 380px) * -0.18); }
+
+  .ls-photo-corner--bl,
+  .ls-photo-corner--br {
+    width: clamp(280px, 28vw, 420px);
+    margin-bottom: calc(clamp(280px, 28vw, 420px) * -0.14);
+  }
+  .ls-photo-corner--bl { margin-left: calc(clamp(280px, 28vw, 420px) * -0.18); }
+  .ls-photo-corner--br { margin-right: calc(clamp(280px, 28vw, 420px) * -0.18); }
+}
+
+/* Text still clears the larger corners */
+.ls-photo-header {
+  padding-top: clamp(5rem, 24vw, 7.5rem);
+}
+
+.ls-photo-footer {
+  padding-bottom: max(clamp(5.25rem, 26vw, 8rem), calc(1rem + env(safe-area-inset-bottom, 0px)));
+}
+
+@media (min-width: 768px) {
+  .ls-photo-header {
+    padding-top: clamp(4rem, 9vw, 7rem);
+  }
+
+  .ls-photo-footer {
+    padding-bottom: clamp(3.5rem, 8vw, 6.5rem);
+  }
+}
+
+@media (max-height: 700px) and (max-width: 767px) {
+  .ls-photo-header {
+    padding-top: clamp(4rem, 19vw, 5.5rem);
+  }
+
+  .ls-photo-footer {
+    padding-bottom: clamp(4.25rem, 21vw, 6rem);
+  }
+}
+
+/* ==========================================================================
+   Photos loader — pastel particles (LoadingScreen.tsx → PHOTO_PARTICLES)
+   Light motif pastels (#C7DDF0 blue, #D5E3D0 mint, #F7E5A9 butter, #F3CED6 blush,
+   #DCCFF0 lavender) rising over the photos as glowing dots, soft petals and
+   four-point sparkles. Above the photos, under the corner florals and text.
+   ========================================================================== */
+.ls-photo-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ls-photo-particle {
+  position: absolute;
+  left: var(--x);
+  bottom: -20px;
+  width: var(--size);
+  height: var(--size);
+  opacity: 0;
+  animation: ls-photo-particle-rise var(--dur) linear var(--delay) infinite;
+  will-change: transform, opacity;
+}
+
+.ls-photo-particle--dot {
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #FFFFFF 0%, var(--c) 55%, color-mix(in srgb, var(--c) 70%, transparent) 100%);
+  box-shadow:
+    0 0 6px 1px color-mix(in srgb, var(--c) 85%, transparent),
+    0 0 14px 3px color-mix(in srgb, var(--c) 45%, transparent);
+}
+
+.ls-photo-particle--petal {
+  width: calc(var(--size) * 1.7);
+  border-radius: 80% 0 80% 0;
+  background: linear-gradient(135deg, #FFFFFF 0%, var(--c) 45%, color-mix(in srgb, var(--c) 80%, #5B7FA6) 100%);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--c) 60%, transparent);
+}
+
+.ls-photo-particle--sparkle {
+  width: calc(var(--size) * 1.6);
+  height: calc(var(--size) * 1.6);
+  background: radial-gradient(circle, #FFFFFF 0%, var(--c) 40%, transparent 70%);
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+  filter: drop-shadow(0 0 4px var(--c));
+}
+
+@keyframes ls-photo-particle-rise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.8);
+  }
+  12% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate3d(calc(var(--drift) * -0.6), -52vh, 0) rotate(calc(var(--spin) * 0.5)) scale(1);
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift), -108vh, 0) rotate(var(--spin)) scale(0.9);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-photo-particles {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Pastel watercolor backdrop — replaces the navy shading over the photo
+   marquee (loader, envelope and home hero all share .ls-photo-backdrop).
+   Warm cream paper, watercolor blooms of pastel blue, lavender, blush, butter
+   and sage pooling at the edges, gold splatter, and a fine gold arch with
+   sweeping lines. The photos still drift faintly underneath.
+   ========================================================================== */
+.ls-photo-backdrop.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__backdrop-veil {
+  background:
+    /* cream paper glow through the middle */
+    radial-gradient(70% 55% at 50% 48%, rgb(255 251 240 / 92%) 0%, rgb(255 249 235 / 80%) 45%, rgb(255 248 232 / 55%) 75%, rgb(255 248 232 / 40%) 100%),
+    linear-gradient(180deg, rgb(255 250 238 / 55%), rgb(255 250 238 / 45%));
+}
+
+.ls-photo-backdrop.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__readability-scrim {
+  opacity: 1;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cg fill='%23C9A24E'%3E%3Ccircle cx='81.8' cy='4.8' r='0.15' fill-opacity='0.63'/%3E%3Ccircle cx='71.1' cy='43.4' r='0.15' fill-opacity='0.57'/%3E%3Ccircle cx='24.8' cy='12.4' r='0.22' fill-opacity='0.77'/%3E%3Ccircle cx='17.3' cy='39.7' r='0.22' fill-opacity='0.47'/%3E%3Ccircle cx='29.0' cy='14.4' r='0.15' fill-opacity='0.74'/%3E%3Ccircle cx='73.1' cy='57.1' r='0.22' fill-opacity='0.64'/%3E%3Ccircle cx='16.9' cy='61.9' r='0.6' fill-opacity='0.79'/%3E%3Ccircle cx='46.6' cy='20.3' r='0.35' fill-opacity='0.60'/%3E%3Ccircle cx='69.9' cy='24.4' r='0.28' fill-opacity='0.71'/%3E%3Ccircle cx='72.9' cy='28.8' r='0.15' fill-opacity='0.51'/%3E%3Ccircle cx='15.2' cy='10.8' r='0.12' fill-opacity='0.93'/%3E%3Ccircle cx='34.0' cy='7.7' r='0.6' fill-opacity='0.74'/%3E%3Ccircle cx='28.3' cy='47.4' r='0.15' fill-opacity='0.48'/%3E%3Ccircle cx='28.5' cy='86.5' r='0.35' fill-opacity='0.46'/%3E%3Ccircle cx='88.3' cy='49.4' r='0.22' fill-opacity='0.83'/%3E%3Ccircle cx='81.9' cy='91.7' r='0.6' fill-opacity='0.49'/%3E%3Ccircle cx='88.3' cy='18.0' r='0.28' fill-opacity='0.80'/%3E%3Ccircle cx='68.3' cy='38.0' r='0.22' fill-opacity='0.53'/%3E%3Ccircle cx='89.8' cy='1.2' r='0.18' fill-opacity='0.58'/%3E%3Ccircle cx='53.5' cy='91.4' r='0.35' fill-opacity='0.93'/%3E%3Ccircle cx='13.7' cy='87.1' r='0.45' fill-opacity='0.65'/%3E%3Ccircle cx='63.4' cy='79.4' r='0.15' fill-opacity='0.94'/%3E%3Ccircle cx='10.2' cy='5.3' r='0.12' fill-opacity='0.73'/%3E%3Ccircle cx='61.4' cy='1.5' r='0.22' fill-opacity='0.76'/%3E%3Ccircle cx='95.5' cy='13.3' r='0.6' fill-opacity='0.51'/%3E%3Ccircle cx='99.3' cy='46.6' r='0.6' fill-opacity='0.61'/%3E%3Ccircle cx='74.0' cy='10.5' r='0.18' fill-opacity='0.71'/%3E%3Ccircle cx='14.7' cy='11.9' r='0.12' fill-opacity='0.83'/%3E%3Ccircle cx='20.9' cy='26.1' r='0.35' fill-opacity='0.90'/%3E%3Ccircle cx='86.0' cy='77.9' r='0.35' fill-opacity='0.77'/%3E%3Ccircle cx='94.2' cy='81.8' r='0.22' fill-opacity='0.55'/%3E%3Ccircle cx='29.7' cy='79.0' r='0.6' fill-opacity='0.58'/%3E%3Ccircle cx='44.7' cy='20.6' r='0.35' fill-opacity='0.93'/%3E%3Ccircle cx='73.1' cy='47.0' r='0.35' fill-opacity='0.55'/%3E%3Ccircle cx='14.4' cy='65.3' r='0.15' fill-opacity='0.87'/%3E%3Ccircle cx='78.2' cy='94.5' r='0.6' fill-opacity='0.89'/%3E%3Ccircle cx='8.7' cy='20.8' r='0.45' fill-opacity='0.68'/%3E%3Ccircle cx='21.7' cy='17.0' r='0.18' fill-opacity='0.46'/%3E%3Ccircle cx='80.7' cy='81.2' r='0.6' fill-opacity='0.78'/%3E%3Ccircle cx='70.6' cy='79.9' r='0.15' fill-opacity='0.71'/%3E%3Ccircle cx='43.4' cy='87.2' r='0.22' fill-opacity='0.46'/%3E%3Ccircle cx='92.9' cy='32.6' r='0.45' fill-opacity='0.87'/%3E%3Ccircle cx='89.8' cy='14.6' r='0.45' fill-opacity='0.86'/%3E%3Ccircle cx='13.1' cy='15.2' r='0.12' fill-opacity='0.89'/%3E%3Ccircle cx='60.9' cy='77.6' r='0.18' fill-opacity='0.54'/%3E%3Ccircle cx='16.7' cy='32.6' r='0.6' fill-opacity='0.84'/%3E%3Ccircle cx='7.5' cy='27.7' r='0.15' fill-opacity='0.70'/%3E%3Ccircle cx='13.3' cy='61.3' r='0.22' fill-opacity='0.80'/%3E%3Ccircle cx='50.8' cy='83.4' r='0.28' fill-opacity='0.91'/%3E%3Ccircle cx='20.3' cy='44.8' r='0.45' fill-opacity='0.51'/%3E%3Ccircle cx='20.1' cy='42.8' r='0.22' fill-opacity='0.78'/%3E%3Ccircle cx='89.7' cy='15.4' r='0.35' fill-opacity='0.52'/%3E%3Ccircle cx='96.8' cy='22.0' r='0.15' fill-opacity='0.65'/%3E%3Ccircle cx='74.8' cy='43.2' r='0.45' fill-opacity='0.62'/%3E%3Ccircle cx='9.2' cy='8.1' r='0.35' fill-opacity='0.73'/%3E%3Ccircle cx='11.5' cy='51.7' r='0.28' fill-opacity='0.71'/%3E%3Ccircle cx='99.2' cy='10.5' r='0.28' fill-opacity='0.59'/%3E%3Ccircle cx='18.2' cy='75.6' r='0.45' fill-opacity='0.87'/%3E%3Ccircle cx='40.6' cy='11.8' r='0.6' fill-opacity='0.80'/%3E%3Ccircle cx='24.0' cy='18.3' r='0.15' fill-opacity='0.58'/%3E%3Ccircle cx='24.0' cy='8.4' r='0.22' fill-opacity='0.48'/%3E%3Ccircle cx='45.4' cy='33.9' r='0.45' fill-opacity='0.91'/%3E%3Ccircle cx='71.3' cy='71.0' r='0.15' fill-opacity='0.93'/%3E%3Ccircle cx='76.1' cy='31.2' r='0.28' fill-opacity='0.72'/%3E%3Ccircle cx='50.0' cy='81.9' r='0.35' fill-opacity='0.85'/%3E%3Ccircle cx='3.7' cy='1.8' r='0.22' fill-opacity='0.71'/%3E%3Ccircle cx='10.6' cy='96.0' r='0.45' fill-opacity='0.78'/%3E%3Ccircle cx='97.0' cy='84.8' r='0.22' fill-opacity='0.94'/%3E%3Ccircle cx='82.1' cy='34.8' r='0.12' fill-opacity='0.87'/%3E%3Ccircle cx='43.1' cy='1.2' r='0.45' fill-opacity='0.89'/%3E%3Ccircle cx='59.9' cy='15.2' r='0.12' fill-opacity='0.68'/%3E%3Ccircle cx='0.4' cy='86.0' r='0.35' fill-opacity='0.94'/%3E%3Ccircle cx='71.0' cy='88.2' r='0.22' fill-opacity='0.63'/%3E%3Ccircle cx='8.4' cy='84.1' r='0.22' fill-opacity='0.57'/%3E%3Ccircle cx='9.1' cy='81.7' r='0.18' fill-opacity='0.65'/%3E%3Ccircle cx='9.0' cy='63.0' r='0.15' fill-opacity='0.74'/%3E%3Ccircle cx='89.7' cy='71.6' r='0.45' fill-opacity='0.83'/%3E%3Ccircle cx='14.9' cy='93.9' r='0.18' fill-opacity='0.47'/%3E%3Ccircle cx='89.2' cy='62.7' r='0.18' fill-opacity='0.90'/%3E%3Ccircle cx='56.8' cy='81.3' r='0.12' fill-opacity='0.86'/%3E%3Ccircle cx='72.6' cy='4.2' r='0.35' fill-opacity='0.93'/%3E%3Ccircle cx='55.9' cy='91.8' r='0.22' fill-opacity='0.69'/%3E%3Ccircle cx='22.4' cy='50.3' r='0.15' fill-opacity='0.78'/%3E%3Ccircle cx='25.2' cy='79.6' r='0.28' fill-opacity='0.57'/%3E%3Ccircle cx='23.1' cy='65.0' r='0.6' fill-opacity='0.70'/%3E%3Ccircle cx='91.0' cy='84.3' r='0.12' fill-opacity='0.76'/%3E%3Ccircle cx='18.0' cy='33.2' r='0.28' fill-opacity='0.76'/%3E%3Ccircle cx='6.1' cy='83.9' r='0.15' fill-opacity='0.80'/%3E%3Ccircle cx='70.9' cy='6.3' r='0.6' fill-opacity='0.68'/%3E%3Ccircle cx='79.4' cy='8.6' r='0.6' fill-opacity='0.46'/%3E%3Ccircle cx='99.4' cy='86.5' r='0.22' fill-opacity='0.49'/%3E%3Ccircle cx='95.3' cy='2.9' r='0.28' fill-opacity='0.89'/%3E%3Ccircle cx='84.9' cy='87.6' r='0.45' fill-opacity='0.46'/%3E%3Ccircle cx='68.2' cy='86.9' r='0.18' fill-opacity='0.66'/%3E%3Ccircle cx='25.2' cy='0.2' r='0.35' fill-opacity='0.87'/%3E%3Ccircle cx='91.4' cy='90.2' r='0.28' fill-opacity='0.58'/%3E%3Ccircle cx='99.9' cy='91.0' r='0.35' fill-opacity='0.91'/%3E%3Ccircle cx='85.4' cy='28.1' r='0.12' fill-opacity='0.87'/%3E%3Ccircle cx='77.5' cy='26.6' r='0.35' fill-opacity='0.54'/%3E%3Ccircle cx='88.4' cy='95.9' r='0.45' fill-opacity='0.91'/%3E%3Ccircle cx='54.9' cy='72.0' r='0.12' fill-opacity='0.92'/%3E%3Ccircle cx='89.3' cy='28.6' r='0.12' fill-opacity='0.91'/%3E%3Ccircle cx='84.2' cy='34.4' r='0.28' fill-opacity='0.58'/%3E%3Ccircle cx='40.6' cy='5.3' r='0.6' fill-opacity='0.73'/%3E%3Ccircle cx='89.3' cy='7.5' r='0.6' fill-opacity='0.73'/%3E%3Ccircle cx='99.6' cy='9.9' r='0.18' fill-opacity='0.72'/%3E%3Ccircle cx='80.3' cy='9.1' r='0.22' fill-opacity='0.63'/%3E%3Ccircle cx='20.2' cy='2.0' r='0.45' fill-opacity='0.64'/%3E%3Ccircle cx='81.3' cy='33.8' r='0.12' fill-opacity='0.70'/%3E%3Ccircle cx='12.6' cy='11.1' r='0.22' fill-opacity='0.50'/%3E%3Ccircle cx='38.5' cy='64.6' r='0.45' fill-opacity='0.93'/%3E%3Ccircle cx='87.3' cy='2.2' r='0.12' fill-opacity='0.66'/%3E%3Ccircle cx='80.4' cy='96.8' r='0.6' fill-opacity='0.45'/%3E%3Ccircle cx='97.2' cy='83.5' r='0.15' fill-opacity='0.56'/%3E%3Ccircle cx='28.2' cy='72.2' r='0.6' fill-opacity='0.49'/%3E%3Ccircle cx='0.1' cy='12.6' r='0.12' fill-opacity='0.77'/%3E%3Ccircle cx='88.8' cy='52.8' r='0.45' fill-opacity='0.80'/%3E%3Ccircle cx='9.0' cy='94.4' r='0.22' fill-opacity='0.64'/%3E%3Ccircle cx='0.3' cy='30.2' r='0.6' fill-opacity='0.59'/%3E%3Ccircle cx='84.3' cy='23.5' r='0.22' fill-opacity='0.46'/%3E%3Ccircle cx='5.5' cy='4.3' r='0.45' fill-opacity='0.49'/%3E%3Ccircle cx='92.5' cy='83.0' r='0.12' fill-opacity='0.80'/%3E%3Ccircle cx='68.3' cy='4.4' r='0.28' fill-opacity='0.82'/%3E%3Ccircle cx='84.9' cy='20.0' r='0.22' fill-opacity='0.57'/%3E%3Ccircle cx='10.9' cy='13.7' r='0.18' fill-opacity='0.90'/%3E%3Ccircle cx='28.5' cy='14.6' r='0.45' fill-opacity='0.48'/%3E%3Ccircle cx='82.5' cy='71.0' r='0.18' fill-opacity='0.65'/%3E%3Ccircle cx='88.4' cy='73.3' r='0.15' fill-opacity='0.92'/%3E%3Ccircle cx='89.6' cy='52.5' r='0.6' fill-opacity='0.47'/%3E%3Ccircle cx='83.9' cy='99.7' r='0.6' fill-opacity='0.53'/%3E%3Ccircle cx='8.1' cy='9.2' r='0.15' fill-opacity='0.73'/%3E%3Ccircle cx='38.0' cy='76.9' r='0.28' fill-opacity='0.86'/%3E%3Ccircle cx='21.2' cy='19.6' r='0.6' fill-opacity='0.55'/%3E%3Ccircle cx='3.0' cy='87.0' r='0.45' fill-opacity='0.47'/%3E%3Ccircle cx='24.1' cy='6.2' r='0.22' fill-opacity='0.82'/%3E%3Ccircle cx='33.9' cy='27.2' r='0.12' fill-opacity='0.58'/%3E%3Ccircle cx='92.4' cy='6.5' r='0.15' fill-opacity='0.46'/%3E%3Ccircle cx='71.6' cy='88.2' r='0.45' fill-opacity='0.84'/%3E%3Ccircle cx='81.5' cy='13.3' r='0.6' fill-opacity='0.54'/%3E%3Ccircle cx='73.8' cy='82.3' r='0.18' fill-opacity='0.75'/%3E%3Ccircle cx='46.1' cy='17.2' r='0.15' fill-opacity='0.71'/%3E%3Ccircle cx='77.4' cy='6.5' r='0.12' fill-opacity='0.69'/%3E%3Ccircle cx='99.4' cy='88.3' r='0.15' fill-opacity='0.58'/%3E%3Ccircle cx='12.6' cy='98.8' r='0.6' fill-opacity='0.54'/%3E%3Ccircle cx='62.0' cy='92.8' r='0.15' fill-opacity='0.84'/%3E%3Ccircle cx='56.7' cy='8.2' r='0.28' fill-opacity='0.55'/%3E%3Ccircle cx='77.1' cy='28.1' r='0.22' fill-opacity='0.61'/%3E%3Ccircle cx='85.2' cy='23.1' r='0.15' fill-opacity='0.78'/%3E%3Ccircle cx='10.2' cy='47.5' r='0.22' fill-opacity='0.87'/%3E%3Ccircle cx='4.0' cy='29.4' r='0.15' fill-opacity='0.48'/%3E%3Ccircle cx='97.9' cy='37.2' r='0.18' fill-opacity='0.67'/%3E%3Ccircle cx='3.2' cy='59.6' r='0.35' fill-opacity='0.56'/%3E%3Ccircle cx='71.3' cy='100.0' r='0.12' fill-opacity='0.75'/%3E%3Ccircle cx='94.4' cy='81.9' r='0.45' fill-opacity='0.79'/%3E%3Ccircle cx='7.8' cy='0.7' r='0.6' fill-opacity='0.72'/%3E%3Ccircle cx='23.9' cy='66.4' r='0.18' fill-opacity='0.77'/%3E%3Ccircle cx='81.9' cy='27.1' r='0.28' fill-opacity='0.78'/%3E%3Ccircle cx='9.4' cy='56.7' r='0.35' fill-opacity='0.66'/%3E%3Ccircle cx='64.4' cy='8.6' r='0.45' fill-opacity='0.55'/%3E%3Ccircle cx='82.7' cy='82.0' r='0.45' fill-opacity='0.74'/%3E%3Ccircle cx='73.9' cy='5.2' r='0.18' fill-opacity='0.77'/%3E%3Ccircle cx='8.9' cy='62.2' r='0.35' fill-opacity='0.82'/%3E%3Ccircle cx='28.3' cy='11.5' r='0.15' fill-opacity='0.50'/%3E%3Ccircle cx='79.0' cy='83.7' r='0.12' fill-opacity='0.94'/%3E%3Ccircle cx='18.2' cy='63.6' r='0.15' fill-opacity='0.90'/%3E%3Ccircle cx='89.2' cy='85.7' r='0.45' fill-opacity='0.76'/%3E%3Ccircle cx='18.3' cy='82.8' r='0.45' fill-opacity='0.92'/%3E%3Ccircle cx='12.3' cy='5.4' r='0.22' fill-opacity='0.47'/%3E%3Ccircle cx='20.0' cy='32.4' r='0.45' fill-opacity='0.75'/%3E%3Ccircle cx='64.9' cy='6.8' r='0.22' fill-opacity='0.66'/%3E%3C/g%3E%3C/svg%3E") center / 100% 100% no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.45  0 0 0 0 0.3  0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23g%29'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.02' numOctaves='4' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 0.98  0 0 0 0 0.93  0 0 0 -0.9 0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23p%29'/%3E%3C/svg%3E") 0 0 / 300px 300px,
+    /* watercolor blooms */
+    radial-gradient(34% 22% at 12% 10%, color-mix(in srgb, #8FB3DC 70%, transparent) 0%, color-mix(in srgb, #C7DDF0 55%, transparent) 45%, transparent 75%),
+    radial-gradient(26% 18% at 30% 4%, color-mix(in srgb, #DCCFF0 70%, transparent) 0%, transparent 72%),
+    radial-gradient(30% 20% at 88% 8%, color-mix(in srgb, #A9B9A1 55%, transparent) 0%, color-mix(in srgb, #D5E3D0 45%, transparent) 50%, transparent 76%),
+    radial-gradient(32% 22% at 96% 32%, color-mix(in srgb, #B8A3E6 60%, transparent) 0%, color-mix(in srgb, #DCCFF0 50%, transparent) 45%, transparent 75%),
+    radial-gradient(30% 20% at 4% 42%, color-mix(in srgb, #F3CED6 75%, transparent) 0%, transparent 72%),
+    radial-gradient(26% 18% at 0% 64%, color-mix(in srgb, #F7E5A9 80%, transparent) 0%, transparent 72%),
+    radial-gradient(28% 18% at 92% 56%, color-mix(in srgb, #F3CED6 70%, transparent) 0%, transparent 72%),
+    radial-gradient(30% 20% at 98% 80%, color-mix(in srgb, #A9B9A1 55%, transparent) 0%, color-mix(in srgb, #C7DDF0 45%, transparent) 50%, transparent 76%),
+    radial-gradient(34% 20% at 14% 92%, color-mix(in srgb, #F3A9B9 55%, transparent) 0%, color-mix(in srgb, #F3CED6 50%, transparent) 45%, transparent 75%),
+    radial-gradient(30% 18% at 40% 98%, color-mix(in srgb, #C9B3EC 60%, transparent) 0%, transparent 72%),
+    radial-gradient(30% 18% at 66% 90%, color-mix(in srgb, #9FBFE2 60%, transparent) 0%, color-mix(in srgb, #C7DDF0 45%, transparent) 50%, transparent 76%),
+    radial-gradient(26% 16% at 82% 100%, color-mix(in srgb, #F7E5A9 80%, transparent) 0%, transparent 72%),
+    /* warm cream base */
+    linear-gradient(180deg, rgb(253 247 230 / 60%), rgb(252 244 222 / 55%));
+}
+
+@media (min-width: 768px) {
+  .ls-photo-backdrop.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__readability-scrim {
+    opacity: 1;
+  }
+}
+
+/* Photos sit softly in the paper */
+.ls-photo-backdrop .loading-screen__slide-photo {
+  filter: saturate(0.85) brightness(1.05) contrast(0.95);
+}
+
+/* ---- Loader text on the light watercolor: navy ink, deeper gold accents,
+   cream halos instead of navy shadows ---- */
+.loading-screen.loading-screen--invitation:not(.loading-screen--plain) {
+  --ls-type-light: var(--color-welcome-navy);
+  --ls-shadow: #FFFBF0;
+  --ls-name-ink: var(--color-welcome-navy);
+  --ls-name-accent: #B08A3E;
+  --ls-name-shadow:
+    0 1px 0 rgb(255 255 255 / 80%),
+    0 0 18px rgb(255 251 240 / 90%);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-kicker,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-status {
+  color: var(--color-welcome-heading);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-headline {
+  color: var(--color-welcome-navy);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%), 0 0 22px rgb(255 251 240 / 95%);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-rule {
+  background: linear-gradient(90deg, transparent, #C9A24E, transparent);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-rule::after {
+  background: #C9A24E;
+}
+
+/* Date boxes keep light type on their photos */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box {
+  --ls-shadow: var(--color-welcome-navy);
+  --ls-type-light: var(--color-motif-soft);
+  --ls-name-ink: var(--color-motif-soft);
+  --ls-name-accent: color-mix(in srgb, var(--color-welcome-gold) 78%, white);
+}
+
+/* Progress bar on paper */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-track {
+  background: color-mix(in srgb, var(--color-welcome-navy) 10%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #C9A24E 35%, transparent),
+    0 1px 4px rgb(47 74 102 / 10%);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-progress-pct {
+  color: #B08A3E;
+  text-shadow: 0 0 8px rgb(255 251 240 / 90%);
+}
+
+/* Corner florals: softer shadow on light paper */
+.ls-photo-corner .ls-photo-corner__img {
+  filter: var(--deco-filter, none) drop-shadow(0 4px 10px rgb(47 74 102 / 16%));
+}
+
+/* ==========================================================================
+   Leaf particles (LoadingScreen.tsx → PHOTO_PARTICLES): slender leaves, round
+   eucalyptus leaves, petals and gold flecks in the motif pastels, tumbling down
+   with a gentle 3D flutter. Replaces the earlier rising dots.
+   ========================================================================== */
+.ls-photo-particle {
+  top: -40px;
+  bottom: auto;
+  width: var(--size);
+  height: var(--size);
+  box-shadow: none;
+  border-radius: 0;
+  clip-path: none;
+  filter: drop-shadow(0 2px 3px rgb(47 74 102 / 18%));
+  animation: ls-leaf-fall var(--dur) linear var(--delay) infinite;
+}
+
+.ls-photo-particle--leaf {
+  width: calc(var(--size) * 0.55);
+  height: var(--size);
+  background:
+    linear-gradient(90deg, transparent 47%, rgb(255 255 255 / 55%) 50%, transparent 53%),
+    linear-gradient(160deg, color-mix(in srgb, var(--c) 55%, white) 0%, var(--c) 45%, color-mix(in srgb, var(--c) 80%, #5B6B55) 100%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 40'%3E%3Cpath d='M10 0 C 19 9%2C 19 26%2C 10 40 C 1 26%2C 1 9%2C 10 0 Z' fill='black'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 40'%3E%3Cpath d='M10 0 C 19 9%2C 19 26%2C 10 40 C 1 26%2C 1 9%2C 10 0 Z' fill='black'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.ls-photo-particle--round {
+  width: calc(var(--size) * 0.85);
+  height: calc(var(--size) * 0.85);
+  background:
+    linear-gradient(90deg, transparent 47%, rgb(255 255 255 / 50%) 50%, transparent 53%),
+    radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 45%, white) 0%, var(--c) 55%, color-mix(in srgb, var(--c) 82%, #5B6B55) 100%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath d='M15 2 C 26 2%2C 29 12%2C 27 18 C 24 26%2C 15 29%2C 15 29 C 15 29%2C 6 26%2C 3 18 C 1 12%2C 4 2%2C 15 2 Z' fill='black'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath d='M15 2 C 26 2%2C 29 12%2C 27 18 C 24 26%2C 15 29%2C 15 29 C 15 29%2C 6 26%2C 3 18 C 1 12%2C 4 2%2C 15 2 Z' fill='black'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.ls-photo-particle--petal {
+  width: calc(var(--size) * 0.9);
+  height: calc(var(--size) * 0.7);
+  border-radius: 80% 10% 80% 10%;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--c) 40%, white) 0%, var(--c) 55%, color-mix(in srgb, var(--c) 85%, #8A6F86) 100%);
+}
+
+.ls-photo-particle--fleck {
+  width: calc(var(--size) * 0.35);
+  height: calc(var(--size) * 0.35);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #FFF3CC 0%, var(--c) 55%, #A9802F 100%);
+  filter: drop-shadow(0 0 4px rgb(217 182 106 / 70%));
+}
+
+@keyframes ls-leaf-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+  }
+  10% {
+    opacity: 0.95;
+  }
+  25% {
+    transform: translate3d(calc(var(--drift) * 0.6), 26vh, 0) rotateZ(calc(var(--spin) * 0.25)) rotateX(55deg) rotateY(20deg);
+  }
+  50% {
+    transform: translate3d(calc(var(--drift) * -0.4), 54vh, 0) rotateZ(calc(var(--spin) * 0.5)) rotateX(0deg) rotateY(60deg);
+  }
+  75% {
+    transform: translate3d(calc(var(--drift) * 0.8), 80vh, 0) rotateZ(calc(var(--spin) * 0.75)) rotateX(-50deg) rotateY(20deg);
+  }
+  90% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift), 108vh, 0) rotateZ(var(--spin)) rotateX(0deg) rotateY(0deg);
+  }
+}
+
+/* ---- Envelope screen over the watercolor: navy text, deeper gold ---- */
+.env-invite-screen--over-photos .env-invite-hint,
+.env-invite-screen--over-photos .env-invite-reveal-copy h2,
+.env-invite-screen--over-photos .env-invite-reveal-copy p {
+  color: var(--color-welcome-navy);
+  -webkit-text-fill-color: var(--color-welcome-navy);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%), 0 0 14px rgb(255 251 240 / 95%);
+}
+
+.env-invite-screen--over-photos .env-invite-days-to-go {
+  color: #B08A3E;
+  -webkit-text-fill-color: #B08A3E;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%), 0 0 14px rgb(255 251 240 / 95%);
+}
+
+/* ---- Home hero over the watercolor: navy + gold on cream ---- */
+.home-hero--photos .home-hero-title-glow {
+  background: radial-gradient(ellipse at center, rgb(255 251 240 / 75%) 0%, rgb(255 251 240 / 30%) 46%, transparent 72%);
+}
+
+.home-hero--photos .home-hero-title-main,
+.home-hero--photos .home-hero-date-day {
+  color: var(--color-welcome-navy);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%), 0 0 22px rgb(255 251 240 / 90%);
+}
+
+.home-hero--photos .home-hero-title-script {
+  color: #B08A3E;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%), 0 0 18px rgb(255 251 240 / 90%);
+}
+
+.home-hero--photos .home-hero-eyebrow,
+.home-hero--photos .home-hero-date,
+.home-hero--photos .home-hero-meta {
+  color: var(--color-welcome-navy);
+  text-shadow: 0 0 12px rgb(255 251 240 / 90%);
+}
+
+.home-hero--photos .home-hero-date-weekday,
+.home-hero--photos .home-hero-date-side,
+.home-hero--photos .home-hero-meta-time {
+  color: #B08A3E;
+}
+
+/* ---- Watercolor backdrop, lighter: the marquee photos show clearly through it.
+   (Gold arch + sweeping lines removed; the paper wash and blooms are thinner, with
+   only a soft cream glow behind the middle so the text stays readable.) ---- */
+.ls-photo-backdrop.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__backdrop-veil {
+  background: radial-gradient(60% 46% at 50% 48%, rgb(255 251 240 / 45%) 0%, rgb(255 250 238 / 22%) 55%, transparent 85%);
+}
+
+.ls-photo-backdrop.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__readability-scrim {
+  opacity: 0.6;
+}
+
+@media (min-width: 768px) {
+  .ls-photo-backdrop.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__readability-scrim {
+    opacity: 0.6;
+  }
+}
+
+/* Photos at natural colour again */
+.ls-photo-backdrop .loading-screen__slide-photo {
+  filter: saturate(0.95) brightness(1.02);
+}
+
+/* Stronger cream halos so navy type reads over the photos */
+.loading-screen.loading-screen--invitation:not(.loading-screen--plain) {
+  --ls-name-shadow:
+    0 1px 0 rgb(255 255 255 / 90%),
+    0 0 10px rgb(255 251 240 / 95%),
+    0 0 26px rgb(255 251 240 / 85%);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-headline,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-kicker,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-eyebrow,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-copy,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-status,
+.env-invite-screen--over-photos .env-invite-hint,
+.env-invite-screen--over-photos .env-invite-days-to-go,
+.env-invite-screen--over-photos .env-invite-reveal-copy h2,
+.home-hero--photos .home-hero-title-main,
+.home-hero--photos .home-hero-title-script,
+.home-hero--photos .home-hero-eyebrow,
+.home-hero--photos .home-hero-date,
+.home-hero--photos .home-hero-meta {
+  text-shadow:
+    0 1px 0 rgb(255 255 255 / 90%),
+    0 0 8px rgb(255 251 240 / 95%),
+    0 0 22px rgb(255 251 240 / 85%);
+}
+
+/* ==========================================================================
+   Photos loader — readable text, no colour patches, pastel date boxes
+   ========================================================================== */
+
+/* Background: no watercolor patches, splatter or texture — the marquee photos show
+   in full. Only a soft cream fade at the top (headline) and bottom (status + bar)
+   and a light glow behind the names, so the navy type stays readable. */
+.ls-photo-backdrop.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__readability-scrim {
+  opacity: 1;
+  background: linear-gradient(
+    180deg,
+    rgb(255 251 240 / 88%) 0%,
+    rgb(255 251 240 / 62%) 16%,
+    rgb(255 251 240 / 18%) 32%,
+    transparent 44%,
+    transparent 58%,
+    rgb(255 251 240 / 22%) 70%,
+    rgb(255 251 240 / 70%) 84%,
+    rgb(255 251 240 / 92%) 100%
+  );
+}
+
+@media (min-width: 768px) {
+  .ls-photo-backdrop.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__readability-scrim {
+    opacity: 1;
+  }
+}
+
+.ls-photo-backdrop.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__backdrop-veil {
+  background: radial-gradient(58% 22% at 50% 36%, rgb(255 251 240 / 62%) 0%, rgb(255 251 240 / 28%) 55%, transparent 85%);
+}
+
+/* Names: cream glow behind the lockup */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-names-slot::before {
+  width: min(100%, 28rem);
+  height: min(100%, 15rem);
+  background: radial-gradient(ellipse 62% 56% at 50% 50%, rgb(255 251 240 / 80%) 0%, rgb(255 251 240 / 45%) 50%, transparent 78%);
+  filter: blur(8px);
+}
+
+/* Small type: heavier weight + darker ink so it reads on photos */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-kicker,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-eyebrow,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-status {
+  color: var(--color-welcome-navy);
+  font-weight: 700;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-eyebrow {
+  color: #9A7632;
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-copy {
+  color: var(--color-welcome-navy);
+  font-weight: 600;
+}
+
+/* ---- Date boxes: pastel motif fade instead of navy, navy type ---- */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box {
+  --ls-type-light: var(--color-welcome-navy);
+  --ls-name-ink: var(--color-welcome-navy);
+  --ls-name-accent: #9A7632;
+  --ls-shadow: #FFFBF0;
+  border: 1px solid rgb(255 255 255 / 85%);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #DCCFF0 70%, transparent),
+    0 10px 24px rgb(110 92 154 / 22%);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-overlay {
+  background: linear-gradient(
+    180deg,
+    transparent 38%,
+    color-mix(in srgb, #C7DDF0 45%, transparent) 58%,
+    color-mix(in srgb, #DCCFF0 82%, transparent) 78%,
+    color-mix(in srgb, #F3CED6 92%, white) 100%
+  );
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box::after {
+  border-color: rgb(255 255 255 / 70%);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-num {
+  color: var(--color-welcome-navy);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 80%), 0 0 10px rgb(255 251 240 / 90%);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-label {
+  color: #9A7632;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-label::before,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-box-label::after {
+  background: color-mix(in srgb, #9A7632 60%, transparent);
+}
+
+/* ---- Progress bar: pastel blue → lavender → blush fill with a white pearl head ---- */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-bar {
+  background: linear-gradient(90deg, #9EB9D4 0%, #B8A3E6 55%, #E8A9B8 100%);
+  box-shadow: 0 0 10px color-mix(in srgb, #B8A3E6 55%, transparent);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-bar::after {
+  background: #FFFFFF;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, #DCCFF0 80%, transparent),
+    0 0 10px 2px color-mix(in srgb, #E8A9B8 70%, transparent);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-progress-pct {
+  color: var(--color-welcome-navy);
+  font-weight: 600;
+}
+
+/* Envelope screen: leaves sit above the photos, behind the envelope */
+.env-invite-screen .env-invite-leaves {
+  position: fixed;
+  z-index: 1;
+}
+
+/* ---- Small lines on the photos: deep blue lettering, no container and no outline —
+   just a soft cream glow so they read elegantly over the photos ----
+   (countdown, "You are invited", message, status, percentage) */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-kicker,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-eyebrow,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-copy,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-status,
+.loading-screen--invitation:not(.loading-screen--plain) .ls-progress-pct {
+  color: #24405F;
+  -webkit-text-fill-color: #24405F;
+  font-weight: 600;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  text-shadow:
+    0 0 6px rgb(255 251 240 / 95%),
+    0 0 14px rgb(255 251 240 / 85%),
+    0 0 28px rgb(255 251 240 / 65%);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-eyebrow {
+  padding: 0;
+  font-size: clamp(0.72rem, 3.2vw, 0.88rem);
+}
+
+/* ==========================================================================
+   Home hero (photos display) — refreshed to match the loader + envelope:
+   deep blue type with soft cream glows (no outlines), pastel cover frame,
+   pastel countdown band, and the falling pastel leaves/petals.
+   ========================================================================== */
+.home-hero--photos .home-hero-leaves {
+  z-index: 2;
+}
+
+/* Title + details */
+.home-hero--photos .home-hero-title-main,
+.home-hero--photos .home-hero-date-day {
+  color: #1F3249;
+  text-shadow:
+    0 0 6px rgb(255 255 255 / 90%),
+    0 0 18px rgb(255 251 240 / 90%),
+    0 0 36px rgb(255 251 240 / 60%);
+}
+
+.home-hero--photos .home-hero-title-script {
+  color: #9A7632;
+  text-shadow:
+    0 0 6px rgb(255 255 255 / 90%),
+    0 0 18px rgb(255 251 240 / 85%);
+}
+
+.home-hero--photos .home-hero-eyebrow,
+.home-hero--photos .home-hero-meta-venue,
+.home-hero--photos .home-hero-meta-address,
+.home-hero--photos .home-hero-date,
+.home-hero--photos .home-hero-meta {
+  color: #24405F;
+  font-weight: 600;
+  text-shadow:
+    0 0 6px rgb(255 251 240 / 95%),
+    0 0 14px rgb(255 251 240 / 85%),
+    0 0 28px rgb(255 251 240 / 65%);
+}
+
+.home-hero--photos .home-hero-date-weekday,
+.home-hero--photos .home-hero-date-side,
+.home-hero--photos .home-hero-meta-time {
+  color: #8E6A2A;
+  font-weight: 700;
+  text-shadow:
+    0 0 6px rgb(255 251 240 / 95%),
+    0 0 14px rgb(255 251 240 / 80%);
+}
+
+/* Soft cream light behind the wording block (no box edges) */
+.home-hero--photos .home-hero-mist {
+  position: absolute;
+  inset: -8% -12%;
+  z-index: -1;
+  background: radial-gradient(ellipse 55% 50% at 50% 50%, rgb(255 251 240 / 70%) 0%, rgb(255 251 240 / 35%) 55%, transparent 80%);
+  filter: blur(10px);
+}
+
+/* Cover photo: white mat, lavender + gold hairlines, soft lavender shadow */
+.home-hero--photos .home-hero-cover::before {
+  border-color: color-mix(in srgb, #B8A3E6 60%, transparent);
+}
+
+.home-hero--photos .home-hero-cover__frame {
+  background: #DCCFF0;
+  border-color: #FFFFFF;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #C9A24E 45%, transparent),
+    0 30px 55px -26px rgb(110 92 154 / 45%),
+    0 10px 24px -12px rgb(110 92 154 / 28%);
+}
+
+.home-hero--photos .home-hero-cover__frame::after {
+  background: linear-gradient(180deg, transparent 76%, color-mix(in srgb, #F3CED6 30%, transparent) 100%);
+}
+
+/* Countdown band: fades up from the bottom in lavender → pastel blue, navy numbers */
+.home-hero--photos .home-hero-countdown-bar {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(255 251 240 / 55%) 26%,
+    color-mix(in srgb, #DCCFF0 80%, transparent) 62%,
+    color-mix(in srgb, #C7DDF0 92%, white) 100%
+  );
+}
+
+.home-hero--photos .home-hero-countdown-heading {
+  color: #8E6A2A;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgb(255 251 240 / 90%);
+}
+
+.home-hero--photos .home-hero-countdown-value {
+  color: #1F3249;
+  text-shadow: 0 0 10px rgb(255 251 240 / 85%);
+}
+
+.home-hero--photos .home-hero-countdown-label {
+  color: #24405F;
+  font-weight: 600;
+  text-shadow: none;
+}
+
+/* ==========================================================================
+   Home hero (photos display) — same background as the loader (photo marquee,
+   cream fades, falling leaves, corner florals), motif-coloured readable type,
+   and a pastel countdown band.
+   ========================================================================== */
+.home-hero--photos .home-hero-photo-corners {
+  z-index: 3;
+}
+
+/* Wording: a wider, stronger pool of cream light behind it (no edges) */
+.home-hero--photos .home-hero-mist {
+  inset: -14% -18%;
+  background: radial-gradient(
+    ellipse 56% 52% at 50% 50%,
+    rgb(255 251 240 / 86%) 0%,
+    rgb(255 251 240 / 62%) 45%,
+    rgb(255 251 240 / 22%) 70%,
+    transparent 84%
+  );
+  filter: blur(14px);
+}
+
+/* Motif colours: navy for the main words, deep lavender script, dusty-blue details */
+.home-hero--photos .home-hero-title-main,
+.home-hero--photos .home-hero-date-day {
+  color: #1F3249;
+}
+
+.home-hero--photos .home-hero-title-script {
+  color: #7A62AE;
+  text-shadow:
+    0 0 6px rgb(255 255 255 / 95%),
+    0 0 18px rgb(255 251 240 / 90%);
+}
+
+.home-hero--photos .home-hero-eyebrow,
+.home-hero--photos .home-hero-meta-venue {
+  color: #24405F;
+  font-weight: 600;
+}
+
+.home-hero--photos .home-hero-meta-address {
+  color: #34506F;
+  font-weight: 500;
+}
+
+.home-hero--photos .home-hero-date-weekday,
+.home-hero--photos .home-hero-date-side,
+.home-hero--photos .home-hero-meta-time {
+  color: #4F6F96;
+  font-weight: 700;
+}
+
+/* ---- Countdown band: a soft pastel ribbon (blue · lavender · blush · mint · butter)
+   rising out of a cream fade, with navy numbers ---- */
+.home-hero--photos .home-hero-countdown-bar {
+  isolation: isolate;
+  background: linear-gradient(180deg, transparent 0%, rgb(255 251 240 / 72%) 30%, rgb(255 251 240 / 88%) 100%);
+}
+
+.home-hero--photos .home-hero-countdown-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, #C7DDF0 85%, transparent) 0%,
+    color-mix(in srgb, #DCCFF0 85%, transparent) 26%,
+    color-mix(in srgb, #F3CED6 80%, transparent) 50%,
+    color-mix(in srgb, #D5E3D0 85%, transparent) 74%,
+    color-mix(in srgb, #F7E5A9 80%, transparent) 100%
+  );
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 45%, #000 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 45%, #000 100%);
+}
+
+.home-hero--photos .home-hero-countdown-heading {
+  color: #7A62AE;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgb(255 251 240 / 90%);
+}
+
+.home-hero--photos .home-hero-countdown-value {
+  color: #1F3249;
+  text-shadow: 0 0 8px rgb(255 255 255 / 80%);
+}
+
+.home-hero--photos .home-hero-countdown-label {
+  color: #4F6F96;
+  font-weight: 700;
+}
+
+/* ---- Home hero (photos display): ceremony time · venue · address typography ----
+   Time in spaced Cinzel small caps between two pastel hairlines, the venue name in
+   The Seasons (same face as the couple's names), and the address in a soft
+   Cormorant Garamond italic. */
+.home-hero--photos .home-hero-meta {
+  gap: 0.35rem;
+}
+
+.home-hero--photos .home-hero-meta-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75em;
+  font-size: clamp(0.7rem, 3vw, 0.84rem);
+  letter-spacing: 0.26em;
+  padding-left: 0.26em; /* balance the trailing letter-spacing */
+}
+
+.home-hero--photos .home-hero-meta-time::before,
+.home-hero--photos .home-hero-meta-time::after {
+  content: "";
+  width: clamp(1.25rem, 6vw, 2.25rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #B8A3E6);
+}
+
+.home-hero--photos .home-hero-meta-time::after {
+  background: linear-gradient(90deg, #9EB9D4, transparent);
+}
+
+.home-hero--photos .home-hero-meta-venue {
+  font-family: var(--font-the-seasons), "The Seasons", "Cormorant Garamond", Georgia, serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(1.45rem, 6.4vw, 2.1rem);
+  line-height: 1.05;
+  letter-spacing: 0.03em;
+  color: #1F3249;
+  margin-top: 0.15rem;
+}
+
+.home-hero--photos .home-hero-meta-address {
+  font-family: "Cormorant Garamond", "SortsMillGoudy", Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(0.98rem, 4.1vw, 1.18rem);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  color: #34506F;
+  margin-top: 0.1rem;
+  text-wrap: balance;
+}
+
+/* The district line, a touch smaller and lighter */
+.home-hero--photos .home-hero-meta-address > span + span {
+  margin-top: 0.1rem;
+  font-size: 0.9em;
+  color: #4F6F96;
+}
+
+/* ---- Home hero (photos display): date block — no long rules.
+   Weekday in spaced small caps, then  DEC │ 21 │ 2026  with short pastel
+   dividers either side of a large day numeral. ---- */
+.home-hero--photos .home-hero-date-row {
+  border: 0;
+  border-image: none;
+  padding: 0;
+  gap: clamp(0.9rem, 4.5vw, 1.6rem);
+}
+
+.home-hero--photos .home-hero-date-weekday {
+  font-size: clamp(0.7rem, 3vw, 0.86rem);
+  letter-spacing: 0.42em;
+  padding-left: 0.42em; /* balance the trailing letter-spacing */
+}
+
+.home-hero--photos .home-hero-date-side {
+  min-width: 3.2em;
+  font-size: clamp(0.82rem, 3.5vw, 1rem);
+  letter-spacing: 0.22em;
+}
+
+.home-hero--photos .home-hero-date-side:first-child {
+  text-align: right;
+}
+
+.home-hero--photos .home-hero-date-side:last-child {
+  text-align: left;
+  padding-left: 0.22em;
+}
+
+.home-hero--photos .home-hero-date-day {
+  position: relative;
+  padding: 0 clamp(0.9rem, 4.5vw, 1.6rem);
+  font-size: clamp(3.4rem, 16vw, 5.2rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* Short vertical dividers beside the day (not full-width underlines) */
+.home-hero--photos .home-hero-date-day::before,
+.home-hero--photos .home-hero-date-day::after {
+  content: "";
+  position: absolute;
+  top: 22%;
+  bottom: 22%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, #B8A3E6 30%, #9EB9D4 70%, transparent);
+}
+
+.home-hero--photos .home-hero-date-day::before {
+  left: 0;
+}
+
+.home-hero--photos .home-hero-date-day::after {
+  right: 0;
+}
+
+/* A little air between date and time */
+.home-hero--photos .home-hero-meta {
+  margin-top: clamp(1rem, 4vw, 1.5rem);
+}
+
+/* ---- Love story cards: one motif pastel per chapter (StorySection.tsx → STORY_TONES),
+   cycling blue · mint · butter · blush · lavender across all chapters ---- */
+.story-card--blue { --story-card-tint: #C7DDF0; }
+.story-card--mint { --story-card-tint: #D5E3D0; }
+.story-card--butter { --story-card-tint: #F7E5A9; }
+.story-card--blush { --story-card-tint: #F3CED6; }
+.story-card--lavender { --story-card-tint: #DCCFF0; }
+
+/* Card edge picks up a deeper shade of its own pastel */
+.story-card {
+  border-color: color-mix(in srgb, var(--story-card-tint) 70%, #5B7FA6 30%);
 }

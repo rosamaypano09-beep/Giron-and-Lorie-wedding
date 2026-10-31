@@ -6,9 +6,10 @@ import localFont from 'next/font/local';
 import { useReducedMotion } from 'motion/react';
 import { useSiteConfig } from '@/hooks/use-site-config';
 import { siteConfig as defaultSiteConfig } from '@/content/site';
-import { GhostBackdrop, PhotoBackground, PhotoMarquee } from '@/components/loader/invite-photo-backdrop';
+import { GhostBackdrop, PhotoBackground } from '@/components/loader/invite-photo-backdrop';
 import { TintedDeco } from '@/components/tinted-deco';
 import { SectionBackdrop } from '@/components/section-backdrop';
+import { LeafParticles } from '@/components/loader/leaf-particles';
 import './loading-screen.css';
 
 const theSeasons = localFont({
@@ -26,12 +27,33 @@ interface LoadingScreenProps {
   onFadeStart?: () => void;
 }
 
-const STAGGER_DELAY_MS = 1100;
-const FIRST_BOX_DELAY_MS = 600;
-const BOX_TRANSITION_MS = 1100;
+// Photos-mode entrance, top to bottom (ms). CSS-delay driven, so it plays as soon as the
+// HTML paints — no wait for hydration:
+// photo backdrop → headline → countdown → groom · "and" · bride → date boxes → footer
+const PHOTO_IN = {
+  headline: 150,
+  kicker: 500,
+  groom: 750,
+  and: 1000,
+  bride: 1150,
+  boxes: 1500,
+  boxStagger: 180,
+  boxText: 350, // after its own box
+  eyebrow: 2250,
+  copy: 2400,
+  rule: 2550,
+  status: 2650,
+  progress: 2750,
+} as const;
+// Photos mode opens behind a pair of pastel-blue silk curtains: the content's entrance is pushed
+// back by this much so it plays as the curtains part (0 when the curtains are skipped)
+const CURTAIN_LEAD_MS = 1100;
+// Folds per curtain side (each 12.5% wide)
+const CURTAIN_FOLDS = 8;
 const FADE_OUT_MS = 1400;
-// Plain mode handoff: the card tucks away first, then the envelope hero starts arriving
-const PLAIN_HANDOFF_LEAD_MS = 550;
+// Handoff: the loader's content fades away first, then the envelope screen fades in
+// (photos mode: over the same, uninterrupted photo marquee)
+const HANDOFF_LEAD_MS = 550;
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 // Plain mode choreography — all CSS-delay driven so it plays in sync even before hydration:
@@ -108,17 +130,14 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
     () => (content.backgroundPhotosDesktop ?? []).map((src) => encodeURI(src)),
     [content.backgroundPhotosDesktop],
   );
-  const showBackdrop = !isPlain && backgroundPhotos.length > 0;
   const plainTheme = content.plainTheme ?? defaultSiteConfig.loadingScreen.plainTheme;
   const cornerDecos = content.cornerDecos ?? defaultSiteConfig.loadingScreen.cornerDecos;
   const plainInvite = content.plainInvite ?? defaultSiteConfig.loadingScreen.plainInvite;
 
   const reduceMotion = useReducedMotion();
   const [fadeOut, setFadeOut] = useState(false);
-  const [visibleBoxes, setVisibleBoxes] = useState(0);
   const [statusIndex, setStatusIndex] = useState(0);
   const [now, setNow] = useState(() => new Date());
-  const photoCopies = reduceMotion ? 1 : 2;
 
   const weddingDate = useMemo(() => new Date(siteConfig.wedding.date), [siteConfig.wedding.date]);
   const hasValidDate = !Number.isNaN(weddingDate.getTime());
@@ -165,8 +184,10 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
   const afterHeadlineMs = isPlain
     ? PLAIN_LETTER_START_MS + headlineLetterCount * PLAIN_LETTER_STAGGER_MS + 250
     : 0;
+  const showCurtains = !isPlain && !reduceMotion;
+  const pin = (ms: number) => ms + (showCurtains ? CURTAIN_LEAD_MS : 0);
   const revealDelay = (photoMs: number, plainOffsetMs: number) =>
-    ({ '--ls-delay': `${isPlain ? afterHeadlineMs + plainOffsetMs : photoMs}ms` }) as React.CSSProperties;
+    ({ '--ls-delay': `${isPlain ? afterHeadlineMs + plainOffsetMs : pin(photoMs)}ms` }) as React.CSSProperties;
   // Plain date steps: 0 = day, 1 = month & year, 2 = weekday
   const dateDelay = (step: number) =>
     ({
@@ -174,8 +195,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
     }) as React.CSSProperties;
 
   const ceremonyLine = siteConfig.ceremony.time ?? '';
-  const groomName = withoutMiddleInitials(siteConfig.couple.groom);
-  const brideName = withoutMiddleInitials(siteConfig.couple.bride);
+  // Nicknames only ("Mars and Yanyan"); falls back to the full name without middle initials
+  const groomName = siteConfig.couple.groomNickname || withoutMiddleInitials(siteConfig.couple.groom);
+  const brideName = siteConfig.couple.brideNickname || withoutMiddleInitials(siteConfig.couple.bride);
   const coupleNames = `${groomName} & ${brideName}`;
 
 
@@ -194,20 +216,6 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
   }, []);
 
   useEffect(() => {
-    if (reduceMotion) {
-      setVisibleBoxes(dateParts.length);
-      return;
-    }
-    // Plain mode sequences its date with CSS delays instead (see dateDelay)
-    if (isPlain) return;
-    const timers = dateParts.map((_, i) =>
-      setTimeout(() => setVisibleBoxes(i + 1), FIRST_BOX_DELAY_MS + i * STAGGER_DELAY_MS),
-    );
-    return () => timers.forEach(clearTimeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reduceMotion, dateParts.length, isPlain]);
-
-  useEffect(() => {
     if (statusMessages.length < 2) return;
     const step = totalDurationMs / statusMessages.length;
     const t = setInterval(
@@ -220,7 +228,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
   useEffect(() => {
     let fadeTimer: ReturnType<typeof setTimeout> | undefined;
     let handoffTimer: ReturnType<typeof setTimeout> | undefined;
-    const lead = isPlain && !reduceMotion ? PLAIN_HANDOFF_LEAD_MS : 0;
+    const lead = reduceMotion ? 0 : HANDOFF_LEAD_MS;
     const t = setTimeout(() => {
       setFadeOut(true);
       handoffTimer = setTimeout(() => {
@@ -237,7 +245,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
 
   return (
     <div
-      className={`loading-screen loading-screen--invitation${isPlain ? ' loading-screen--plain' : ''} fixed inset-0 z-50 flex flex-col overflow-hidden overscroll-none h-dvh max-h-dvh w-screen${fadeOut ? ' is-fading' : ''}${reduceMotion ? ' is-reduced-motion' : ''}`}
+      className={`loading-screen loading-screen--invitation${isPlain ? ' loading-screen--plain' : ''} fixed inset-0 z-50 flex flex-col overflow-hidden overscroll-none h-dvh max-h-dvh w-full${fadeOut ? ' is-fading' : ''}${reduceMotion ? ' is-reduced-motion' : ''}`}
       aria-live="polite"
       aria-busy={!fadeOut}
       aria-label="Loading invitation"
@@ -252,15 +260,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
         } as React.CSSProperties
       }
     >
-      {showBackdrop && (
-        <>
-          <div className="loading-screen__backdrop" aria-hidden="true">
-            <PhotoMarquee photos={backgroundPhotos} copies={photoCopies} variant="loader" shuffle={false} />
-            <div className="loading-screen__backdrop-veil" />
-          </div>
-          <div className="loading-screen__readability-scrim" aria-hidden="true" />
-        </>
-      )}
+      {/* Photos display: the sliding photo marquee is rendered once by the page
+          (invitation-page.tsx → LoaderPhotoBackdrop) behind both this screen and the
+          envelope, so it carries straight on through the handoff */}
 
       {isPlain && (
         <>
@@ -314,8 +316,43 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
         </>
       )}
 
+      {/* Photos mode: pastel leaves falling over the photos (under the corners + text) */}
+      {!isPlain && !reduceMotion && <LeafParticles />}
+
+      {/* Photos mode: four corner florals (content/site.ts → loadingScreen.cornerDecos), tucked
+          into the screen corners. Already in place behind the curtains — revealed as they part,
+          then they just sway gently */}
+      {!isPlain && (
+        <div className="ls-photo-corners" aria-hidden="true">
+          {(
+            [
+              { src: cornerDecos.topLeft, pos: 'tl', delay: 0 },
+              { src: cornerDecos.topRight, pos: 'tr', delay: -2000 },
+              { src: cornerDecos.bottomLeft, pos: 'bl', delay: -4000 },
+              { src: cornerDecos.bottomRight, pos: 'br', delay: -6000 },
+            ] as const
+          )
+            .filter(({ src }) => src)
+            .map(({ src, pos, delay }) => (
+              <span
+                key={pos}
+                className={`ls-photo-corner ls-photo-corner--${pos}`}
+                // Sway phase offset per corner so they don't move in unison
+                style={{ '--ls-delay': `${delay}ms` } as React.CSSProperties}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={encodeURI(src)} alt="" className="ls-photo-corner__img" />
+              </span>
+            ))}
+        </div>
+      )}
+
       <div className="loading-screen__save-date">
-        <header className="flex flex-col items-center w-full pt-10 sm:pt-14 md:pt-16 px-4 sm:px-6 flex-shrink-0">
+        <header
+          className={`flex flex-col items-center w-full px-4 sm:px-6 flex-shrink-0${
+            isPlain ? ' pt-10 sm:pt-14 md:pt-16' : ' ls-photo-header'
+          }`}
+        >
           {isPlain && plainInvite.ornament && (
             <TintedDeco
               src={plainInvite.ornament}
@@ -361,12 +398,18 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
               )}
             </h1>
           ) : (
-            <h1 className="loading-screen__std-headline ls-reveal" style={{ '--ls-delay': '0ms' } as React.CSSProperties}>
+            <h1
+              className="loading-screen__std-headline ls-in ls-in--headline"
+              style={{ '--ls-delay': `${pin(PHOTO_IN.headline)}ms` } as React.CSSProperties}
+            >
               {content.headline}
             </h1>
           )}
           {countdownText && (
-            <p className="loading-screen__std-kicker ls-reveal" style={revealDelay(250, 0)}>
+            <p
+              className={`loading-screen__std-kicker ${isPlain ? 'ls-reveal' : 'ls-in ls-in--track'}`}
+              style={revealDelay(PHOTO_IN.kicker, 0)}
+            >
               {countdownText}
             </p>
           )}
@@ -378,15 +421,31 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
           </p>
         )}
 
-        <div className="loading-screen__std-names-slot ls-reveal" style={revealDelay(450, 400)}>
+        <div
+          className={`loading-screen__std-names-slot${isPlain ? ' ls-reveal' : ''}`}
+          style={isPlain ? revealDelay(0, 400) : undefined}
+        >
           <h2 className="loading-screen__std-names loading-screen__std-names--text" aria-label={coupleNames}>
-            <span className={`${theSeasons.className} ls-names__nick ls-names__nick--full`} aria-hidden="true">
+            {/* Photos mode: groom glides in from the left, "and" blooms, bride from the right */}
+            <span
+              className={`${theSeasons.className} ls-names__nick${isPlain ? '' : ' ls-in ls-in--from-left'}`}
+              style={isPlain ? undefined : ({ '--ls-delay': `${pin(PHOTO_IN.groom)}ms` } as React.CSSProperties)}
+              aria-hidden="true"
+            >
               {groomName}
             </span>
-            <span className={`${aboveTheBeyond.className} ls-names__and`} aria-hidden="true">
+            <span
+              className={`${aboveTheBeyond.className} ls-names__and${isPlain ? '' : ' ls-in ls-in--bloom'}`}
+              style={isPlain ? undefined : ({ '--ls-delay': `${pin(PHOTO_IN.and)}ms` } as React.CSSProperties)}
+              aria-hidden="true"
+            >
               and
             </span>
-            <span className={`${theSeasons.className} ls-names__nick ls-names__nick--full`} aria-hidden="true">
+            <span
+              className={`${theSeasons.className} ls-names__nick${isPlain ? '' : ' ls-in ls-in--from-right'}`}
+              style={isPlain ? undefined : ({ '--ls-delay': `${pin(PHOTO_IN.bride)}ms` } as React.CSSProperties)}
+              aria-hidden="true"
+            >
               {brideName}
             </span>
           </h2>
@@ -425,36 +484,34 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
         {!isPlain && dateParts.length > 0 && (
           <div className="flex items-stretch justify-center gap-3 sm:gap-4 md:gap-6 px-4 pt-1 pb-3 sm:pb-4 flex-shrink-0">
             {dateParts.map((value, i) => {
-              const isVisible = i < visibleBoxes;
               const photo = content.photos[i % content.photos.length];
+              const boxDelay = pin(PHOTO_IN.boxes) + i * PHOTO_IN.boxStagger;
               return (
                 <div
                   key={content.dateLabels[i] ?? i}
-                  className="loading-screen__std-box relative flex-1 max-w-[28vw] sm:max-w-[140px] md:max-w-[160px] aspect-[3/4] overflow-hidden rounded-2xl"
-                  style={{
-                    opacity: isVisible ? 1 : 0,
-                    transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(28px) scale(0.94)',
-                    transition: reduceMotion
-                      ? 'none'
-                      : `opacity ${BOX_TRANSITION_MS}ms cubic-bezier(0.22, 1, 0.36, 1), transform ${BOX_TRANSITION_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`,
-                  }}
+                  className="loading-screen__std-box ls-box-in relative flex-1 max-w-[28vw] sm:max-w-[140px] md:max-w-[160px] aspect-[3/4] overflow-hidden rounded-2xl"
+                  style={{ '--ls-delay': `${boxDelay}ms` } as React.CSSProperties}
                 >
                   {photo && (
                     <Image
                       src={photo}
                       alt=""
                       fill
-                      priority={i === 0}
-                      className="loading-screen__std-box-img object-cover"
-                      sizes="(max-width: 640px) 28vw, 160px"
+                      priority
+                      className="loading-screen__std-box-img object-cover scale-105"
+                      sizes="(max-width: 640px) 30vw, 160px"
+                      quality={70}
                     />
                   )}
                   <div className="loading-screen__std-box-overlay absolute inset-0" />
-                  <div className="absolute bottom-2.5 inset-x-0 sm:bottom-3 flex flex-col items-center">
-                    <span className="loading-screen__std-box-num text-2xl sm:text-3xl md:text-4xl select-none leading-none text-center">
+                  <div
+                    className="loading-screen__std-box-text ls-in ls-in--up absolute bottom-2 inset-x-0 sm:bottom-3 flex flex-col items-center"
+                    style={{ '--ls-delay': `${boxDelay + PHOTO_IN.boxText}ms` } as React.CSSProperties}
+                  >
+                    <span className="loading-screen__std-box-num text-2xl sm:text-3xl md:text-4xl font-medium select-none leading-none text-center">
                       {value}
                     </span>
-                    <span className="loading-screen__std-box-label text-[9px] sm:text-[10px] uppercase mt-1">
+                    <span className="loading-screen__std-box-label text-[8px] sm:text-[9px] uppercase mt-0.5">
                       {content.dateLabels[i]}
                     </span>
                   </div>
@@ -464,8 +521,21 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
           </div>
         )}
 
-        <footer className="loading-screen__std-footer flex flex-col items-center w-full pt-1 px-6 flex-shrink-0">
-          {content.showCeremonyDetails &&
+        <footer
+          className={`loading-screen__std-footer flex flex-col items-center w-full pt-1 px-6 flex-shrink-0${isPlain ? '' : ' ls-photo-footer'}`}
+        >
+          {/* Photos mode: invitation line + message under the date boxes */}
+          {!isPlain && content.eyebrow && (
+            <p className="loading-screen__std-eyebrow ls-in ls-in--track" style={revealDelay(PHOTO_IN.eyebrow, 0)}>
+              {content.eyebrow}
+            </p>
+          )}
+          {!isPlain && content.message && (
+            <p className="loading-screen__std-copy ls-in ls-in--up" style={revealDelay(PHOTO_IN.copy, 0)}>
+              {content.message}
+            </p>
+          )}
+          {isPlain && content.showCeremonyDetails &&
             (ceremonyLine || siteConfig.ceremony.location || siteConfig.ceremony.venue) && (
             <div className="loading-screen__std-venue ls-reveal" style={revealDelay(900, 3200)}>
               {ceremonyLine && <span className="loading-screen__std-venue-time">{ceremonyLine}</span>}
@@ -477,14 +547,24 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
               )}
             </div>
           )}
-          <div className="loading-screen__std-rule" aria-hidden="true" />
+          <div
+            className={`loading-screen__std-rule${isPlain ? '' : ' ls-in ls-in--line'}`}
+            style={isPlain ? undefined : ({ '--ls-delay': `${pin(PHOTO_IN.rule)}ms` } as React.CSSProperties)}
+            aria-hidden="true"
+          />
           {statusMessages.length > 0 && (
-            <p key={statusIndex} className="loading-screen__std-status">
+            <p
+              key={statusIndex}
+              className="loading-screen__std-status"
+              // Photos mode: the first message waits its turn in the entrance; later ones swap in right away
+              style={!isPlain && statusIndex === 0 ? { animationDelay: `${pin(PHOTO_IN.status)}ms` } : undefined}
+            >
               {statusMessages[statusIndex]}
             </p>
           )}
           <div
-            className="w-full max-w-[200px] sm:max-w-xs mx-auto"
+            className={`w-full max-w-[200px] sm:max-w-xs mx-auto${isPlain ? '' : ' ls-in ls-in--fade'}`}
+            style={isPlain ? undefined : ({ '--ls-delay': `${pin(PHOTO_IN.progress)}ms` } as React.CSSProperties)}
             role="progressbar"
             aria-label="Loading invitation"
             aria-valuemin={0}
@@ -503,9 +583,37 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
                 />
               )}
             </div>
+            {/* Photos mode: percentage counting up in step with the bar (CSS-animated) */}
+            {!isPlain && (
+              <span
+                className="ls-progress-pct"
+                style={{ animationDuration: `${totalDurationMs}ms` }}
+                aria-hidden="true"
+              />
+            )}
           </div>
         </footer>
       </div>
+
+      {/* Opening curtains (photos mode): pastel-blue (#C7DDF0) silk drapes hung in folds part from the
+          centre — inner folds are pulled first and travel furthest, gathering toward the
+          wings — then slide off and dissolve. Pure CSS, so they open on first paint. */}
+      {showCurtains && (
+        <div className="ls-curtains" aria-hidden="true">
+          {(['left', 'right'] as const).map((side) => (
+            <div key={side} className={`ls-curtain ls-curtain--${side}`}>
+              {Array.from({ length: CURTAIN_FOLDS }, (_, i) => (
+                <span
+                  key={i}
+                  className="ls-curtain__fold"
+                  style={{ '--i': i, '--inner': CURTAIN_FOLDS - 1 - i } as React.CSSProperties}
+                />
+              ))}
+            </div>
+          ))}
+          <span className="ls-curtains__seam" />
+        </div>
+      )}
     </div>
   );
 };

@@ -130,9 +130,12 @@ export function PhotoMarquee({
     setSelected(pickRandomPhotos(photos, MARQUEE_SAMPLE_SIZE));
   }, [photos, compact]);
 
-  const [top, bottom] = compact
-    ? [selected, [...selected].reverse()]
-    : splitMarqueeRows(selected);
+  // Loader with a longer hand-picked list: alternate photos between the rows so each row
+  // shows different shots (shorter lists repeat, mirrored, on the second row)
+  const [top, bottom] =
+    !compact || (variant === 'loader' && selected.length > 5)
+      ? splitMarqueeRows(selected)
+      : [selected, [...selected].reverse()];
   // Only the first tiles on screen load eagerly; the rest wait their turn
   const eagerCount = Math.min(selected.length, MARQUEE_EAGER_COUNT);
 
@@ -234,6 +237,33 @@ export function InvitePhotoBackdrop({
     <div className={`invite-photo-backdrop ${className}`.trim()} aria-hidden="true">
       <PhotoMarquee photos={resolved} copies={copies} variant="mobile" />
       <div className="loading-screen__backdrop-veil" />
+    </div>
+  );
+}
+
+/**
+ * Photos-display backdrop shared by the loader and the envelope: the same two-row
+ * portrait marquee, veil and scrim. Both screens render this exact markup and the
+ * marquee runs on one shared clock, so when the envelope fades in over the loader
+ * the photo strip simply carries on — same photos, same spot, same speed.
+ */
+export function LoaderPhotoBackdrop({
+  photos,
+  enter = false,
+}: {
+  photos: readonly string[];
+  /** Loader only: fade + settle the strip in on first paint */
+  enter?: boolean;
+}) {
+  const reduceMotion = useReducedMotion();
+  if (photos.length === 0) return null;
+  return (
+    <div className="ls-photo-backdrop loading-screen--invitation" aria-hidden="true">
+      <div className={`loading-screen__backdrop${enter ? ' ls-backdrop-in' : ''}`}>
+        <PhotoMarquee photos={photos} copies={reduceMotion ? 1 : 2} variant="loader" shuffle={false} />
+        <div className="loading-screen__backdrop-veil" />
+      </div>
+      <div className="loading-screen__readability-scrim" />
     </div>
   );
 }

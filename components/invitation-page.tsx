@@ -1,13 +1,13 @@
 "use client"
 
-import { Suspense, useState, useCallback, useEffect } from "react"
+import { Suspense, useState, useCallback, useEffect, useMemo } from "react"
 import { motion } from "motion/react"
 import dynamic from "next/dynamic"
 import { Hero as MainHero } from "@/components/sections/hero"
 import { Welcome } from "@/components/sections/welcome"
 import { Hero as InvitationHero } from "@/components/loader/Hero"
 import { LoadingScreen } from "@/components/loader/LoadingScreen"
-import { InvitePhotoBackdrop } from "@/components/loader/invite-photo-backdrop"
+import { LoaderPhotoBackdrop } from "@/components/loader/invite-photo-backdrop"
 import { Navbar } from "@/components/navbar"
 import { AppState } from "@/components/types"
 import { prefetchInvitationData } from "@/lib/invitation-data"
@@ -88,7 +88,7 @@ const sectionsRevealVariants = {
 }
 
 /** WebGL Silk needs a hex color. */
-const SILK_COLOR = "#B7D1E8"
+const SILK_COLOR = "#C7DDF0"
 
 type InvitationPageProps = {
   /** Which principal-sponsor sheet the entourage shows (googleAPI.sponsorsInviteOne / Two) */
@@ -159,6 +159,14 @@ export function InvitationPage({ sponsorsList, showEntourage = true, showTimelin
   }, [])
 
   const detailsVisible = appState === AppState.DETAILS
+  // Photos display: ONE photo marquee behind both the loader and the envelope, so the strip
+  // simply carries on through the handoff (nothing re-mounts, nothing jumps)
+  const sharedBackdropPhotos = useMemo(
+    () => (siteConfig.loadingScreen?.backgroundPhotos ?? []).map((src) => encodeURI(src)),
+    [siteConfig.loadingScreen?.backgroundPhotos],
+  )
+  const showSharedBackdrop =
+    !plainLoader && sharedBackdropPhotos.length > 0 && (loadingOverlayVisible || showInvitation)
   const pageScrollLocked = appState !== AppState.DETAILS
   const cinematicEntry = enteringFromInvite && detailsVisible
 
@@ -168,12 +176,11 @@ export function InvitationPage({ sponsorsList, showEntourage = true, showTimelin
 
   return (
       <div className={`relative min-h-screen bg-cloud text-charcoal selection:bg-birch selection:text-nut font-sans ${pageScrollLocked ? "overflow-hidden" : ""}`}>
-        {loadingOverlayVisible && !plainLoader && (
-          <div
-            className="invite-photo-backdrop-wrap invite-photo-backdrop-wrap--loading"
-            aria-hidden="true"
-          >
-            <InvitePhotoBackdrop photos={siteConfig.loadingScreen?.backgroundPhotos} />
+        {showSharedBackdrop && (
+          // Sits just under the loader (z-50) and envelope (z-55); fades out with the
+          // envelope's final reveal into the invitation
+          <div className={`ls-shared-backdrop${detailsVisible ? " is-leaving" : ""}`} aria-hidden="true">
+            <LoaderPhotoBackdrop photos={sharedBackdropPhotos} enter />
           </div>
         )}
 

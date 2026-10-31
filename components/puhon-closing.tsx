@@ -17,7 +17,7 @@ const theSeasons = localFont({
 const BURGUNDY = "var(--color-welcome-navy)"
 const ROSE = "var(--color-welcome-heading)"
 const INK = "#4A5A6B" // soft cocoa for the long verse line — gentler than burgundy, still high contrast
-const QUOTE_MARK = "color-mix(in srgb, #8FB0CF 70%, transparent)"
+const QUOTE_MARK = "color-mix(in srgb, #9EB9D4 70%, transparent)"
 // Soft ivory edge keeps burgundy text crisp over pink or photos
 const glow = "0 1px 0 rgb(247 244 239 / 90%), 0 0 14px rgb(247 244 239 / 85%)"
 
@@ -29,7 +29,7 @@ const TONES = {
     lead: BURGUNDY,
     body: INK,
     mark: QUOTE_MARK,
-    rule: "#8FB0CF",
+    rule: "#9EB9D4",
     shadow: glow,
   },
   light: {
@@ -138,7 +138,7 @@ export function PuhonBanner() {
       className="relative isolate overflow-hidden rounded-[1.5rem] sm:rounded-[2rem]"
       style={{
         boxShadow:
-          "0 0 0 1px color-mix(in srgb, #8FB0CF 45%, transparent), 0 0 0 6px rgb(247 244 239 / 35%), 0 26px 50px -28px color-mix(in srgb, #2F4A66 45%, transparent)",
+          "0 0 0 1px color-mix(in srgb, #9EB9D4 45%, transparent), 0 0 0 6px rgb(247 244 239 / 35%), 0 26px 50px -28px color-mix(in srgb, #2F4A66 45%, transparent)",
       }}
     >
       {images.map((src, i) => (
