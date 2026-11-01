@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import Image from "next/image"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { useAudio } from "@/contexts/audio-context"
 import { cinzel } from "@/lib/fonts"
@@ -105,7 +106,6 @@ const BUTTON =
 const BUTTON_SHADOW =
   "0 0 0 3px color-mix(in srgb, var(--color-motif-medium) 22%, transparent), 0 12px 24px -12px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)"
 const IVORY = "#FFFFFF"
-const PAPER = "#FFFFFF"
 const NAVY = TEAL
 const BODY = "var(--color-welcome-text)"
 const ACCENT = "var(--color-welcome-heading)"
@@ -210,6 +210,121 @@ function PlaylistTitle({ title, script }: { title: string; script: string }) {
   )
 }
 
+// Album sleeve (couple photo) with a vinyl record half pulled out to the right.
+// The record turns slowly at rest and speeds up while Spotify is playing.
+function RecordSleeve({
+  cover,
+  monogram,
+  alt,
+  spinning,
+  reduceMotion,
+}: {
+  cover: string
+  monogram: string
+  alt: string
+  spinning: boolean
+  reduceMotion: boolean
+}) {
+  return (
+    <div className="relative h-36 w-[13.5rem] shrink-0 sm:h-44 sm:w-[16.5rem]" aria-hidden>
+      {/* Vinyl */}
+      <motion.div
+        className="absolute right-0 top-1/2 aspect-square h-[92%] -translate-y-1/2 rounded-full"
+        initial={false}
+        animate={{ x: spinning ? "6%" : "0%" }}
+        transition={{ duration: 0.8, ease }}
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, transparent 0 31%, #1d2733 31.5% 33%, transparent 33.5%), repeating-radial-gradient(circle at 50% 50%, #18212b 0 1.2px, #232f3c 1.2px 2.6px), #18212b",
+          boxShadow: "0 14px 30px -14px rgb(20 30 44 / 75%), inset 0 0 0 2px rgb(255 255 255 / 6%)",
+        }}
+      >
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            animation: reduceMotion ? "none" : `spin ${spinning ? 2.4 : 9}s linear infinite`,
+          }}
+        >
+          {/* Sheen across the grooves */}
+          <span
+            className="absolute inset-0 rounded-full"
+            style={{ background: "conic-gradient(from 20deg, transparent 0 18%, rgb(255 255 255 / 14%) 24%, transparent 30% 68%, rgb(255 255 255 / 10%) 74%, transparent 80%)" }}
+          />
+          {/* Pastel centre label with the monogram */}
+          <span
+            className="absolute left-1/2 top-1/2 flex h-[34%] w-[34%] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full"
+            style={{ background: "conic-gradient(var(--color-motif-blue), var(--color-motif-violet), var(--color-motif-pink), var(--color-motif-butter), var(--color-motif-green), var(--color-motif-blue))" }}
+          >
+            {monogram ? (
+              <span
+                className="block h-[62%] w-[62%]"
+                style={{
+                  background: "var(--color-welcome-navy)",
+                  WebkitMask: `url("${monogram}") center / contain no-repeat`,
+                  mask: `url("${monogram}") center / contain no-repeat`,
+                }}
+              />
+            ) : null}
+            <span className="absolute h-1.5 w-1.5 rounded-full bg-[#18212b]" />
+          </span>
+        </div>
+      </motion.div>
+
+      {/* Sleeve */}
+      <div
+        className="absolute left-0 top-0 aspect-square h-full overflow-hidden rounded-[0.6rem] bg-white p-1.5"
+        style={{
+          boxShadow:
+            "0 0 0 1px color-mix(in srgb, var(--color-motif-medium) 55%, transparent), 0 18px 34px -16px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)",
+        }}
+      >
+        <div
+          className="relative h-full w-full overflow-hidden rounded-[0.4rem]"
+          style={{ background: "linear-gradient(135deg, var(--color-motif-blue), var(--color-motif-violet) 55%, var(--color-motif-pink))" }}
+        >
+          {cover ? (
+            <Image src={cover} alt={alt} fill sizes="180px" className="object-cover object-[center_30%]" />
+          ) : monogram ? (
+            <span
+              className="absolute inset-[22%] block"
+              style={{
+                background: "var(--color-welcome-navy)",
+                WebkitMask: `url("${monogram}") center / contain no-repeat`,
+                mask: `url("${monogram}") center / contain no-repeat`,
+              }}
+            />
+          ) : null}
+          {/* Soft light from the top-left, like a printed sleeve */}
+          <span
+            className="pointer-events-none absolute inset-0"
+            style={{ background: "linear-gradient(135deg, rgb(255 255 255 / 22%) 0%, transparent 40%, rgb(20 30 44 / 18%) 100%)" }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Four little bars that bounce while music plays (still when paused)
+function Equalizer({ active }: { active: boolean }) {
+  return (
+    <span className="flex h-3 items-end gap-[2px]" aria-hidden>
+      {[0.9, 0.5, 1, 0.65].map((h, i) => (
+        <motion.span
+          key={i}
+          className="block w-[3px] rounded-full"
+          style={{ background: ACCENT, originY: 1 }}
+          initial={false}
+          animate={active ? { scaleY: [h * 0.4, h, h * 0.55, h * 0.9, h * 0.4] } : { scaleY: 0.35 }}
+          transition={active ? { duration: 1 + i * 0.15, repeat: Infinity, ease: "easeInOut" } : { duration: 0.3 }}
+        >
+          <span className="block h-3" />
+        </motion.span>
+      ))}
+    </span>
+  )
+}
+
 export function WeddingPlaylist() {
   const siteConfig = useSiteConfig()
   const content = siteConfig.playlist
@@ -224,6 +339,11 @@ export function WeddingPlaylist() {
   const controllerRef = useRef<SpotifyEmbedController | null>(null)
   const playbackStateRef = useRef<"playing" | "paused">("paused")
   const [playerReady, setPlayerReady] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  // Older configs (e.g. from /api/wedding-details) may not have these
+  const extra = content as { cover?: string; statusPlaying?: string; statusIdle?: string }
+  const cover = extra.cover ? encodeURI(extra.cover) : ""
+  const monogram = siteConfig.couple.monogram
   const { pauseMusic, resumeMusic } = useAudio()
 
   useEffect(() => {
@@ -235,9 +355,11 @@ export function WeddingPlaylist() {
     const handlePlaybackStateChange = (isPlaying: boolean) => {
       if (isPlaying && playbackStateRef.current !== "playing") {
         playbackStateRef.current = "playing"
+        setIsPlaying(true)
         pauseMusic()
       } else if (!isPlaying && playbackStateRef.current === "playing") {
         playbackStateRef.current = "paused"
+        setIsPlaying(false)
         resumeMusic()
       }
     }
@@ -356,55 +478,59 @@ export function WeddingPlaylist() {
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
           >
-            <div className="relative z-20 grid grid-cols-1 items-center gap-4 px-3 py-4 sm:gap-6 sm:px-7 sm:py-9 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-10 md:px-10 md:py-10">
-              {/* Info */}
-              <div className="flex flex-row flex-wrap items-center gap-x-3 gap-y-2 px-1 text-left sm:flex-col sm:flex-nowrap sm:gap-0 sm:px-0 sm:text-center md:items-start md:text-left">
-                <span
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full sm:h-16 sm:w-16"
-                  style={{
-                    background: BUTTON,
-                    boxShadow: `0 0 0 4px ${PAPER}, 0 0 0 5px ${HAIRLINE}, 0 14px 28px -12px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)`,
-                  }}
-                  aria-hidden
-                >
-                  <Disc3
-                    className={`h-6 w-6 sm:h-8 sm:w-8 ${reduceMotion ? "" : "animate-[spin_6s_linear_infinite]"}`}
-                    style={{ color: IVORY }}
-                  />
-                </span>
-                <div className="min-w-0 sm:contents">
+            <div className="relative z-20 grid grid-cols-1 items-center gap-5 px-3 pb-4 pt-6 sm:gap-6 sm:px-7 sm:py-9 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-10 md:px-10 md:py-11">
+              {/* Info: record sleeve with the vinyl sliding out, then the playlist details */}
+              <div className="flex flex-col items-center text-center md:items-start md:text-left">
+                <RecordSleeve cover={cover} monogram={monogram} alt={playlistName} spinning={isPlaying} reduceMotion={!!reduceMotion} />
+
+                <div className="mt-5 flex items-center gap-2 sm:mt-6" aria-live="polite">
+                  <Equalizer active={isPlaying && !reduceMotion} />
                   <p
-                    className={`${cinzel.className} text-[0.55rem] font-semibold uppercase tracking-[0.22em] sm:mt-4 sm:text-[0.65rem]`}
+                    className={`${cinzel.className} text-[0.58rem] font-semibold uppercase tracking-[0.24em] sm:text-[0.66rem]`}
                     style={{ color: ACCENT }}
                   >
-                    {content.cardEyebrow}
+                    {isPlaying ? extra.statusPlaying || "Now playing" : extra.statusIdle || content.cardEyebrow}
                   </p>
-                  <h3
-                    className={`${theSeasons.className} mt-0.5 truncate text-base uppercase leading-tight tracking-[0.06em] sm:mt-1.5 sm:whitespace-normal sm:text-2xl sm:tracking-[0.08em]`}
-                    style={{ color: NAVY }}
-                    title={playlistName}
-                  >
-                    <SpecialCharFont text={playlistName} />
-                  </h3>
                 </div>
+
+                <h3
+                  className={`${theSeasons.className} mt-1.5 text-xl uppercase leading-tight tracking-[0.08em] sm:text-2xl md:text-[1.7rem]`}
+                  style={{ color: NAVY }}
+                  title={playlistName}
+                >
+                  <SpecialCharFont text={playlistName} />
+                </h3>
+                <p
+                  className={`${cinzel.className} mt-1 text-[0.55rem] font-semibold uppercase tracking-[0.22em] sm:text-[0.62rem]`}
+                  style={{ color: "var(--color-welcome-text-soft)" }}
+                >
+                  {content.cardEyebrow}
+                </p>
+
+                {/* Pastel ribbon */}
+                <span
+                  aria-hidden
+                  className="my-4 block h-[2px] w-28 rounded-full sm:my-5"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, var(--color-motif-blue), var(--color-motif-green), var(--color-motif-butter), var(--color-motif-pink), var(--color-motif-violet))",
+                  }}
+                />
+
                 {content.cardNote ? (
                   <p
-                    className={`font-goudy-italic w-full text-[0.82rem] leading-snug sm:mt-3 sm:w-auto sm:max-w-sm sm:text-[0.95rem] sm:leading-relaxed md:text-base`}
+                    className="font-goudy-italic max-w-sm text-[0.88rem] leading-relaxed sm:text-[0.95rem] md:text-base"
                     style={{ color: BODY }}
                   >
                     {content.cardNote}
                   </p>
                 ) : null}
-                <span
-                  aria-hidden
-                  className="my-5 hidden h-px w-24 md:block"
-                  style={{ background: "linear-gradient(to right, var(--color-motif-yellow), transparent)" }}
-                />
+
                 <a
                   href={spotifyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${cinzel.className} mt-5 hidden items-center sm:inline-flex justify-center gap-2 rounded-full border px-7 py-2.5 font-semibold uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-motif-accent)] sm:py-3 md:mt-0 ${ct.btn}`}
+                  className={`${cinzel.className} mt-5 hidden items-center justify-center gap-2 rounded-full border px-7 py-3 font-semibold uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-motif-accent)] sm:inline-flex ${ct.btn}`}
                   style={{
                     background: BUTTON,
                     borderColor: "rgb(255 255 255 / 70%)",

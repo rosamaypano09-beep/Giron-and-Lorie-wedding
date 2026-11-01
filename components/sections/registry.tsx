@@ -1,11 +1,13 @@
 "use client"
 
 import { RisingHearts } from "@/components/rising-hearts"
-import type { CSSProperties } from "react"
+import { useState, type CSSProperties, type KeyboardEvent } from "react"
+import { QRCodeSVG } from "qrcode.react"
+import { useQrColors } from "@/hooks/use-css-color"
 import localFont from "next/font/local"
 import { cinzel } from "@/lib/fonts"
-import { Gift, Heart } from "lucide-react"
-import { motion, useReducedMotion, type Variants } from "motion/react"
+import { Gift, Heart, Copy, Check } from "lucide-react"
+import { AnimatePresence, motion, useReducedMotion, type Variants } from "motion/react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 
@@ -96,6 +98,185 @@ function RegistryTitle({ title, subtitle }: { title: string; subtitle: string })
   )
 }
 
+type GiftAccount = { provider: string; name: string; number: string }
+
+// "09309324933" → "0930 932 4933"; other numbers in groups of four
+function formatAccountNumber(number: string) {
+  const digits = number.replace(/\s+/g, "")
+  if (/^09\d{9}$/.test(digits)) return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7)}`
+  return digits.replace(/(\d{4})(?=\d)/g, "$1 ")
+}
+
+type RegistryColors = { title: string; script: string; eyebrow: string; body: string; soft: string; cardEdge: string }
+
+// Tab label: "GCash · Melchor" (first name only), or just the provider when there's no name
+function tabLabel(account: GiftAccount) {
+  const first = account.name.trim().split(/\s+/)[0]
+  return first ? { provider: account.provider, who: first } : { provider: account.provider, who: "" }
+}
+
+// One account at a time: tabs on top, a large QR with the name, number and Copy below
+function AccountTabs({
+  accounts,
+  colors,
+  buttonBg,
+}: {
+  accounts: readonly GiftAccount[]
+  colors: RegistryColors
+  buttonBg: string
+}) {
+  const { fg: qrFg, bg: qrBg } = useQrColors()
+  const reduceMotion = useReducedMotion()
+  const [active, setActive] = useState(0)
+  const [copied, setCopied] = useState(false)
+  const account = accounts[Math.min(active, accounts.length - 1)]
+  const number = account.number.replace(/\s+/g, "")
+
+  const select = (index: number) => {
+    setActive(index)
+    setCopied(false)
+  }
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(number)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      /* clipboard blocked — the number is still shown to copy by hand */
+    }
+  }
+
+  // Arrow keys move between tabs
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return
+    e.preventDefault()
+    const next = (active + (e.key === "ArrowRight" ? 1 : -1) + accounts.length) % accounts.length
+    select(next)
+    document.getElementById(`gift-tab-${next}`)?.focus()
+  }
+
+  return (
+    <motion.div variants={itemVariants} className="mx-auto mt-4 w-full max-w-sm">
+      {/* Tabs */}
+      <div
+        role="tablist"
+        aria-label="Gift accounts"
+        onKeyDown={onKeyDown}
+        className="relative flex rounded-full p-1"
+        style={{ background: "color-mix(in srgb, var(--color-motif-blush) 22%, white)", boxShadow: `inset 0 0 0 1px ${colors.cardEdge}` }}
+      >
+        {accounts.map((acc, i) => {
+          const isActive = i === active
+          const { provider, who } = tabLabel(acc)
+          return (
+            <button
+              key={`${acc.provider}-${acc.number}`}
+              id={`gift-tab-${i}`}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-controls="gift-tab-panel"
+              tabIndex={isActive ? 0 : -1}
+              onClick={() => select(i)}
+              className="relative flex min-w-0 flex-1 flex-col items-center rounded-full px-1.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-motif-accent)] sm:py-2"
+            >
+              {isActive && (
+                <motion.span
+                  layoutId="gift-tab-pill"
+                  className="absolute inset-0 rounded-full"
+                  style={{ background: buttonBg, boxShadow: "0 6px 14px -8px color-mix(in srgb, var(--color-welcome-navy) 70%, transparent)" }}
+                  transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span
+                className={`${cinzel.className} relative text-[0.58rem] font-semibold uppercase leading-tight tracking-[0.14em] sm:text-[0.66rem]`}
+                style={{ color: isActive ? "#FFFFFF" : colors.title }}
+              >
+                {provider}
+              </span>
+              {who ? (
+                <span
+                  className="font-goudy-italic relative mt-0.5 truncate text-[0.66rem] leading-none sm:text-[0.74rem]"
+                  style={{ color: isActive ? "rgb(255 255 255 / 85%)" : colors.soft }}
+                >
+                  {who}
+                </span>
+              ) : null}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Panel */}
+      <div
+        id="gift-tab-panel"
+        role="tabpanel"
+        aria-labelledby={`gift-tab-${active}`}
+        className="mt-3 rounded-2xl px-4 pb-5 pt-5 text-center sm:px-6"
+        style={{ background: "color-mix(in srgb, var(--color-motif-blush) 14%, white)", border: `1px solid ${colors.cardEdge}` }}
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={active}
+            className="flex flex-col items-center"
+            initial={reduceMotion ? false : { opacity: 0, y: 10, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.97 }}
+            transition={{ duration: 0.3, ease }}
+          >
+            <div
+              className="rounded-2xl p-2.5 sm:p-3"
+              style={{ backgroundColor: qrBg, boxShadow: `0 0 0 1px ${colors.cardEdge}, 0 14px 28px -16px color-mix(in srgb, var(--color-welcome-navy) 50%, transparent)` }}
+            >
+              <QRCodeSVG
+                value={number}
+                size={220}
+                level="M"
+                includeMargin={false}
+                fgColor={qrFg}
+                bgColor={qrBg}
+                className="block h-40 w-40 sm:h-44 sm:w-44"
+                aria-label={`QR code for ${account.provider} ${number}`}
+              />
+            </div>
+            <span
+              className={`${cinzel.className} mt-4 rounded-full px-3 py-0.5 text-[0.58rem] font-semibold uppercase tracking-[0.2em] sm:text-[0.64rem]`}
+              style={{ background: "#FFFFFF", color: colors.eyebrow, border: `1px solid ${colors.cardEdge}` }}
+            >
+              {account.provider}
+            </span>
+            {account.name ? (
+              <p
+                className={`${cinzel.className} mt-2 text-[0.7rem] font-semibold uppercase leading-snug tracking-[0.14em] sm:text-[0.78rem]`}
+                style={{ color: colors.title }}
+              >
+                {account.name}
+              </p>
+            ) : null}
+            <p
+              className={`${cinzel.className} mt-1 text-[1.15rem] font-semibold tabular-nums tracking-[0.06em] sm:text-[1.3rem]`}
+              style={{ color: colors.script }}
+            >
+              {formatAccountNumber(number)}
+            </p>
+            <button
+              type="button"
+              onClick={copy}
+              className={`${cinzel.className} mt-3 inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.14em] transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] sm:text-[0.68rem]`}
+              style={{ color: "#FFFFFF", background: buttonBg, borderColor: "rgb(255 255 255 / 70%)" }}
+              aria-label={`Copy ${account.provider} number ${number}`}
+            >
+              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+              {copied ? "Copied" : "Copy Number"}
+            </button>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  )
+}
+
 export function Registry() {
   const siteConfig = useSiteConfig()
   const content = siteConfig.registry
@@ -103,6 +284,12 @@ export function Registry() {
   const { brideNickname, groomNickname } = siteConfig.couple
   const reduceMotion = useReducedMotion()
   const initial = reduceMotion ? false : "hidden"
+
+  // Older configs (e.g. from /api/wedding-details) may not have accounts
+  const extra = content as { accounts?: GiftAccount[]; accountsTitle?: string; accountsHint?: string }
+  const accounts = extra.accounts ?? []
+  const accountsTitle = extra.accountsTitle || "Ways to Send Your Gift"
+  const accountsHint = extra.accountsHint ?? ""
 
   const buttonBg = c.button
   const buttonText = "#FFFFFF"
@@ -201,6 +388,28 @@ export function Registry() {
                 </motion.p>
               ))}
             </div>
+
+            {/* Gift accounts with QR codes */}
+            {accounts.length > 0 && (
+              <div className="mt-7 sm:mt-8">
+                <motion.div variants={itemVariants} className="flex items-center justify-center gap-2.5">
+                  <span className="h-px w-8 sm:w-12" style={{ background: `linear-gradient(to right, transparent, ${c.line})` }} aria-hidden />
+                  <p
+                    className={`${cinzel.className} text-[0.66rem] font-semibold uppercase tracking-[0.22em] sm:text-[0.74rem]`}
+                    style={{ color: c.eyebrow }}
+                  >
+                    {accountsTitle}
+                  </p>
+                  <span className="h-px w-8 sm:w-12" style={{ background: `linear-gradient(to left, transparent, ${c.line})` }} aria-hidden />
+                </motion.div>
+                {accountsHint ? (
+                  <motion.p variants={itemVariants} className={`font-goudy-italic mt-1.5 ${ct.body}`} style={{ color: c.soft }}>
+                    {accountsHint}
+                  </motion.p>
+                ) : null}
+                <AccountTabs accounts={accounts} colors={c} buttonBg={buttonBg} />
+              </div>
+            )}
 
             <div className="h-6 sm:h-7" aria-hidden />
 

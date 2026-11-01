@@ -205,6 +205,23 @@ function HeroCountdown() {
   )
 }
 
+// The Seasons has no clean glyphs for symbols / apostrophes — render those in Cinzel
+function SymbolsInCinzel({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/([^\p{L}\s]+)/u).map((part, i) =>
+        i % 2 === 1 ? (
+          <span key={i} className={`${cinzel.className} tracking-normal`}>
+            {part}
+          </span>
+        ) : (
+          part
+        ),
+      )}
+    </>
+  )
+}
+
 export function Hero() {
   const siteConfig = useSiteConfig()
   const loading = siteConfig.loadingScreen ?? defaultSiteConfig.loadingScreen
@@ -242,10 +259,8 @@ export function Hero() {
   const ceremonyTimePhrase = formatCeremonyTimePhrase(
     siteConfig.ceremony.time ?? siteConfig.wedding.time,
   )
-  const ceremonyName =
-    siteConfig.ceremony.location || siteConfig.wedding.venue
-  // Congregation / district line under the venue name (content/site.ts → CEREMONY_VENUE.address)
-  const ceremonyAddress = siteConfig.ceremony.location ? siteConfig.ceremony.venue : ""
+  // Venue name only — the address lives in the Event Details section
+  const ceremonyName = (siteConfig.ceremony.location || siteConfig.wedding.venue).trim()
 
   const fadeUp = (delay: number) => {
     if (reduceMotion) {
@@ -389,57 +404,57 @@ export function Hero() {
         </motion.h1>
 
         <motion.p
-          className="home-hero-eyebrow mt-5 text-[clamp(1.05rem,4.6vw,1.4rem)] italic leading-snug sm:mt-6"
+          className="home-hero-eyebrow mt-4 text-[clamp(0.95rem,4.1vw,1.25rem)] italic leading-snug sm:mt-5"
           {...fadeUp(0.2)}
         >
           We are getting married
         </motion.p>
 
-        <motion.div className="home-hero-date-block mt-5 flex flex-col items-center sm:mt-6" {...fadeUp(0.28)}>
+        <motion.div className="home-hero-date-block mt-4 flex flex-col items-center sm:mt-5" {...fadeUp(0.28)}>
           <span
-            className={`${cinzel.className} home-hero-date-weekday text-[clamp(0.66rem,2.8vw,0.8rem)] font-semibold uppercase tracking-[0.42em]`}
+            className={`${cinzel.className} home-hero-date-weekday text-[clamp(0.6rem,2.5vw,0.72rem)] font-semibold uppercase tracking-[0.4em]`}
           >
             {parsedDate.dayOfWeek}
           </span>
-          <div className="home-hero-date-row mt-2 flex items-center justify-center gap-[clamp(0.75rem,4vw,1.5rem)]">
+          <div className="home-hero-date-row mt-1.5 flex items-center justify-center gap-[clamp(0.65rem,3.5vw,1.25rem)]">
             <span
-              className={`${cinzel.className} home-hero-date-side text-[clamp(0.72rem,3vw,0.9rem)] font-semibold uppercase tracking-[0.24em]`}
+              className={`${cinzel.className} home-hero-date-side text-[clamp(0.64rem,2.7vw,0.8rem)] font-semibold uppercase tracking-[0.22em]`}
             >
               {/* Short month name ("Dec") */}
               {parsedDate.month.slice(0, 3)}
             </span>
             <span
               className="home-hero-date-day leading-none"
+              style={{ fontSize: "clamp(2.9rem, 14.5vw, 4.6rem)" }}
             >
               {pad2(Number(parsedDate.day))}
             </span>
             <span
-              className={`${cinzel.className} home-hero-date-side text-[clamp(0.72rem,3vw,0.9rem)] font-semibold uppercase tracking-[0.24em]`}
+              className={`${cinzel.className} home-hero-date-side text-[clamp(0.64rem,2.7vw,0.8rem)] font-semibold uppercase tracking-[0.22em]`}
             >
               {parsedDate.year}
             </span>
           </div>
         </motion.div>
 
-        <motion.div className="home-hero-meta mt-5 flex flex-col items-center gap-1 sm:mt-6" {...fadeUp(0.36)}>
+        <motion.div className="home-hero-meta mt-4 flex flex-col items-center sm:mt-5" {...fadeUp(0.36)}>
+          {/* Hairline · diamond · hairline */}
+          <span className="flex items-center gap-2 opacity-70" aria-hidden>
+            <span className="h-px w-8 sm:w-12" style={{ background: "linear-gradient(to right, transparent, currentColor)" }} />
+            <span className="h-1.5 w-1.5 rotate-45" style={{ border: "1px solid currentColor" }} />
+            <span className="h-px w-8 sm:w-12" style={{ background: "linear-gradient(to left, transparent, currentColor)" }} />
+          </span>
           <span
-            className={`${cinzel.className} home-hero-meta-time text-[clamp(0.68rem,2.9vw,0.82rem)] font-semibold uppercase tracking-[0.22em]`}
+            className={`${cinzel.className} home-hero-meta-time mt-3 text-[clamp(0.6rem,2.5vw,0.72rem)] font-semibold uppercase tracking-[0.26em] sm:mt-3.5`}
           >
             {ceremonyTimePhrase}
           </span>
-          <span className="home-hero-meta-venue text-[clamp(1.05rem,4.6vw,1.4rem)] italic leading-tight">
-            {ceremonyName}
+          <span
+            className="home-hero-meta-venue mt-1.5 max-w-[20rem] uppercase leading-snug tracking-[0.12em] sm:max-w-md sm:tracking-[0.14em]"
+            style={{ fontFamily: "var(--font-the-seasons), Georgia, serif", fontStyle: "normal", fontSize: "clamp(0.88rem, 3.7vw, 1.15rem)" }}
+          >
+            <SymbolsInCinzel text={ceremonyName} />
           </span>
-          {ceremonyAddress && (
-            <span className="home-hero-meta-address mt-1 max-w-[22rem] text-[clamp(0.78rem,3.2vw,0.95rem)] leading-snug sm:max-w-md">
-              {/* Break the district onto its own line */}
-              {ceremonyAddress.split(/\s+(?=Ecclesiastical District)/).map((line, i) => (
-                <span key={i} className="block">
-                  {line}
-                </span>
-              ))}
-            </span>
-          )}
         </motion.div>
         </div>
       </div>

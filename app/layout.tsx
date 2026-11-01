@@ -28,36 +28,47 @@ const OG_IMAGE_TYPE = /\.png$/i.test(desktopHero)
 
 const coupleNames = `${siteConfig.couple.groomNickname} & ${siteConfig.couple.brideNickname}`
 const eventTitle = `${coupleNames} - Wedding Invitation`
-const eventDescription = `Celebrate the wedding of ${siteConfig.couple.groomNickname} and ${siteConfig.couple.brideNickname} on ${siteConfig.wedding.date} at ${siteConfig.ceremony.venue}. RSVP, explore their story, and find everything you need to join the celebration.`
+const eventDescription = `Celebrate the wedding of ${siteConfig.couple.groomNickname} and ${siteConfig.couple.brideNickname} on ${siteConfig.wedding.date} at the ${siteConfig.ceremony.location.trim()}, ${siteConfig.ceremony.venue}. RSVP, explore their story, and find everything you need to join the celebration.`
+
+// "November 28, 2026" + "9:00 AM" → "2026-11-28T09:00:00+08:00" (Philippine time)
+function toIsoStart(date: string, time: string) {
+  const d = new Date(date)
+  const m = time.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i)
+  if (Number.isNaN(d.getTime()) || !m) return undefined
+  let hour = Number(m[1]) % 12
+  if (m[3].toUpperCase() === "PM") hour += 12
+  const pad = (n: number) => String(n).padStart(2, "0")
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(hour)}:${m[2]}:00+08:00`
+}
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Event",
   name: `${siteConfig.couple.groomNickname} & ${siteConfig.couple.brideNickname} Wedding`,
-  startDate: "2026-12-06T16:00:00+08:00",
-  endDate: "2026-12-06T23:00:00+08:00",
+  // Built from content/site.ts so it always matches the wedding date and ceremony time
+  startDate: toIsoStart(siteConfig.ceremony.date, siteConfig.ceremony.time),
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   location: [
     {
       "@type": "Place",
-      name: siteConfig.ceremony.venue,
+      name: siteConfig.ceremony.location.trim(),
       address: {
         "@type": "PostalAddress",
         streetAddress: siteConfig.ceremony.venue,
-        addressLocality: siteConfig.ceremony.location,
-        addressRegion: siteConfig.ceremony.location,
+        addressLocality: siteConfig.ceremony.venue,
+        addressRegion: "Negros Occidental",
         addressCountry: "PH",
       },
     },
     {
       "@type": "Place",
-      name: siteConfig.reception.venue,
+      name: siteConfig.reception.location.trim(),
       address: {
         "@type": "PostalAddress",
-        streetAddress: siteConfig.reception.location,
-        addressLocality: siteConfig.reception.location,
-        addressRegion: siteConfig.reception.location,
+        streetAddress: siteConfig.reception.venue,
+        addressLocality: siteConfig.reception.venue,
+        addressRegion: "Negros Occidental",
         addressCountry: "PH",
       },
     },
@@ -92,7 +103,7 @@ export const metadata: Metadata = {
   },
   description: eventDescription,
   keywords:
-    `${siteConfig.couple.groomNickname} ${siteConfig.couple.brideNickname} wedding, ${siteConfig.ceremony.venue} wedding, ${siteConfig.reception.venue} wedding, wedding invitation, RSVP, wedding gallery, message wall, love story, #${siteConfig.couple.groomNickname}And${siteConfig.couple.brideNickname}SayIDo`,
+    `${siteConfig.couple.groomNickname} ${siteConfig.couple.brideNickname} wedding, ${siteConfig.ceremony.location.trim()}, ${siteConfig.reception.location.trim()} wedding, wedding invitation, RSVP, wedding gallery, message wall, love story, #${siteConfig.couple.groomNickname}And${siteConfig.couple.brideNickname}SayIDo`,
   applicationName: `${coupleNames} Wedding Invitation`,
   authors: [
     { name: siteConfig.couple.groomNickname },

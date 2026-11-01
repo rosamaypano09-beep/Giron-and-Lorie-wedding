@@ -31,7 +31,7 @@ export interface StaggeredMenuProps {
 // Colors sourced from globals.css @theme inline — edit there to update everywhere
 const HERO_ACCENT = 'var(--color-motif-accent)';
 const MENU_PANEL_BG =
-  'linear-gradient(170deg, #FFFFFF 0%, var(--color-motif-soft) 45%, color-mix(in srgb, var(--color-motif-medium) 22%, white) 100%)';
+  'radial-gradient(120% 45% at 0% 0%, color-mix(in srgb, var(--color-motif-blue) 55%, transparent) 0%, transparent 70%), radial-gradient(110% 40% at 100% 100%, color-mix(in srgb, var(--color-motif-pink) 45%, transparent) 0%, transparent 70%), linear-gradient(175deg, #FFFFFF 0%, var(--color-motif-soft) 55%, color-mix(in srgb, var(--color-motif-violet) 35%, white) 100%)';
 const MENU_TEXT = 'var(--color-welcome-navy)';
 const MENU_TEXT_MUTED = 'var(--color-welcome-heading)';
 
@@ -510,8 +510,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .sm-icon { position: relative; width: 22px; height: 16px; flex: 0 0 22px; display: inline-flex; align-items: center; justify-content: center; will-change: transform; }
 .sm-scope .sm-panel-itemWrap { position: relative; overflow: hidden; line-height: 1; }
 .sm-scope .sm-icon-line { position: absolute; left: 50%; top: 50%; width: 100%; height: 2px; background: currentColor; border-radius: 2px; transform: translate(-50%, -50%); will-change: transform, opacity; }
-.sm-scope .staggered-menu-panel { position: absolute; top: 0; right: 0; width: clamp(260px, 38vw, 420px); height: 100%; background: linear-gradient(170deg, #FFFFFF 0%, var(--color-motif-soft) 45%, color-mix(in srgb, var(--color-motif-medium) 22%, white) 100%); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 6.5em 2.25em 2.25em 2.25em; overflow-y: auto; z-index: 10; border-left: 1px solid color-mix(in srgb, var(--color-motif-medium) 55%, transparent); }
-.sm-scope [data-position='left'] .staggered-menu-panel { border-left: none; border-right: 1px solid color-mix(in srgb, var(--color-motif-medium) 55%, transparent); }
+.sm-scope .staggered-menu-panel { position: absolute; top: 0; right: 0; width: clamp(260px, 38vw, 420px); height: 100%; background: var(--color-motif-soft); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 6.5em 2.25em 2.25em 2.25em; overflow-y: auto; z-index: 10; border-left: 1px solid color-mix(in srgb, var(--color-motif-medium) 55%, transparent); }
+.sm-scope [data-position='left'] .staggered-menu-panel { border-left: none; border-right: 1px solid rgb(255 255 255 / 80%); box-shadow: 18px 0 40px -18px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent); }
 .sm-scope [data-position='left'] .staggered-menu-panel { right: auto; left: 0; }
 .sm-scope .sm-prelayers { position: absolute; top: 0; right: 0; bottom: 0; width: clamp(260px, 38vw, 420px); pointer-events: none; z-index: 5; }
 .sm-scope [data-position='left'] .sm-prelayers { right: auto; left: 0; }
@@ -541,13 +541,15 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .sm-panel-item { position: relative; color: var(--color-welcome-navy); font-family: 'The Seasons', 'SortsMillGoudy', Georgia, serif; font-weight: 400; font-size: clamp(1rem, 2.9vh, 1.6rem); line-height: 1.2; letter-spacing: 0.01em; text-transform: none; cursor: pointer; display: inline-block; max-width: 100%; text-decoration: none; padding: clamp(0.2rem, 0.9vh, 0.55rem) 0; white-space: nowrap; transition: color 0.3s ease; }
 .sm-scope .sm-panel-itemLabel { display: inline-block; will-change: transform, opacity; }
 /* "&" and other symbols: italic serif in sage */
-.sm-scope .sm-panel-symbol { font-family: 'SortsMillGoudy', Georgia, 'Times New Roman', serif; font-style: italic; color: var(--color-motif-yellow); padding: 0 0.04em; }
+.sm-scope .sm-panel-symbol { font-family: 'SortsMillGoudy', Georgia, 'Times New Roman', serif; font-style: italic; color: #B8914A; padding: 0 0.04em; }
 .sm-scope .sm-panel-item:hover { color: var(--sm-accent, var(--color-motif-accent)); }
 /* Sage hairline that draws in under the hovered / current item */
-.sm-scope .sm-panel-item::before { content: ''; position: absolute; left: 0; bottom: 0.2em; height: 1px; width: 0; background: var(--color-motif-yellow); transition: width 0.35s ease; }
+.sm-scope .sm-panel-item::before { content: ''; position: absolute; left: 0; bottom: 0.2em; height: 2px; width: 0; border-radius: 2px; background: linear-gradient(90deg, var(--color-motif-blue), var(--color-motif-violet), var(--color-motif-pink)); transition: width 0.35s ease; }
 .sm-scope .sm-panel-item:hover::before, .sm-scope .sm-panel-item[data-active]::before { width: 100%; }
+.sm-scope .sm-panel-item[data-active] { padding-left: 0.9em; }
+.sm-scope .sm-panel-item[data-active]::after { content: ''; position: absolute; left: 0; top: 50%; width: 0.38em; height: 0.38em; border-radius: 50%; transform: translateY(-50%); background: var(--sm-accent, var(--color-motif-accent)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-motif-blue) 70%, transparent); }
 /* Backdrop beside the panel */
-.sm-scope .sm-backdrop { background: color-mix(in srgb, var(--color-welcome-navy) 45%, transparent); opacity: 0; transition: opacity 0.35s ease; pointer-events: none; }
+.sm-scope .sm-backdrop { background: color-mix(in srgb, var(--color-welcome-navy) 35%, transparent); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); opacity: 0; transition: opacity 0.35s ease; pointer-events: none; }
 .sm-scope[data-open] .sm-backdrop { opacity: 1; pointer-events: auto; }
 @media (prefers-reduced-motion: reduce) { .sm-scope .sm-panel-item::before, .sm-scope .sm-backdrop { transition: none; } }
 @media (max-width: 1024px) { .sm-scope .staggered-menu-panel, .sm-scope .sm-prelayers { width: min(calc(100% - 4rem), 26rem); left: 0; right: auto; } .sm-scope .staggered-menu-wrapper[data-open] .sm-logo-img { filter: invert(100%); } }

@@ -9,13 +9,12 @@ import type { AttireColor } from "@/content/site"
 import Image from "next/image"
 import localFont from "next/font/local"
 import { cinzel } from "@/lib/fonts"
-import { Shirt, Copy, Check, Navigation, MapPin, Car } from "lucide-react"
+import { Shirt, Copy, Check, Navigation, MapPin, House, Video } from "lucide-react"
 import { motion, useReducedMotion, type Variants } from "motion/react"
 import { PlainBubbles } from "@/components/loader/PlainBubbles"
 import { TintedDeco } from "@/components/tinted-deco"
 import { DecoCorners } from "@/components/deco-corners"
 import { SectionBackdrop } from "@/components/section-backdrop"
-import { siteConfig as defaultSiteConfig } from "@/content/site"
 
 const theSeasons = localFont({
   src: "../../Font/Fontspring-DEMO-theseasons-reg.otf",
@@ -157,59 +156,6 @@ function toPaletteColors(colors: readonly AttireColor[]): PaletteColor[] {
   return colors.map((c) => (typeof c === "string" ? { name: "", hex: c } : c))
 }
 
-// Light swatches (cream, blush) get charcoal names; darker ones get white
-function isLightHex(hex: string) {
-  const h = hex.replace("#", "")
-  if (h.length !== 6) return false
-  const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16))
-  return 0.299 * r + 0.587 * g + 0.114 * b > 186
-}
-
-// Full-width color strip: every color gets an equal share of the card width
-function DressCodePaletteSwatches({ palette, compact = false }: { palette: readonly PaletteColor[]; compact?: boolean }) {
-  const named = palette.filter((c) => c.name)
-  return (
-    <div
-      className="flex w-full overflow-hidden rounded-xl border-2"
-      style={{
-        borderColor: "#FFFFFF",
-        boxShadow:
-          "0 0 0 1px color-mix(in srgb, var(--color-motif-blush) 90%, transparent), 0 10px 22px -14px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent)",
-      }}
-      role="img"
-      aria-label={`Dress code color palette: ${(named.length ? named.map((c) => c.name) : palette.map((c) => c.hex)).join(", ")}`}
-    >
-      {palette.map((color, index) => (
-        <div
-          key={`${color.hex}-${index}`}
-          className={`relative flex min-w-0 flex-1 items-center justify-center ${
-            compact ? "min-h-[64px] sm:min-h-[76px] md:min-h-[88px]" : "min-h-[88px] sm:min-h-[108px] md:min-h-[128px] lg:min-h-[148px]"
-          } ${
-            index === palette.length - 1 ? "" : "border-r border-white/80"
-          }`}
-          style={{ backgroundColor: color.hex }}
-          title={color.name || color.hex}
-        >
-          {color.name ? (
-            <span
-              className="text-[6px] font-semibold uppercase tracking-[0.08em] sm:text-[7px] md:text-[8px] lg:text-[9px]"
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                ...(isLightHex(color.hex)
-                  ? { color: "var(--color-motif-deep)", textShadow: "0 1px 0 rgb(255 255 255 / 60%)" }
-                  : { color: "#FFFFFF", textShadow: "0 1px 2px rgb(0 0 0 / 45%), 0 0 6px rgb(0 0 0 / 25%)" }),
-              }}
-            >
-              {color.name}
-            </span>
-          ) : null}
-        </div>
-      ))}
-    </div>
-  )
-}
-
 function ColorPalette({ colors }: { colors: readonly string[] }) {
   const widthClass = colors.length > 4 ? "max-w-md" : "max-w-xs sm:max-w-sm"
 
@@ -223,6 +169,96 @@ function ColorPalette({ colors }: { colors: readonly string[] }) {
       {colors.map((color) => (
         <div key={color} className="min-w-0 flex-1" style={{ backgroundColor: color }} title={color} />
       ))}
+    </div>
+  )
+}
+
+// Fanned deck of framed photos: the front photo sits in the middle, the rest fan out
+// to alternate sides behind it. Each step, every card glides one place round the fan.
+function CoupleImagesCarousel({
+  coupleImages,
+  currentImageIndex,
+  onSelect,
+}: {
+  coupleImages: readonly string[]
+  currentImageIndex: number
+  onSelect: (index: number) => void
+}) {
+  const reduceMotion = useReducedMotion()
+  const count = coupleImages.length
+
+  return (
+    <div className="mb-5 flex flex-col items-center sm:mb-6">
+      <div className="relative h-[7.5rem] w-full max-w-[20rem] sm:h-[9.5rem] sm:max-w-[26rem]" aria-hidden>
+        {/* Soft blush glow behind the deck */}
+        <span
+          className="pointer-events-none absolute left-1/2 top-1/2 h-28 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl sm:h-32 sm:w-72"
+          style={{ background: "color-mix(in srgb, var(--color-motif-blush) 55%, transparent)" }}
+        />
+        {coupleImages.map((image, index) => {
+          // 0 = front; 1, 2, … alternate right / left, further out each step
+          const place = (index - currentImageIndex + count) % count
+          const rank = Math.ceil(place / 2)
+          const side = place === 0 ? 0 : place % 2 === 1 ? 1 : -1
+          return (
+            <motion.button
+              type="button"
+              key={image}
+              onClick={() => onSelect(index)}
+              tabIndex={-1}
+              className="absolute left-1/2 top-1/2 -ml-[2.6rem] -mt-[3.3rem] w-[5.2rem] cursor-pointer rounded-[0.35rem] bg-white p-1 pb-3.5 sm:-ml-[3.25rem] sm:-mt-[4.1rem] sm:w-[6.5rem] sm:p-1.5 sm:pb-5"
+              style={{
+                zIndex: 20 - rank * 2 - (side < 0 ? 1 : 0),
+                boxShadow: `0 0 0 1px ${blushEdge}, 0 14px 26px -12px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)`,
+              }}
+              initial={false}
+              animate={{
+                x: `${side * rank * 62}%`,
+                y: rank * 6,
+                rotate: side * (5 + rank * 4) + (place === 0 ? -1.5 : 0),
+                scale: place === 0 ? 1.08 : 1 - rank * 0.1,
+                opacity: rank > 2 ? 0 : 1 - rank * 0.12,
+              }}
+              transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 120, damping: 18, mass: 0.9 }}
+            >
+              <span className="relative block aspect-[4/5] w-full overflow-hidden rounded-[0.2rem]">
+                <Image
+                  src={encodeURI(image)}
+                  alt=""
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 640px) 104px, 84px"
+                />
+                {/* Slight sheen on the front photo */}
+                {place === 0 && (
+                  <span
+                    className="pointer-events-none absolute inset-0"
+                    style={{ background: "linear-gradient(135deg, rgb(255 255 255 / 22%) 0%, transparent 45%)" }}
+                  />
+                )}
+              </span>
+            </motion.button>
+          )
+        })}
+      </div>
+
+      {/* Progress dots */}
+      {count > 1 && (
+        <div className="mt-3 flex items-center gap-1.5" aria-hidden>
+          {coupleImages.map((image, index) => (
+            <motion.span
+              key={image}
+              className="block h-1.5 rounded-full"
+              animate={{
+                width: index === currentImageIndex ? 16 : 6,
+                opacity: index === currentImageIndex ? 1 : 0.45,
+              }}
+              transition={{ duration: 0.4, ease: revealEase }}
+              style={{ background: C.blue }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -282,50 +318,129 @@ function highlightPhrase(text: string, phrase?: string): ReactNode {
   )
 }
 
-function AttirePaletteGroup({
-  label,
-  description,
-  roles = [],
-}: {
+type AttireHalf = {
   label: string
-  description?: ReactNode
-  roles?: readonly { role: string; attire: string }[]
-}) {
+  details: string
+  highlight?: string
+  roles: readonly { role: string; attire: string }[]
+}
+
+// Small round swatches with their names underneath — compact palette for one group
+function PaletteDots({ palette }: { palette: readonly PaletteColor[] }) {
   return (
-    <div className="mx-auto w-full max-w-md space-y-1.5 sm:space-y-2">
-      <div className="flex items-center justify-center gap-2">
-        <span className="h-px w-6 sm:w-10" style={{ background: "linear-gradient(to right, transparent, var(--color-motif-medium))" }} />
-        <p
-          className={`${cinzel.className} text-center text-[0.62rem] font-semibold uppercase tracking-[0.22em] sm:text-[0.7rem]`}
-          style={{ color: C.label }}
+    <ul
+      className="flex flex-wrap items-start justify-center gap-x-2.5 gap-y-2 sm:gap-x-4"
+      aria-label={`Color palette: ${palette.map((c) => c.name || c.hex).join(", ")}`}
+    >
+      {palette.map((color, i) => (
+        <li key={`${color.hex}-${i}`} className="flex w-11 flex-col items-center sm:w-14">
+          <span
+            className="block h-6 w-6 rounded-full sm:h-7 sm:w-7"
+            style={{
+              backgroundColor: color.hex,
+              boxShadow: `0 0 0 2px #FFFFFF, 0 0 0 3px ${blushEdge}, 0 4px 10px -4px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent)`,
+            }}
+            title={color.name || color.hex}
+          />
+          {color.name ? (
+            <span
+              className={`${cinzel.className} mt-1.5 text-center text-[0.5rem] font-semibold uppercase leading-tight tracking-[0.06em] sm:text-[0.56rem]`}
+              style={{ color: C.soft }}
+            >
+              {color.name}
+            </span>
+          ) : null}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+// One attire group in a single compact panel: title + tag, outfits side by side, palette dots
+function AttireGroupPanel({
+  group,
+}: {
+  group: {
+    id: string
+    title: string
+    dressCode?: string
+    note?: string
+    palette: readonly AttireColor[]
+    ladies: AttireHalf
+    gentlemen: AttireHalf
+  }
+}) {
+  const palette = toPaletteColors(group.palette)
+  const halves = [group.ladies, group.gentlemen].filter((h) => h.details.trim() || h.roles.length > 0)
+  return (
+    <section
+      aria-label={`${group.title} attire`}
+      className="rounded-2xl px-3.5 py-4 sm:px-6 sm:py-5"
+      style={{ ...softPanelStyle, boxShadow: `0 0 0 1px ${blushEdge}` }}
+    >
+      <div className="flex flex-col items-center gap-1.5 text-center">
+        <h4
+          className={`${theSeasons.className} text-[0.95rem] uppercase leading-tight tracking-[0.12em] sm:text-lg md:text-xl`}
+          style={{ color: C.heading }}
         >
-          {label}
-        </p>
-        <span className="h-px w-6 sm:w-10" style={{ background: "linear-gradient(to left, transparent, var(--color-motif-medium))" }} />
+          <SpecialCharFont text={group.title} />
+        </h4>
+        {group.dressCode ? (
+          <span
+            className={`${cinzel.className} rounded-full px-2.5 py-0.5 text-[0.52rem] font-semibold uppercase tracking-[0.18em] sm:text-[0.6rem]`}
+            style={{ color: C.blue, background: "#FFFFFF", border: `1px solid ${blushEdge}` }}
+          >
+            {group.dressCode}
+          </span>
+        ) : null}
       </div>
-      {description ? (
-        <p className="font-goudy-italic text-center text-[0.78rem] leading-snug sm:text-sm" style={{ color: C.body }}>
-          {description}
-        </p>
-      ) : null}
-      {roles.length > 0 && (
-        <ul className="space-y-1.5 sm:space-y-2">
-          {roles.map(({ role, attire }) => (
-            <li key={role} className="text-center">
+
+      {halves.length > 0 && (
+        <div className={`mt-3 grid gap-2.5 sm:mt-4 sm:gap-4 ${halves.length > 1 ? "sm:grid-cols-2" : ""}`}>
+          {halves.map((half, i) => (
+            <div
+              key={half.label}
+              className={`text-center ${halves.length > 1 && i > 0 ? "border-t pt-2.5 sm:border-l sm:border-t-0 sm:pl-4 sm:pt-0" : ""}`}
+              style={{ borderColor: hairline }}
+            >
               <p
-                className={`${cinzel.className} text-[0.6rem] font-semibold uppercase leading-tight tracking-[0.12em] sm:text-[0.68rem]`}
-                style={{ color: C.heading }}
+                className={`${cinzel.className} text-[0.58rem] font-semibold uppercase tracking-[0.2em] sm:text-[0.66rem]`}
+                style={{ color: C.label }}
               >
-                <SpecialCharFont text={role} />
+                {half.label}
               </p>
-              <p className="font-goudy-italic text-[0.78rem] leading-snug sm:text-sm" style={{ color: C.body }}>
-                {attire}
-              </p>
-            </li>
+              {half.details.trim() ? (
+                <p className="font-goudy-italic mt-1 text-[0.8rem] leading-snug sm:text-sm" style={{ color: C.body }}>
+                  {highlightPhrase(half.details, half.highlight)}
+                </p>
+              ) : null}
+              {half.roles.map(({ role, attire }) => (
+                <p key={role} className="font-goudy-italic mt-1 text-[0.8rem] leading-snug sm:text-sm" style={{ color: C.body }}>
+                  <span className={`${cinzel.className} not-italic text-[0.6rem] font-semibold uppercase tracking-[0.1em]`} style={{ color: C.heading }}>
+                    {role}:
+                  </span>{" "}
+                  {attire}
+                </p>
+              ))}
+            </div>
           ))}
-        </ul>
+        </div>
       )}
-    </div>
+
+      {palette.length > 0 || group.note?.trim() ? (
+        <div className="mt-3.5 border-t pt-3.5 sm:mt-4 sm:pt-4" style={{ borderColor: hairline }}>
+          {palette.length > 0 ? <PaletteDots palette={palette} /> : null}
+          {group.note?.trim() ? (
+            <p
+              className={`font-goudy-italic text-center text-[0.72rem] leading-snug sm:text-[0.8rem] ${palette.length ? "mt-2.5" : ""}`}
+              style={{ color: C.soft }}
+            >
+              {group.note}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
+    </section>
   )
 }
 
@@ -446,144 +561,231 @@ type VenueLabels = {
   mapTitle?: string
 }
 
-// Keyless Google Maps embeds: a pin for one place, or the driving route between two
-const placeEmbedUrl = (query: string) =>
-  `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=15&output=embed`
-const routeEmbedUrl = (from: string, to: string) =>
-  `https://maps.google.com/maps?saddr=${encodeURIComponent(from)}&daddr=${encodeURIComponent(to)}&dirflg=d&output=embed`
-const routeLink = (from: string, to: string) =>
-  `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(to)}&travelmode=driving`
+type SecondReception = { show: boolean; eyebrow: string; badge: string; name: string; note: string }
 
-// Embedded map in a blush-edged frame; lazy so it only loads near the viewport
-function MapFrame({ src, title, className = "" }: { src: string; title: string; className?: string }) {
-  return (
-    <div
-      className={`relative w-full overflow-hidden rounded-2xl ${className}`}
-      style={{
-        background: "color-mix(in srgb, var(--color-motif-blush) 30%, white)",
-        boxShadow: `0 0 0 1px ${blushEdge}, 0 12px 26px -18px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent)`,
-      }}
-    >
-      <iframe
-        src={src}
-        title={title}
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        allowFullScreen
-        className="absolute inset-0 h-full w-full border-0"
-      />
-    </div>
-  )
-}
-
-type RouteContent = {
-  show: boolean
-  eyebrow: string
-  title: string
-  travelTime: string
-  fromLabel: string
-  toLabel: string
-  buttonText: string
-}
-
-// Church → reception: both stops, the travel time and the driving route on a map
-function VenueRouteCard({
-  route,
-  from,
-  to,
-  onOpenMaps,
-}: {
-  route: RouteContent
-  from: { name: string; query: string }
-  to: { name: string; query: string }
-  onOpenMaps: (link: string) => void
-}) {
+// Second reception: a text-only invitation card (no photo, map link or QR)
+function SecondReceptionCard({ info }: { info: SecondReception }) {
   const reduceMotion = useReducedMotion()
-  const stop = (letter: string, label: string, name: string) => (
-    <div className="flex min-w-0 flex-1 flex-col items-center text-center">
-      <span
-        className={`${cinzel.className} flex h-7 w-7 items-center justify-center rounded-full text-[0.7rem] font-semibold sm:h-8 sm:w-8 sm:text-xs`}
-        style={{ background: primaryButtonBg, color: "#FFFFFF", boxShadow: "0 0 0 3px #FFFFFF" }}
-      >
-        {letter}
-      </span>
-      <p className={`${cinzel.className} ${ct.labelSm} mt-2 font-semibold uppercase tracking-[0.2em]`} style={{ color: C.label }}>
-        {label}
-      </p>
-      <p
-        className={`${theSeasons.className} mt-0.5 text-[0.72rem] leading-snug tracking-[0.05em] uppercase sm:text-sm`}
-        style={{ color: C.heading }}
-      >
-        <SpecialCharFont text={name} />
-      </p>
-    </div>
-  )
-
   return (
     <motion.div
       className="relative group"
       initial={reduceMotion ? false : { opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.85, ease: revealEase }}
     >
       <div
-        className="relative overflow-hidden rounded-[1.5rem] p-3 sm:rounded-[2rem] sm:p-5 md:p-7 lg:p-9"
+        className="absolute -inset-1 rounded-2xl opacity-0 blur-lg transition-opacity duration-500 group-hover:opacity-100"
+        style={{ background: "color-mix(in srgb, var(--color-motif-accent) 14%, transparent)" }}
+      />
+      <div
+        className="relative overflow-hidden rounded-[1.5rem] px-5 py-8 text-center sm:rounded-[2rem] sm:px-10 sm:py-10 md:px-14 md:py-12"
         style={{ background: cardStyle.background, boxShadow: cardStyle.boxShadow }}
       >
-        <div className="text-center">
-          {route.eyebrow ? (
-            <p className={`${cinzel.className} ${ct.labelSm} font-semibold uppercase tracking-[0.26em]`} style={{ color: C.label }}>
-              {route.eyebrow}
-            </p>
-          ) : null}
-          <h3
-            className={`${theSeasons.className} ${ct.sectionTitle} ${route.eyebrow ? "mt-1.5" : ""} font-semibold uppercase leading-tight tracking-[0.12em]`}
-            style={{ color: C.heading }}
-          >
-            {route.title}
-          </h3>
-        </div>
-
-        {/* Church ── car + travel time ── Reception */}
-        <div className="mx-auto mt-5 flex max-w-xl items-start gap-2 sm:mt-6 sm:gap-4">
-          {stop("A", route.fromLabel, from.name)}
-          <div className="flex shrink-0 flex-col items-center pt-1.5 sm:pt-2">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="h-px w-5 border-t border-dashed sm:w-10" style={{ borderColor: "var(--color-motif-medium)" }} />
-              <Car className="h-4 w-4 sm:h-5 sm:w-5" style={{ color: C.blue }} aria-hidden />
-              <span className="h-px w-5 border-t border-dashed sm:w-10" style={{ borderColor: "var(--color-motif-medium)" }} />
-            </div>
-            <span
-              className={`${cinzel.className} mt-2 rounded-full px-2.5 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.12em] whitespace-nowrap sm:px-3 sm:text-[0.7rem]`}
-              style={{ color: C.blue, ...softPanelStyle, border: `1px solid ${blushEdge}` }}
-            >
-              {route.travelTime}
-            </span>
-          </div>
-          {stop("B", route.toLabel, to.name)}
-        </div>
-
-        <MapFrame
-          src={routeEmbedUrl(from.query, to.query)}
-          title={`Driving route from ${from.name} to ${to.name}`}
-          className="mt-5 aspect-[4/5] sm:mt-6 sm:aspect-[16/10]"
+        {/* Soft blush glow behind the text */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(60% 70% at 50% 0%, color-mix(in srgb, var(--color-motif-blush) 45%, transparent) 0%, transparent 70%)",
+          }}
+          aria-hidden
+        />
+        {/* Inner hairline frame */}
+        <div
+          className="pointer-events-none absolute inset-2.5 rounded-[1.15rem] sm:inset-3.5 sm:rounded-[1.6rem]"
+          style={{ border: `1px solid ${hairline}` }}
+          aria-hidden
         />
 
-        <button
-          type="button"
-          onClick={() => onOpenMaps(routeLink(from.query, to.query))}
-          className={`${cinzel.className} mt-4 flex w-full items-center justify-center gap-1.5 rounded-full border px-4 py-2.5 font-semibold uppercase tracking-[0.12em] sm:mt-6 sm:gap-2 sm:py-3 md:py-3.5 ${ct.btn} transition-all duration-300 hover:scale-[1.01] hover:brightness-110 active:scale-[0.98]`}
+        <div className="relative flex flex-col items-center">
+          <SectionIconDivider icon={<House className="h-3.5 w-3.5 sm:h-4 sm:w-4" style={{ color: C.blue }} aria-hidden />} />
+
+          {info.eyebrow ? (
+            <p
+              className={`${cinzel.className} mt-4 text-[0.6rem] font-semibold uppercase tracking-[0.32em] sm:mt-5 sm:text-[0.68rem] sm:tracking-[0.38em]`}
+              style={{ color: C.label }}
+            >
+              {info.eyebrow}
+            </p>
+          ) : null}
+
+          <p
+            className={`${aboveTheBeyond.className} mt-3 leading-[0.9] sm:mt-4`}
+            style={{ color: C.script, fontSize: "clamp(1.6rem, 6.5vw, 2.75rem)" }}
+          >
+            Second Reception
+          </p>
+
+          <span
+            className={`${cinzel.className} mt-4 rounded-full px-3 py-1 text-[0.55rem] font-semibold uppercase tracking-[0.2em] sm:mt-5 sm:text-[0.65rem]`}
+            style={{ color: C.blue, ...softPanelStyle, border: `1px solid ${blushEdge}` }}
+          >
+            {info.badge}
+          </span>
+
+          <h3
+            className={`${theSeasons.className} mt-3 uppercase leading-tight tracking-[0.12em] sm:mt-4 sm:tracking-[0.16em]`}
+            style={{ color: C.heading, fontSize: "clamp(1.35rem, 5.5vw, 2.4rem)" }}
+          >
+            <SpecialCharFont text={info.name} />
+          </h3>
+
+          <FadeRule className="mt-4 sm:mt-5" />
+
+          {info.note ? (
+            <p
+              className={`font-goudy-italic ${ct.bodyLg} mx-auto mt-4 max-w-md leading-relaxed sm:mt-5`}
+              style={{ color: C.body }}
+            >
+              {info.note}
+            </p>
+          ) : null}
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+type ZoomInfo = {
+  show: boolean
+  eyebrow: string
+  title: string
+  note: string
+  meetingId: string
+  passcode: string
+  noPasscodeText: string
+  link: string
+  joinButton: string
+  copyButton: string
+}
+
+// Online guests: Meeting ID (+ passcode), Join button and Copy Meeting ID
+function ZoomCard({
+  info,
+  copied,
+  onCopy,
+  onOpen,
+}: {
+  info: ZoomInfo
+  copied: boolean
+  onCopy: () => void
+  onOpen: (link: string) => void
+}) {
+  const reduceMotion = useReducedMotion()
+  return (
+    <motion.div
+      className="relative group"
+      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.85, ease: revealEase }}
+    >
+      <div
+        className="absolute -inset-1 rounded-2xl opacity-0 blur-lg transition-opacity duration-500 group-hover:opacity-100"
+        style={{ background: "color-mix(in srgb, var(--color-motif-accent) 14%, transparent)" }}
+      />
+      <div
+        className="relative overflow-hidden rounded-[1.5rem] px-5 py-8 text-center sm:rounded-[2rem] sm:px-10 sm:py-10 md:px-14"
+        style={{ background: cardStyle.background, boxShadow: cardStyle.boxShadow }}
+      >
+        <div
+          className="pointer-events-none absolute inset-0"
           style={{
-            background: primaryButtonBg,
-            borderColor: "rgb(255 255 255 / 70%)",
-            color: "#FFFFFF",
-            boxShadow: "0 12px 24px -10px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)",
+            background:
+              "radial-gradient(60% 70% at 50% 0%, color-mix(in srgb, var(--color-motif-blush) 45%, transparent) 0%, transparent 70%)",
           }}
-        >
-          <Navigation className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4 md:h-5 md:w-5" />
-          <span>{route.buttonText}</span>
-        </button>
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-2.5 rounded-[1.15rem] sm:inset-3.5 sm:rounded-[1.6rem]"
+          style={{ border: `1px solid ${hairline}` }}
+          aria-hidden
+        />
+
+        <div className="relative flex flex-col items-center">
+          <SectionIconDivider icon={<Video className="h-3.5 w-3.5 sm:h-4 sm:w-4" style={{ color: C.blue }} aria-hidden />} />
+
+          {info.eyebrow ? (
+            <p
+              className={`${cinzel.className} mt-4 text-[0.6rem] font-semibold uppercase tracking-[0.32em] sm:mt-5 sm:text-[0.68rem] sm:tracking-[0.38em]`}
+              style={{ color: C.label }}
+            >
+              {info.eyebrow}
+            </p>
+          ) : null}
+
+          <h3
+            className={`${theSeasons.className} mt-3 uppercase leading-tight tracking-[0.12em] sm:mt-4 sm:tracking-[0.16em]`}
+            style={{ color: C.heading, fontSize: "clamp(1.35rem, 5.5vw, 2.4rem)" }}
+          >
+            {info.title}
+          </h3>
+
+          {info.note ? (
+            <p className={`font-goudy-italic ${ct.body} mx-auto mt-2.5 max-w-md leading-relaxed sm:mt-3`} style={{ color: C.body }}>
+              {info.note}
+            </p>
+          ) : null}
+
+          {/* Meeting ID panel */}
+          <div
+            className="mt-5 w-full max-w-sm rounded-2xl px-4 py-4 sm:mt-6 sm:py-5"
+            style={{ ...softPanelStyle, boxShadow: `0 0 0 1px ${blushEdge}` }}
+          >
+            <p className={`${cinzel.className} ${ct.labelSm} font-semibold uppercase tracking-[0.24em]`} style={{ color: C.label }}>
+              Meeting ID
+            </p>
+            <p
+              className={`${cinzel.className} mt-1.5 text-[1.35rem] font-semibold tabular-nums tracking-[0.08em] sm:text-[1.7rem]`}
+              style={{ color: C.heading }}
+            >
+              {info.meetingId}
+            </p>
+            <span className="mx-auto my-2.5 block h-px w-2/3" style={{ background: hairline }} aria-hidden />
+            {info.passcode ? (
+              <p className={`${cinzel.className} ${ct.labelSm} font-semibold uppercase tracking-[0.2em]`} style={{ color: C.label }}>
+                Passcode: <span style={{ color: C.heading }}>{info.passcode}</span>
+              </p>
+            ) : (
+              <p className="font-goudy-italic text-[0.8rem] sm:text-sm" style={{ color: C.soft }}>
+                {info.noPasscodeText}
+              </p>
+            )}
+          </div>
+
+          <div className="mt-5 flex w-full max-w-sm flex-col gap-2 sm:mt-6 sm:flex-row sm:gap-3">
+            {info.link ? (
+              <button
+                type="button"
+                onClick={() => onOpen(info.link)}
+                className={`${cinzel.className} flex flex-1 items-center justify-center gap-1.5 rounded-full border px-4 py-2.5 font-semibold uppercase tracking-[0.12em] ${ct.btn} transition-all duration-300 hover:scale-[1.02] hover:brightness-110 active:scale-[0.98] sm:py-3`}
+                style={{
+                  background: primaryButtonBg,
+                  borderColor: "rgb(255 255 255 / 70%)",
+                  color: "#FFFFFF",
+                  boxShadow: "0 12px 24px -10px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)",
+                }}
+              >
+                <Video className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4" />
+                <span>{info.joinButton}</span>
+              </button>
+            ) : null}
+            <button
+              type="button"
+              onClick={onCopy}
+              className={`${cinzel.className} flex flex-1 items-center justify-center gap-1.5 rounded-full border px-4 py-2.5 font-semibold uppercase tracking-[0.12em] ${ct.btn} transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] sm:py-3`}
+              style={{ color: C.heading, backgroundColor: "var(--color-motif-soft)", borderColor: blushEdge }}
+            >
+              {copied ? (
+                <Check className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4" style={{ color: C.blue }} />
+              ) : (
+                <Copy className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4" />
+              )}
+              <span>{copied ? "Copied" : info.copyButton}</span>
+            </button>
+          </div>
+        </div>
       </div>
     </motion.div>
   )
@@ -602,8 +804,6 @@ type EventVenueCardProps = {
   // Combined card: one row per event (e.g. Ceremony 3:00 PM / Reception 6:00 PM)
   schedule?: { label: string; time: string }[]
   mapsLink: string
-  // Place shown on the embedded map ("" hides the map)
-  mapQuery?: string
   copyId: string
   fullVenue: string
   copiedItems: Set<string>
@@ -627,7 +827,6 @@ function EventVenueCard({
   arrivalTime,
   schedule,
   mapsLink,
-  mapQuery,
   copyId,
   fullVenue,
   copiedItems,
@@ -782,6 +981,7 @@ function EventVenueCard({
             >
               <SpecialCharFont text={locationName} />
             </h3>
+            {venueAddress ? (
             <p
               className={`${theSeasons.className} text-[10px] sm:text-xs md:text-sm lg:text-base drop-shadow-md tracking-[0.06em] leading-snug whitespace-normal [overflow-wrap:anywhere]`}
               style={{ color: "var(--color-motif-silver)" }}
@@ -793,18 +993,11 @@ function EventVenueCard({
                 </span>
               ))}
             </p>
+            ) : null}
           </div>
         </div>
 
         <div className="p-3 sm:p-5 md:p-7 lg:p-9">
-          {mapQuery ? (
-            <MapFrame
-              src={placeEmbedUrl(mapQuery)}
-              title={`${locationName} ${labels.mapTitle ?? "Map"}`}
-              className="mb-4 aspect-[4/3] sm:mb-6 sm:aspect-[16/9]"
-            />
-          ) : null}
-
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4">
             <button
               type="button"
@@ -850,18 +1043,20 @@ export function Details() {
   const siteConfig = useSiteConfig()
   const content = siteConfig.eventDetails
   const { decos, venues, labels, attire, reminders } = content
-  const route = content.route ?? defaultSiteConfig.eventDetails.route
   const { ceremony, reception } = siteConfig
 
   const [copiedItems, setCopiedItems] = useState<Set<string>>(new Set())
   const [ceremonyImageIndex, setCeremonyImageIndex] = useState(0)
   const [receptionImageIndex, setReceptionImageIndex] = useState(0)
+  const [reminderImageIndex, setReminderImageIndex] = useState(0)
   const reduceMotion = useReducedMotion()
 
   // "combined" = one card for both events at the ceremony venue (eventDetails.venues.layout)
   const isCombined = venues.layout === "combined"
   const ceremonyImages = ceremony.image
   const receptionImages = isCombined ? [] : reception.image
+  // Photos above the reminders (older configs may not have them)
+  const reminderImages = (reminders as { images?: string[] }).images ?? []
   const paletteHexes = toPaletteColors(attire.palette).map((c) => c.hex)
   // Guard against null entries (e.g. a stray comma in ATTIRE.show)
   const attireGroups = attire.groups.filter(Boolean)
@@ -877,6 +1072,15 @@ export function Details() {
     const timer = setInterval(() => setReceptionImageIndex((prev) => (prev + 1) % receptionImages.length), 4500)
     return () => clearInterval(timer)
   }, [receptionImages.length])
+
+  // Reminder photos — the deck turns every few seconds (restarts after a tap)
+  useEffect(() => {
+    if (reminderImages.length <= 1 || reduceMotion) return
+    const interval = setInterval(() => {
+      setReminderImageIndex((prev) => (prev + 1) % reminderImages.length)
+    }, 3200)
+    return () => clearInterval(interval)
+  }, [reminderImages.length, reduceMotion, reminderImageIndex])
 
   const copyToClipboard = async (text: string, itemId: string) => {
     try {
@@ -904,9 +1108,11 @@ export function Details() {
   const ceremonyVenue = `${ceremony.location}, ${ceremony.venue}`
   const receptionVenue = `${reception.location}, ${reception.venue}`
   const receptionMapsLink = reception.map || `https://maps.google.com/?q=${encodeURIComponent(receptionVenue)}`
-  const ceremonyMapQuery = ceremony.mapQuery || ceremonyVenue
-  const receptionMapQuery = reception.mapQuery || receptionVenue
-  const showRoute = !isCombined && route.show && venues.ceremony.show && venues.reception.show
+  // Older configs (e.g. from /api/wedding-details) may not have a second reception
+  const secondReception = (reception as { second?: SecondReception }).second
+  const showSecondReception = !isCombined && Boolean(secondReception?.show && secondReception.name)
+  const zoom = (content as { zoom?: ZoomInfo }).zoom
+  const showZoom = Boolean(zoom?.show && zoom.meetingId)
 
   return (
     <div
@@ -990,7 +1196,6 @@ export function Details() {
                   : []),
               ]}
               mapsLink={ceremony.map}
-              mapQuery={ceremonyMapQuery}
               copyId="combined"
               fullVenue={ceremonyVenue}
               copiedItems={copiedItems}
@@ -1014,7 +1219,6 @@ export function Details() {
               time={ceremony.time}
               arrivalTime={venues.ceremony.showArrival ? ceremony.guestsTime : undefined}
               mapsLink={ceremony.map}
-              mapQuery={ceremonyMapQuery}
               copyId="ceremony"
               fullVenue={ceremonyVenue}
               copiedItems={copiedItems}
@@ -1023,15 +1227,6 @@ export function Details() {
               showDateDetails={venues.ceremony.showDate}
               showTime={venues.ceremony.showTime}
               labels={labels}
-            />
-          )}
-
-          {showRoute && (
-            <VenueRouteCard
-              route={route}
-              from={{ name: ceremony.location, query: ceremonyMapQuery }}
-              to={{ name: reception.location, query: receptionMapQuery }}
-              onOpenMaps={openInMaps}
             />
           )}
 
@@ -1047,7 +1242,6 @@ export function Details() {
               time={reception.time}
               arrivalTime={venues.reception.showArrival ? ceremony.guestsTime : undefined}
               mapsLink={receptionMapsLink}
-              mapQuery={receptionMapQuery}
               copyId="reception"
               fullVenue={receptionVenue}
               copiedItems={copiedItems}
@@ -1056,6 +1250,17 @@ export function Details() {
               showDateDetails={venues.reception.showDate}
               showTime={venues.reception.showTime}
               labels={labels}
+            />
+          )}
+
+          {showSecondReception && secondReception && <SecondReceptionCard info={secondReception} />}
+
+          {showZoom && zoom && (
+            <ZoomCard
+              info={zoom}
+              copied={copiedItems.has("zoom")}
+              onCopy={() => copyToClipboard(zoom.meetingId.replace(/\s+/g, ""), "zoom")}
+              onOpen={openInMaps}
             />
           )}
         </div>
@@ -1074,12 +1279,6 @@ export function Details() {
             <p className={`font-goudy-italic ${ct.bodyLg} mt-3 leading-relaxed sm:mt-4`} style={{ ...onBgBody, fontWeight: 600 }}>
               {attire.description}
             </p>
-            {/* Butter yellow + pastel blue swatches (attire.palette) */}
-            {attire.palette.length > 0 && (
-              <div className="mx-auto mt-4 w-full max-w-xs sm:mt-5 sm:max-w-sm">
-                <DressCodePaletteSwatches palette={toPaletteColors(attire.palette)} compact />
-              </div>
-            )}
           </div>
           )}
 
@@ -1087,68 +1286,11 @@ export function Details() {
           {/* One card for everyone: shared image, then each group with its palette below */}
           {attireGroups.length > 0 && (
             <div className="mx-auto mb-6 w-full max-w-3xl sm:mb-8 md:mb-10">
-              <AttireCard title="" image={attire.image} alt="Entourage in butter yellow, pastel blue and cream — attire guide">
-                <div className="space-y-6 sm:space-y-8">
-                  {attireGroups.map((group, index) => {
-                    const palette = toPaletteColors(group.palette)
-                    const halves = [group.ladies, group.gentlemen].filter(
-                      (half) => half.details.trim() || half.roles.length > 0,
-                    )
-                    return (
-                      <section key={group.id} aria-label={`${group.title} attire`} className="space-y-3 sm:space-y-4">
-                        {index > 0 ? (
-                          <span
-                            className="mx-auto mb-5 block h-px w-2/3 sm:mb-7"
-                            style={{ background: "linear-gradient(to right, transparent, var(--color-motif-medium), transparent)" }}
-                            aria-hidden
-                          />
-                        ) : null}
-                        <div className="flex flex-col items-center gap-1.5">
-                          <h4
-                            className={`${cinzel.className} ${ct.attireCardTitle} text-center font-semibold uppercase leading-tight tracking-[0.2em]`}
-                            style={{ color: C.heading }}
-                          >
-                            {group.title}
-                          </h4>
-                          {group.dressCode ? (
-                            <span
-                              className={`${cinzel.className} rounded-full px-2.5 py-0.5 text-[0.55rem] font-semibold uppercase tracking-[0.18em] sm:text-[0.62rem]`}
-                              style={{
-                                color: C.blue,
-                                background: "color-mix(in srgb, var(--color-motif-blush) 35%, white)",
-                                border: `1px solid ${blushEdge}`,
-                              }}
-                            >
-                              {group.dressCode}
-                            </span>
-                          ) : null}
-                        </div>
-                        {halves.map((half) => (
-                          <AttirePaletteGroup
-                            key={half.label}
-                            label={half.label}
-                            description={half.details.trim() ? highlightPhrase(half.details, half.highlight) : undefined}
-                            roles={half.roles}
-                          />
-                        ))}
-                        {/* Palette below the descriptions */}
-                        {palette.length > 0 ? (
-                          <div className="space-y-2 pt-1">
-                            {group.note?.trim() ? (
-                              <p className="font-goudy-italic text-center text-[0.72rem] leading-snug sm:text-[0.8rem]" style={{ color: C.soft }}>
-                                {group.note}
-                              </p>
-                            ) : null}
-                            <DressCodePaletteSwatches palette={palette} compact />
-                          </div>
-                        ) : group.note?.trim() ? (
-                          <p className="font-goudy-italic text-center text-[0.78rem] leading-snug sm:text-sm" style={{ color: C.body }}>
-                            {group.note}
-                          </p>
-                        ) : null}
-                      </section>
-                    )
-                  })}
+              <AttireCard title="" image={attire.image} alt="Attire guide in pastel blue, green, yellow, pink and violet">
+                <div className="space-y-3 sm:space-y-4">
+                  {attireGroups.map((group) => (
+                    <AttireGroupPanel key={group.id} group={group} />
+                  ))}
                 </div>
               </AttireCard>
             </div>
@@ -1174,6 +1316,13 @@ export function Details() {
                 viewport={{ once: true, amount: 0.15 }}
               >
                 <motion.div variants={reminderItemVariants} className="flex flex-col items-center">
+                  {reminderImages.length > 0 ? (
+                    <CoupleImagesCarousel
+                      coupleImages={reminderImages}
+                      currentImageIndex={reminderImageIndex}
+                      onSelect={setReminderImageIndex}
+                    />
+                  ) : null}
                   <h3
                     className={`${theSeasons.className} ${ct.sectionTitle} font-semibold uppercase tracking-[0.18em]`}
                     style={{ color: C.heading }}

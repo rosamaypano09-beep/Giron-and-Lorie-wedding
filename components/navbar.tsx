@@ -121,25 +121,25 @@ export function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${
         isScrolled
-          ? "shadow-[0_10px_24px_color-mix(in_srgb,var(--color-motif-medium)_22%,transparent)]"
-          : "shadow-[0_4px_12px_color-mix(in_srgb,var(--color-motif-medium)_12%,transparent)]"
+          ? "shadow-[0_10px_28px_-6px_color-mix(in_srgb,var(--color-welcome-navy)_22%,transparent)]"
+          : "shadow-[0_4px_14px_-6px_color-mix(in_srgb,var(--color-welcome-navy)_14%,transparent)]"
       }`}
       style={{
-        // Soft ivory → blush bar; burgundy is kept for the lettering only
-        background:
-          "linear-gradient(180deg, color-mix(in srgb, var(--color-motif-soft) 94%, transparent) 0%, color-mix(in srgb, var(--color-motif-blush) 90%, transparent) 100%)",
-        WebkitBackdropFilter: "blur(10px)",
-        backdropFilter: "blur(10px)",
-        borderBottom:
-          "1px solid color-mix(in srgb, var(--color-motif-medium) 35%, transparent)",
+        // Frosted cream glass with a whisper of pastel blue — reads over sky, florals and paper alike
+        background: isScrolled
+          ? "linear-gradient(180deg, rgb(255 251 240 / 92%) 0%, color-mix(in srgb, var(--color-motif-blue) 38%, rgb(255 251 240 / 88%)) 100%)"
+          : "linear-gradient(180deg, rgb(255 251 240 / 80%) 0%, color-mix(in srgb, var(--color-motif-blue) 30%, rgb(255 251 240 / 72%)) 100%)",
+        WebkitBackdropFilter: "blur(14px) saturate(1.15)",
+        backdropFilter: "blur(14px) saturate(1.15)",
+        borderBottom: "1px solid rgb(255 255 255 / 70%)",
       }}
     >
-      {/* Hairline along the bottom edge: dusty rose → sage → dusty rose */}
+      {/* Pastel ribbon along the bottom edge: blue · green · butter · pink · violet */}
       <div
         className="absolute inset-x-0 bottom-0 h-[2px] pointer-events-none"
         style={{
           background:
-            "linear-gradient(90deg, transparent, var(--color-motif-medium) 20%, var(--color-motif-yellow) 50%, var(--color-motif-medium) 80%, transparent)",
+            "linear-gradient(90deg, transparent 0%, var(--color-motif-blue) 12%, var(--color-motif-green) 30%, var(--color-motif-butter) 50%, var(--color-motif-pink) 70%, var(--color-motif-violet) 88%, transparent 100%)",
         }}
       />
       
@@ -150,12 +150,14 @@ export function Navbar() {
             className="flex-shrink-0 group relative z-10 flex items-center justify-center py-0 pl-1 pr-2.5 sm:pl-1.5 sm:pr-3 md:pl-2 md:pr-3.5 -ml-0.5 sm:ml-0 self-stretch"
             aria-label={`${siteConfig.couple.groomNickname} & ${siteConfig.couple.brideNickname} — Home`}
           >
-            {/* Monogram painted in soft gold through its alpha mask */}
+            {/* Monogram painted in a richer antique gold (readable on the light bar) through its alpha mask */}
             <span
               aria-hidden
               className="relative block h-[2.5rem] w-[3.2rem] sm:h-[2.85rem] sm:w-[3.65rem] md:h-[3.35rem] md:w-[4.15rem] shrink-0 my-0 group-hover:scale-105 group-active:scale-100 transition-transform duration-500"
               style={{
-                backgroundColor: "var(--color-welcome-gold)",
+                background:
+                  "linear-gradient(160deg, #D9BC7E 0%, #B8914A 48%, #9C7A3C 100%)",
+                filter: "drop-shadow(0 1px 0 rgb(255 255 255 / 70%))",
                 WebkitMask: `url("${monogramSrc}") center / contain no-repeat`,
                 mask: `url("${monogramSrc}") center / contain no-repeat`,
               }}
@@ -173,15 +175,15 @@ export function Navbar() {
                   aria-current={isActive ? "location" : undefined}
                   className={`${link.wideOnly ? "hidden 2xl:inline-block" : ""} ${cinzel.className} group relative whitespace-nowrap px-2.5 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] transition-colors duration-300 lg:px-3 lg:text-[0.72rem] ${
                     isActive
-                      ? "text-[var(--color-motif-deep)]"
-                      : "text-[var(--color-welcome-heading)] hover:text-[var(--color-motif-deep)]"
+                      ? "text-[var(--color-welcome-navy)]"
+                      : "text-[var(--color-welcome-text)] hover:text-[var(--color-welcome-navy)]"
                   }`}
                 >
                   {link.label}
-                  {/* Butter underline that grows from the centre */}
+                  {/* Pastel underline that grows from the centre */}
                   <span
                     aria-hidden
-                    className={`absolute bottom-1 left-1/2 h-px -translate-x-1/2 bg-[var(--color-motif-medium)] transition-all duration-300 ${
+                    className={`absolute bottom-1 left-1/2 h-[2px] -translate-x-1/2 rounded-full bg-[linear-gradient(90deg,var(--color-motif-blue),var(--color-motif-violet),var(--color-motif-pink))] transition-all duration-300 ${
                       isActive ? "w-[60%]" : "w-0 group-hover:w-[60%]"
                     }`}
                   />
@@ -196,12 +198,12 @@ export function Navbar() {
               items={menuItems}
               socialItems={[]}
               displaySocials={false}
-              menuButtonColor="var(--color-motif-deep)"
-              openMenuButtonColor="#FFFFFF"
+              menuButtonColor="var(--color-welcome-navy)"
+              openMenuButtonColor="var(--color-welcome-navy)"
               changeMenuColorOnOpen={true}
-              // One soft sky layer slides in just ahead of the panel
-              colors={["var(--color-motif-medium)"]}
-              accentColor="var(--color-welcome-heading)"
+              // Two pastel layers (violet, then blue) slide in just ahead of the panel
+              colors={["var(--color-motif-violet)", "var(--color-motif-blue)"]}
+              accentColor="var(--color-motif-accent)"
               isFixed={true}
               activeLink={activeSection}
               onMenuOpen={() => {}}

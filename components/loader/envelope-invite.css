@@ -4340,3 +4340,59 @@
 .env-invite-screen.env-invite-screen--over-photos.is-arriving .env-invite-seal-img {
   animation: none;
 }
+
+/* ==========================================================================
+   Desktop & large screens — flexible envelope sizing.
+   The letter (and everything sized from it: headline, date, names, portraits)
+   follows both the screen width and height, so it fills a big monitor and
+   still fits a short laptop screen. Text inside the letter is no longer
+   capped at 12px. Kept last so it wins.
+   ========================================================================== */
+@media (min-width: 768px) {
+  .env-invite-screen,
+  .env-invite-screen.env-invite-screen--plain {
+    --env-letter-w: clamp(300px, min(30vw, 46vh), 500px);
+    --env-letter-h: calc(var(--env-letter-w) * 1.16);
+    --env-seal-size: clamp(104px, min(9vw, 15vh), 172px);
+  }
+
+  .env-invite-screen .env-invite-letter-inner {
+    font-size: clamp(12px, calc(var(--env-letter-w) * 0.04), 19px);
+  }
+
+  .env-invite-screen .env-invite-names__nick {
+    font-size: clamp(2.1rem, calc(var(--env-letter-w) * 0.12), 3.7rem);
+  }
+
+  .env-invite-screen .env-invite-names__and {
+    font-size: clamp(1.25rem, calc(var(--env-letter-w) * 0.07), 2.15rem);
+  }
+
+  .env-invite-screen .env-invite-hint {
+    font-size: clamp(0.85rem, min(1.05vw, 1.9vh), 1.2rem);
+    letter-spacing: 0.24em;
+    max-width: min(80vw, 34rem);
+  }
+
+  .env-invite-screen .env-invite-enter-btn {
+    font-size: clamp(0.82rem, min(0.95vw, 1.7vh), 1.05rem);
+    padding: clamp(0.75rem, 1.6vh, 1rem) clamp(2rem, 2.6vw, 3rem);
+    min-height: clamp(3rem, 6vh, 3.75rem);
+    letter-spacing: 0.22em;
+  }
+}
+
+/* Short laptop screens: keep the open letter + portraits clear of the button */
+@media (min-width: 768px) and (max-height: 760px) {
+  .env-invite-screen,
+  .env-invite-screen.env-invite-screen--plain {
+    --env-letter-w: clamp(260px, min(28vw, 40vh), 420px);
+  }
+}
+
+/* Very large screens: a touch more breathing room around the button */
+@media (min-width: 1600px) and (min-height: 900px) {
+  .env-invite-cta-bar .env-invite-enter-btn {
+    bottom: calc(clamp(3rem, 7dvh, 5rem) + env(safe-area-inset-bottom, 0px));
+  }
+}

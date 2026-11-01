@@ -306,8 +306,9 @@ export function Footer({ background = true }: { background?: boolean } = {}) {
       {background && <SectionBackdrop />}
       {background && content.showFrame && <div className="deco-frame" aria-hidden="true" />}
 
-      {/* Corner florals (content/site.ts → footer.decos) — bottom only; See You There sits above */}
-      <DecoCorners decos={{ bottomLeft: decos.bottomLeft, bottomRight: decos.bottomRight }} />
+      {/* Corner florals in all four corners (content/site.ts → footer.decos; "" hides one).
+          See You There above is a full-screen photo, so the footer frames its own top too. */}
+      <DecoCorners decos={decos} />
 
       <footer className="relative z-20 pt-14 pb-10 sm:pt-16 sm:pb-12 md:pt-20 md:pb-14">
         {/* Header: monogram + couple */}

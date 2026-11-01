@@ -170,6 +170,7 @@ export function applyInviteTwo(config: SiteConfig): SiteConfig {
       day,
       time,
       image: venue.photos,
+      second: undefined,
     },
     loveStory: {
       ...config.loveStory,
@@ -195,6 +196,7 @@ export function applyInviteTwo(config: SiteConfig): SiteConfig {
         reception: { ...venues.reception, show: true, showDate: true, showTime: true },
       },
       route: { ...(config.eventDetails.route ?? baseSiteConfig.eventDetails.route), show: false },
+      zoom: undefined,
     },
     faq: { ...config.faq, items: faqItems },
   }

@@ -17,6 +17,7 @@ import { Cinzel } from "next/font/google"
 import localFont from "next/font/local"
 import Image from "next/image"
 import { TintedDeco } from "@/components/tinted-deco"
+import { RisingHearts } from "@/components/rising-hearts"
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -209,6 +210,12 @@ export function WeddingTimeline() {
       id="wedding-timeline"
       className="relative z-10 overflow-hidden py-10 sm:py-12 md:py-16 lg:py-20"
     >
+      {/* Same background as the guest list: translucent readability scrim + butter hearts */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-black/35" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <RisingHearts tone="butter" fill />
+      </div>
+
       {/* Corner decorations (optional, from site.ts) */}
       <div className="pointer-events-none absolute left-0 top-0 z-10">
         <DecoImg src={decos.topLeft} className={CORNER_DECO_CLASS} />
@@ -525,14 +532,19 @@ function TimelineText({
   return (
     <div className={`max-w-md ${textAlign} ${align === "right" ? "ml-auto" : "mr-auto"}`}>
       <motion.p
-        className={`${cinzel.className} ${timelineType.label} font-semibold tracking-[0.2em] uppercase`}
-        style={{ color: PALE, textShadow }}
+        className={`${cinzel.className} inline-block rounded-full border px-2.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] sm:px-3 sm:text-[0.7rem]`}
+        style={{
+          color: "var(--color-motif-yellow)",
+          borderColor: "color-mix(in srgb, var(--color-motif-yellow) 55%, transparent)",
+          background: "color-mix(in srgb, var(--color-welcome-navy) 22%, transparent)",
+          textShadow,
+        }}
         variants={timeIn}
       >
         {event.time}
       </motion.p>
       <motion.p
-        className={`${theSeasons.className} mt-1 text-[1.15rem] leading-tight tracking-[0.04em] sm:text-[1.25rem] md:text-[1.175rem]`}
+        className={`${theSeasons.className} mt-2 text-[1.05rem] uppercase leading-tight tracking-[0.08em] sm:text-[1.2rem] md:text-[1.15rem] lg:text-[1.3rem]`}
         style={{ color: IVORY, textShadow: titleShadow }}
         variants={lineIn}
       >
@@ -551,8 +563,8 @@ function TimelineText({
 
       {event.location && (
         <motion.p
-          className={`font-goudy-italic ${timelineType.text} mt-1.5 leading-relaxed`}
-          style={{ color: CREAM, textShadow }}
+          className={`${cinzel.className} mt-1.5 text-[0.6rem] font-semibold uppercase leading-snug tracking-[0.16em] sm:text-[0.68rem]`}
+          style={{ color: PALE, textShadow }}
           variants={lineIn}
         >
           {event.location}

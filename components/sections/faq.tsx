@@ -241,8 +241,8 @@ export function FAQ({ background = true }: { background?: boolean } = {}) {
         id="faq"
         className="relative z-10 overflow-hidden pt-14 pb-12 sm:pt-16 sm:pb-14 md:pt-20 md:pb-16 lg:pt-24 lg:pb-20"
       >
-        {/* Corner florals (content/site.ts → faq.decos) — bottom only; Book of Guests sits above */}
-        <DecoCorners decos={{ bottomLeft: decos.bottomLeft, bottomRight: decos.bottomRight }} />
+        {/* Corner florals in all four corners (content/site.ts → faq.decos; "" hides one) */}
+        <DecoCorners decos={decos} />
 
         {/* Header */}
         <motion.div

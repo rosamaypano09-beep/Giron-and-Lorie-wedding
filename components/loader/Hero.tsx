@@ -479,23 +479,25 @@ export const Hero: React.FC<HeroProps> = ({
     exit: { y: '-18%', x: '108%', rotate: 16, scale: 0.72, opacity: 0, zIndex: 10 },
   };
 
-  const mobileEnvelopePhotoLeftVariants: Variants = {
-    hidden: { y: '58%', x: '6%', rotate: -1, scale: 0.72, opacity: 0, zIndex: 12 },
-    emerge: { y: '0%', x: '-8%', rotate: -4, scale: 1, opacity: 1, zIndex: 16 },
-    hover: { y: '-6%', x: '-8%', rotate: -4.5, scale: 1.05, opacity: 1, zIndex: 26 },
-    press: { y: '-3%', x: '-8%', rotate: -4.2, scale: 1.02, opacity: 1, zIndex: 24 },
-    lifted: { y: '-12%', x: '-8%', rotate: -4.5, scale: 1.08, opacity: 1, zIndex: 30 },
-    exit: { y: '-18%', x: '-108%', rotate: -24, scale: 0.68, opacity: 0, zIndex: 10 },
+  // Envelope portraits. On phones they sit further out to the sides and a little lower,
+  // so they frame the names on the letter instead of covering them.
+  const portraitX = isMobileViewport ? 22 : 8; // % sideways from the default spot
+  const portraitY = isMobileViewport ? 14 : 0; // % down from the default spot
+  const portraitVariants = (dir: 1 | -1): Variants => {
+    const x = `${dir * portraitX}%`;
+    const y = (offset: number) => `${portraitY + offset}%`;
+    const tilt = dir * 4;
+    return {
+      hidden: { y: '58%', x: `${-dir * 6}%`, rotate: dir, scale: 0.72, opacity: 0, zIndex: 12 },
+      emerge: { y: y(0), x, rotate: tilt, scale: 1, opacity: 1, zIndex: 16 },
+      hover: { y: y(-6), x, rotate: dir * 4.5, scale: 1.05, opacity: 1, zIndex: 26 },
+      press: { y: y(-3), x, rotate: dir * 4.2, scale: 1.02, opacity: 1, zIndex: 24 },
+      lifted: { y: y(-12), x, rotate: dir * 4.5, scale: 1.08, opacity: 1, zIndex: 30 },
+      exit: { y: '-18%', x: `${dir * 108}%`, rotate: dir * 24, scale: 0.68, opacity: 0, zIndex: 10 },
+    };
   };
-
-  const mobileEnvelopePhotoRightVariants: Variants = {
-    hidden: { y: '58%', x: '-6%', rotate: 1, scale: 0.72, opacity: 0, zIndex: 12 },
-    emerge: { y: '0%', x: '8%', rotate: 4, scale: 1, opacity: 1, zIndex: 16 },
-    hover: { y: '-6%', x: '8%', rotate: 4.5, scale: 1.05, opacity: 1, zIndex: 26 },
-    press: { y: '-3%', x: '8%', rotate: 4.2, scale: 1.02, opacity: 1, zIndex: 24 },
-    lifted: { y: '-12%', x: '8%', rotate: 4.5, scale: 1.08, opacity: 1, zIndex: 30 },
-    exit: { y: '-18%', x: '108%', rotate: 24, scale: 0.68, opacity: 0, zIndex: 10 },
-  };
+  const mobileEnvelopePhotoLeftVariants = portraitVariants(-1);
+  const mobileEnvelopePhotoRightVariants = portraitVariants(1);
 
   const revealCopyContainerVariants: Variants = {
     hidden: {},
