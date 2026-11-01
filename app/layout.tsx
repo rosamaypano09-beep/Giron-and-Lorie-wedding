@@ -27,6 +27,8 @@ const OG_IMAGE_TYPE = /\.png$/i.test(desktopHero)
     : "image/jpeg"
 
 const coupleNames = `${siteConfig.couple.groomNickname} & ${siteConfig.couple.brideNickname}`
+// Main wedding hashtag (content/site.ts → HASHTAGS[0])
+const mainHashtag = siteConfig.snapShare.hashtag[0] ?? ""
 const eventTitle = `${coupleNames} - Wedding Invitation`
 const eventDescription = `Celebrate the wedding of ${siteConfig.couple.groomNickname} and ${siteConfig.couple.brideNickname} on ${siteConfig.wedding.date} at the ${siteConfig.ceremony.location.trim()}, ${siteConfig.ceremony.venue}. RSVP, explore their story, and find everything you need to join the celebration.`
 
@@ -80,7 +82,7 @@ const jsonLd = {
     "@type": "Person",
     name: coupleNames,
   },
-  eventHashtag: `#${siteConfig.couple.groomNickname}And${siteConfig.couple.brideNickname}SayIDo`,
+  eventHashtag: mainHashtag,
 }
 
 const brittany = localFont({
@@ -103,7 +105,7 @@ export const metadata: Metadata = {
   },
   description: eventDescription,
   keywords:
-    `${siteConfig.couple.groomNickname} ${siteConfig.couple.brideNickname} wedding, ${siteConfig.ceremony.location.trim()}, ${siteConfig.reception.location.trim()} wedding, wedding invitation, RSVP, wedding gallery, message wall, love story, #${siteConfig.couple.groomNickname}And${siteConfig.couple.brideNickname}SayIDo`,
+    `${siteConfig.couple.groomNickname} ${siteConfig.couple.brideNickname} wedding, ${siteConfig.ceremony.location.trim()}, ${siteConfig.reception.location.trim()} wedding, wedding invitation, RSVP, wedding gallery, message wall, love story, ${mainHashtag}`,
   applicationName: `${coupleNames} Wedding Invitation`,
   authors: [
     { name: siteConfig.couple.groomNickname },
@@ -156,7 +158,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${coupleNames} Wedding Invitation`,
     description:
-      `You're invited to the wedding of ${siteConfig.couple.groomNickname} & ${siteConfig.couple.brideNickname} on ${siteConfig.wedding.date}. RSVP, explore their story, and get all the details for the big day! #${siteConfig.couple.groomNickname}And${siteConfig.couple.brideNickname}SayIDo`,
+      `You're invited to the wedding of ${siteConfig.couple.groomNickname} & ${siteConfig.couple.brideNickname} on ${siteConfig.wedding.date}. RSVP, explore their story, and get all the details for the big day! ${mainHashtag}`,
     images: [eventImageUrl],
     creator: `@${siteConfig.couple.groomNickname}And${siteConfig.couple.brideNickname}`,
     site: `@${siteConfig.couple.groomNickname}And${siteConfig.couple.brideNickname}`,
@@ -214,11 +216,17 @@ export default function RootLayout({
           type="font/ttf"
           crossOrigin="anonymous"
         />
-        {/* First loader photos, preloaded as the exact resized files the marquee requests */}
-        {[
-          ...LOADING_BG_PHOTOS.slice(0, 3).map((src) => ({ src, media: "(max-width: 767px)" })),
-          ...LOADING_BG_PHOTOS_DESKTOP.slice(0, 3).map((src) => ({ src, media: "(min-width: 768px)" })),
-        ].map(({ src, media }, index) => {
+        {/* First loader photos, preloaded as the exact resized files the marquee requests.
+            Photos display: the loader marquee shows the same portrait list on every screen,
+            so its first tiles (two per row) are preloaded for all widths. Plain display
+            uses the landscape set from 768px up. */}
+        {(siteConfig.loadingScreen.display === "plain"
+          ? [
+              ...LOADING_BG_PHOTOS.slice(0, 3).map((src) => ({ src, media: "(max-width: 767px)" })),
+              ...LOADING_BG_PHOTOS_DESKTOP.slice(0, 3).map((src) => ({ src, media: "(min-width: 768px)" })),
+            ]
+          : LOADING_BG_PHOTOS.slice(0, 4).map((src) => ({ src, media: undefined as string | undefined }))
+        ).map(({ src, media }, index) => {
           const { props } = getImageProps({
             src,
             alt: "",
@@ -234,7 +242,7 @@ export default function RootLayout({
               imageSrcSet={props.srcSet}
               imageSizes={props.sizes}
               media={media}
-              {...(index % 3 === 0 ? { fetchPriority: "high" as const } : {})}
+              {...(index < 2 || (media && index % 3 === 0) ? { fetchPriority: "high" as const } : {})}
             />
           )
         })}

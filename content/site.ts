@@ -215,7 +215,7 @@ const RSVP = {
   coordinator: "{groom} / {bride}", // {groom} / {bride} → couple nicknames
   phone: "to be announced",
 }
-const HASHTAGS = ["#MYwedding"]
+const HASHTAGS = ["#MelchorAndElizabeth2026", "#MelchorWedsElizabeth"]
 
 // ── Attire guide (Event Details → Attire Guidelines) ────────────────────────
 // One card for everyone: ATTIRE.image on top, then one block per group (title, dress
@@ -2024,7 +2024,7 @@ Now, as they prepare to say yes before God and the people they love most, Cather
       ],
     },
     website: {
-      show: false,
+      show: true,
       title: "Share Our Wedding Website",
       description:
         "Spread the word about {couple}'s celebration. Share this QR code so friends and family can join us.",
@@ -2040,7 +2040,7 @@ Now, as they prepare to say yes before God and the people they love most, Cather
       allCopied: "All Copied!",
     },
     social: {
-      show: false,
+      show: true,
       title: "Share on Social Media",
       description: "Help spread the word about {couple}'s wedding across your favorite platforms.",
       // Remove any you don't want: "instagram" | "facebook" | "tiktok" | "twitter"

@@ -45,11 +45,6 @@ const PHOTO_IN = {
   status: 2650,
   progress: 2750,
 } as const;
-// Photos mode opens behind a pair of pastel-blue silk curtains: the content's entrance is pushed
-// back by this much so it plays as the curtains part (0 when the curtains are skipped)
-const CURTAIN_LEAD_MS = 1100;
-// Folds per curtain side (each 12.5% wide)
-const CURTAIN_FOLDS = 8;
 const FADE_OUT_MS = 1400;
 // Handoff: the loader's content fades away first, then the envelope screen fades in
 // (photos mode: over the same, uninterrupted photo marquee)
@@ -184,8 +179,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
   const afterHeadlineMs = isPlain
     ? PLAIN_LETTER_START_MS + headlineLetterCount * PLAIN_LETTER_STAGGER_MS + 250
     : 0;
-  const showCurtains = !isPlain && !reduceMotion;
-  const pin = (ms: number) => ms + (showCurtains ? CURTAIN_LEAD_MS : 0);
+  // Photos mode: no opening curtains, so the photo marquee shows from the very first paint
+  // and the text plays in straight away over it
+  const pin = (ms: number) => ms;
   const revealDelay = (photoMs: number, plainOffsetMs: number) =>
     ({ '--ls-delay': `${isPlain ? afterHeadlineMs + plainOffsetMs : pin(photoMs)}ms` }) as React.CSSProperties;
   // Plain date steps: 0 = day, 1 = month & year, 2 = weekday
@@ -497,7 +493,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
                       src={photo}
                       alt=""
                       fill
-                      priority
+                      // The cards fade in after the marquee, so let the marquee photos load first
+                      loading="eager"
+                      fetchPriority="low"
                       className="loading-screen__std-box-img object-cover scale-105"
                       sizes="(max-width: 640px) 30vw, 160px"
                       quality={70}
@@ -595,25 +593,6 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
         </footer>
       </div>
 
-      {/* Opening curtains (photos mode): pastel-blue (#C7DDF0) silk drapes hung in folds part from the
-          centre — inner folds are pulled first and travel furthest, gathering toward the
-          wings — then slide off and dissolve. Pure CSS, so they open on first paint. */}
-      {showCurtains && (
-        <div className="ls-curtains" aria-hidden="true">
-          {(['left', 'right'] as const).map((side) => (
-            <div key={side} className={`ls-curtain ls-curtain--${side}`}>
-              {Array.from({ length: CURTAIN_FOLDS }, (_, i) => (
-                <span
-                  key={i}
-                  className="ls-curtain__fold"
-                  style={{ '--i': i, '--inner': CURTAIN_FOLDS - 1 - i } as React.CSSProperties}
-                />
-              ))}
-            </div>
-          ))}
-          <span className="ls-curtains__seam" />
-        </div>
-      )}
     </div>
   );
 };
