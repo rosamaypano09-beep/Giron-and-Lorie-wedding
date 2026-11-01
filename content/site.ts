@@ -719,6 +719,88 @@ export const siteConfig = {
           "The long distance relationship wasn't easy but with Jehovah's help we made it until today. Gipakilala ko siya sa akon pamilya nga first, ang babaye nga nagustohan ko. Next, ang babaye nga gipangaluyagan ko. Then, ang babaye nga akon mega. Finally, ang babaye nga akon pangasaw-on.",
         ],
       },
+      // ── Her side of the story (continuation) ──
+      {
+        date: "November 2024",
+        title: "A Memorable Time",
+        image: "/mobile-background/couples (15).webp",
+        paragraphs: [
+          "As I reminisce, November 2024 was a memorable time for me it was the time I met the one I'm spending my life forever. Melchor was our trade overseer in the Mahayag renovation site.",
+        ],
+      },
+      {
+        date: "Mahayag Renovation",
+        title: "Someone Reliable",
+        image: "/mobile-background/couples (9).webp",
+        paragraphs: [
+          "Nakita nako ang iyang mga maayong hiyas sama sa maayong pagpanguna ug ang voluntary spirit. He is someone reliable so working in the site wasn't difficult.",
+        ],
+      },
+      {
+        date: "Volunteering Together",
+        title: "Like a Younger Brother",
+        image: "/mobile-background/couples (18).webp",
+        paragraphs: [
+          "We became good friends as we spend time together volunteering. He was like a younger brother to me as I see my younger sister in him, a person with chubby cheeks, fun to be with and someone who is always ready to volunteer whenever possible.",
+        ],
+      },
+      {
+        date: "Leon Postigo",
+        title: "Updates I Didn't Ask For",
+        image: "/mobile-background/couples (49).webp",
+        paragraphs: [
+          "When they transferred to Leon Postigo things went different. He called every time and gave updates about things I didn't ask. People around me are talking about what he's trying to do so I prayed to Jehovah and ask for his guidance then went to Leon Postigo to volunteer and observe.",
+        ],
+      },
+      {
+        date: "A Prayer for Time",
+        title: "More Attention, Extra Care",
+        image: "/mobile-background/couples (65).webp",
+        paragraphs: [
+          "I noticed his treatment towards him feels different from how it was before in Mahayag. He showed more attention and extra care for me. I prayed to Jehovah again and told him that I am not ready to be in a relationship so please give us more time to get to know each other better as friends.",
+        ],
+      },
+      {
+        date: "Night Owl & Early Bird",
+        title: "Feelings Grew",
+        image: "/mobile-background/couples (80).webp",
+        paragraphs: [
+          "I saw how he sacrificed his sleep just to talk to me because I'm a night owl and he is an early bird. That made me feel special. Time passed and feelings grew.",
+        ],
+      },
+      {
+        date: "Prayers Answered",
+        title: "All That I Prayed For",
+        image: "/mobile-background/couples (98).webp",
+        paragraphs: [
+          "I recalled all of my prayers before. I prayed to Jehovah that if I am for marriage I will meet someone when I'm 30 who has the qualities like a good head of the family, reliable, someone with a volunteering spirit and a good cook. 😂",
+          "It was then when I realized he has all of those.",
+        ],
+      },
+      {
+        date: "July 3, 2025",
+        title: "Just at the Right Time",
+        image: "/mobile-background/couples (102).webp",
+        paragraphs: [
+          "To confirm if he is really the one I prayed to Jehovah specifically that if Melchor confess his feelings in the first week of July 2025 then I will accept him but if not then I will stop our communication for good from July 08, 2025. He confessed in July 3, 2025 just at the right time. Jehovah has given me all the answers to my prayer. Bisan layo andam siya mo biyahe para mananghid sa akong spiritual parents sa Labangan ug mananghid sa akong papa virtually kay layo man akong papa.",
+        ],
+      },
+      {
+        date: "September 07, 2025",
+        title: "Flowers and a \"Yes\"",
+        image: "/mobile-background/couples (47).webp",
+        paragraphs: [
+          "Months of courtship passed. I wanted him to feel special because he is to me so I sent a bouquet of flowers delivered with love and a \"Yes\" in September 07, 2025. The most special time in 2025 for this 30 year old woman. Volunteering together as a couple made me very happy and grateful to Jehovah for gifting me a partner I didn't expect I needed.",
+        ],
+      },
+      {
+        date: "Forever Begins",
+        title: "My Husband to Be",
+        image: "/mobile-background/couples (53).webp",
+        paragraphs: [
+          "Long distance relationship wasn't easy but as we focused on how  Jehovah has helped us that strengthened us to continue serving him wherever we are. Melchor was first, my friend. Next,my younger brother. Then, my boyfriend. Finally, my husband to be.",
+        ],
+      },
     ] as StoryChapter[],
   },
   // Gallery section (components/sections/gallery.tsx)
@@ -2026,7 +2108,7 @@ Now, as they prepare to say yes before God and the people they love most, Cather
       images: [
         "/box/box (3).JPG",
         "/box/box (2).JPG",
-        "/desktop-background/couples (5).webp",
+        "/desktop-background/couples (40).webp",
       ],
     },
     website: {
