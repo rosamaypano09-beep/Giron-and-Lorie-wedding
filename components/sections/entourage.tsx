@@ -305,6 +305,7 @@ const ROLE_CATEGORY_ORDER = [
   "Matron of Honor",
   "Best Man",
   "Maid of Honor",
+  "Witnesses",
   "Little Groom",
   "Little Bride",
   "Little Tiny Groom",
@@ -382,6 +383,7 @@ function normalizeRoleCategory(category: string): string {
   }
   const alias = honorAliases[normalized.toLowerCase()]
   if (alias) return alias
+  if (/^witness(es)?$/i.test(normalized)) return "Witnesses"
   if (/^little love bearers?$/i.test(normalized)) return "Little Love Bearer"
   if (/^candle bearers?$/i.test(normalized)) return "Candle Bearer"
   if (/^candle sponsors?$/i.test(normalized)) return "Candle Sponsors"
@@ -650,7 +652,7 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
           style={{ background: "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-motif-silver) 70%, transparent), transparent)" }}
         />
         <p
-          className={`relative ${textAlign} transition-all duration-300 max-w-full break-words`}
+          className={`relative ${textAlign} w-full max-w-full truncate whitespace-nowrap transition-all duration-300`}
           style={{
             ...nameStyle,
             ...(featured ? { fontSize: featuredNameSize } : {}),
@@ -667,7 +669,7 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
         </p>
         {showRole && displayRole && (
           <p
-            className={`${cinzel.className} relative mt-0.5 font-semibold ${textAlign} max-w-full break-words`}
+            className={`${cinzel.className} relative mt-0.5 font-semibold ${textAlign} w-full max-w-full truncate whitespace-nowrap`}
             style={{ ...roleTitleStyle, color: SCRIPT }}
             title={displayRole}
           >
@@ -995,8 +997,7 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
                           return (
                             <div key="OfficiatingMinisterBeforeSponsors" className="mt-3 sm:mt-5 md:mt-6">
                               <TwoColumnLayout
-                                singleTitle="OFFICIATING MINISTER"
-                                caption="To solemnize the marriage and lead the couple in their covenant before God."
+                                singleTitle="Officiating Minister"
                                 centerContent={true}
                               >
                                 {officiating.map((member, idx) => (
@@ -1017,7 +1018,6 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
                             <div className="flex justify-center py-1 sm:py-2 md:py-2.5 mb-1.5 sm:mb-2.5 md:mb-3" />
                             <TwoColumnLayout
                               singleTitle="Principal Sponsors"
-                              caption="To stand as principal witnesses in our exchange of vows"
                               centerContent={true}
                             >
                               {sponsors.map((sponsor, idx) => (
@@ -1465,7 +1465,10 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
                               <div className="w-full max-w-md h-px" style={dividerLineStyle} />
                             </div>
                           )}
-                          <TwoColumnLayout singleTitle="Beloved Entourage">
+                          <TwoColumnLayout
+                            leftTitle={groomsmen.length > 0 ? "Groomsmen" : undefined}
+                            rightTitle={bridesmaids.length > 0 ? "Bridesmaids" : undefined}
+                          >
                             {(() => {
                               const maxLen = Math.max(bridesmaids.length, groomsmen.length)
                               const rows = []
@@ -1559,6 +1562,29 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
                         <SectionTitle>Secondary Sponsors</SectionTitle>
                       </div>
                       {secondarySponsorGroups.map(renderPairedGroup)}
+                    </div>
+                  )
+                }
+
+                // Witnesses: always two columns, meeting at the centre
+                if (category === "Witnesses") {
+                  const half = Math.ceil(members.length / 2)
+                  return (
+                    <div key="Witnesses">
+                      {categoryIndex > 0 && (
+                        <div className="flex justify-center py-1 sm:py-2.5 md:py-3 mb-1.5 sm:mb-2.5 md:mb-3">
+                          <div className="w-full max-w-md h-px" style={dividerLineStyle} />
+                        </div>
+                      )}
+                      <TwoColumnLayout singleTitle={members.length > 1 ? "Witnesses" : "Witness"} centerContent={true}>
+                        {members.length === 1 ? (
+                          <div className="col-span-2 flex justify-center min-w-0 overflow-hidden px-0.5 sm:px-1">
+                            <NameItem member={members[0]} align="center" showRole={false} />
+                          </div>
+                        ) : (
+                          renderPairRows("witnesses", members.slice(0, half), members.slice(half))
+                        )}
+                      </TwoColumnLayout>
                     </div>
                   )
                 }

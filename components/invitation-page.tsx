@@ -282,7 +282,7 @@ export function InvitationPage({ sponsorsList, showEntourage = true, showTimelin
               <Messages />
               <Details />
               {showTimeline && <WeddingTimeline />}
-              {/* {showEntourage && <Entourage sponsorsList={sponsorsList} />} */}
+              {showEntourage && <Entourage sponsorsList={sponsorsList} />} 
               <GuestList />
               {/* One continuous circle pattern behind Book of Guests and FAQ — no seam between them */}
               <div className="relative isolate" style={{ background: "var(--color-bg-pattern-base)" }}>
@@ -291,7 +291,7 @@ export function InvitationPage({ sponsorsList, showEntourage = true, showTimelin
                 {/* Pink paper wash + rising hearts (section-backdrop.tsx) + one double border around both sections */}
                 <SectionBackdrop />
                 {siteConfig.bookOfGuests.showFrame && <div className="deco-frame" aria-hidden="true" />}
-                {/* <BookOfGuests background={false} /> */}
+                <BookOfGuests background={false} />
                 <FAQ background={false} />
               </div>
               <Registry />
