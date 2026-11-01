@@ -466,12 +466,12 @@ export function SnapShare() {
               <CardTitle>{content.moments.title}</CardTitle>
               <div className="grid w-full min-w-0 grid-cols-2 gap-2 sm:gap-3">
                 {[momentA, momentB].filter(Boolean).map((src, i) => (
-                  <div key={src} className="relative aspect-square overflow-hidden rounded-xl" style={{ boxShadow: `0 0 0 1px ${HAIRLINE}` }}>
+                  <div key={src} className="relative aspect-[3/4] overflow-hidden rounded-xl" style={{ boxShadow: `0 0 0 1px ${HAIRLINE}` }}>
                     <Image src={encodeURI(src)} alt={`Wedding moment ${i + 1}`} fill sizes="(max-width: 1024px) 45vw, 22vw" className="object-cover" />
                   </div>
                 ))}
                 {momentC ? (
-                  <div className="relative col-span-2 aspect-[3/2] overflow-hidden rounded-xl" style={{ boxShadow: `0 0 0 1px ${HAIRLINE}` }}>
+                  <div className="relative col-span-2 aspect-[4/3] overflow-hidden rounded-xl" style={{ boxShadow: `0 0 0 1px ${HAIRLINE}` }}>
                     <Image src={encodeURI(momentC)} alt="Wedding moment 3" fill sizes="(max-width: 1024px) 90vw, 45vw" className="object-cover" />
                   </div>
                 ) : null}
