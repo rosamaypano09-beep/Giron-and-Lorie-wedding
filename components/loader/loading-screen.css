@@ -5577,6 +5577,8 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 
 .ls-curtain__fold {
   --tx: calc(var(--i) * -88%);
+  /* Sway: inner folds (pulled first, travel furthest) swing the most */
+  --skew: calc(var(--i) * 0.7deg + 1.6deg);
   position: relative;
   flex: 0 0 12.5%;
   height: 104%;
@@ -5595,14 +5597,20 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
     );
   box-shadow: -6px 0 14px rgb(0 0 0 / 35%);
   transform-origin: 0 0;
-  will-change: transform;
+  will-change: transform, translate, scale;
   backface-visibility: hidden;
-  /* Two keyframes only: a single ease over the whole move (no mid-way stall) */
-  animation: ls-curtain-fold 2.3s cubic-bezier(0.65, 0, 0.3, 1) calc(320ms + var(--inner) * 40ms) both;
+  /* Two layered animations on separate properties, so neither interrupts the other:
+     - gather (translate + scale): one continuous ease, no mid-way stall
+     - sway (transform: skew): the hem trails the top, swings back a touch, then settles —
+       a soft pendulum wave that ripples outward fold by fold */
+  animation:
+    ls-curtain-gather 2.3s cubic-bezier(0.65, 0, 0.3, 1) calc(320ms + var(--inner) * 40ms) both,
+    ls-curtain-sway 2.6s ease-in-out calc(320ms + var(--inner) * 55ms) both;
 }
 
 .ls-curtain--right .ls-curtain__fold {
   --tx: calc(var(--i) * 88%);
+  --skew: calc(var(--i) * -0.7deg - 1.6deg);
   transform-origin: 100% 0;
   box-shadow: 6px 0 14px rgb(0 0 0 / 35%);
 }
@@ -5670,12 +5678,33 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   }
 }
 
-@keyframes ls-curtain-fold {
+@keyframes ls-curtain-gather {
   from {
-    transform: translate3d(0, 0, 0) scaleX(1);
+    translate: 0 0;
+    scale: 1 1;
   }
   to {
-    transform: translate3d(var(--tx), 0, 0) scaleX(0.55);
+    translate: var(--tx) 0;
+    scale: 0.55 1;
+  }
+}
+
+/* Ease-in-out per segment: the fabric slows at each swing's peak like real cloth */
+@keyframes ls-curtain-sway {
+  0% {
+    transform: skewX(0deg);
+  }
+  38% {
+    transform: skewX(var(--skew));
+  }
+  68% {
+    transform: skewX(calc(var(--skew) * -0.28));
+  }
+  86% {
+    transform: skewX(calc(var(--skew) * 0.08));
+  }
+  100% {
+    transform: skewX(0deg);
   }
 }
 
