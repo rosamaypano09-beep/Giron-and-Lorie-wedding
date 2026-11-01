@@ -5550,7 +5550,7 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   overflow: hidden;
   pointer-events: none;
   contain: strict;
-  animation: ls-curtain-hide 0s linear 3.45s forwards;
+  animation: ls-curtain-hide 0s linear 3.3s forwards;
 }
 
 .ls-curtain {
@@ -5561,7 +5561,8 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   display: flex;
   will-change: transform, opacity;
   backface-visibility: hidden;
-  animation: ls-curtain-exit-left 0.85s cubic-bezier(0.55, 0, 0.7, 0.2) 2.55s forwards;
+  /* Starts while the folds are still gathering, so the open reads as one continuous move */
+  animation: ls-curtain-exit-left 1.15s cubic-bezier(0.45, 0, 0.25, 1) 2.1s both;
 }
 
 .ls-curtain--left {
@@ -5576,7 +5577,6 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 
 .ls-curtain__fold {
   --tx: calc(var(--i) * -88%);
-  --skew: calc(var(--i) * 0.9deg + 2deg);
   position: relative;
   flex: 0 0 12.5%;
   height: 104%;
@@ -5597,12 +5597,12 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   transform-origin: 0 0;
   will-change: transform;
   backface-visibility: hidden;
-  animation: ls-curtain-fold 2.2s cubic-bezier(0.6, 0, 0.22, 1) calc(380ms + var(--inner) * 45ms) forwards;
+  /* Two keyframes only: a single ease over the whole move (no mid-way stall) */
+  animation: ls-curtain-fold 2.3s cubic-bezier(0.65, 0, 0.3, 1) calc(320ms + var(--inner) * 40ms) both;
 }
 
 .ls-curtain--right .ls-curtain__fold {
   --tx: calc(var(--i) * 88%);
-  --skew: calc(var(--i) * -0.9deg - 2deg);
   transform-origin: 100% 0;
   box-shadow: 6px 0 14px rgb(0 0 0 / 35%);
 }
@@ -5671,19 +5671,20 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 }
 
 @keyframes ls-curtain-fold {
-  0% {
-    transform: none;
+  from {
+    transform: translate3d(0, 0, 0) scaleX(1);
   }
-  55% {
-    transform: translateX(calc(var(--tx) * 0.62)) skewX(var(--skew)) scaleX(0.82);
-  }
-  100% {
-    transform: translateX(var(--tx)) skewX(0deg) scaleX(0.55);
+  to {
+    transform: translate3d(var(--tx), 0, 0) scaleX(0.55);
   }
 }
 
 @keyframes ls-curtain-exit-left {
-  60% {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  55% {
     opacity: 1;
   }
   to {
@@ -5693,7 +5694,11 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 }
 
 @keyframes ls-curtain-exit-right {
-  60% {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  55% {
     opacity: 1;
   }
   to {

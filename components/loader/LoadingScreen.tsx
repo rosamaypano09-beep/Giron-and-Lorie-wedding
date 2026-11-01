@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import localFont from 'next/font/local';
 import { useReducedMotion } from 'motion/react';
@@ -50,6 +50,21 @@ const PHOTO_IN = {
 const CURTAIN_LEAD_MS = 1100;
 // Folds per curtain side (each 12.5% wide)
 const CURTAIN_FOLDS = 8;
+// Full curtain run (ms) — matches .ls-curtains' hide time in loading-screen.css
+const CURTAIN_TOTAL_MS = 3300;
+// When the curtains started opening (page clock), shared across remounts: if React ever
+// re-creates the curtain DOM (e.g. a hydration retry), its CSS animations would restart from
+// "closed" — instead they are fast-forwarded to where the open already was
+let curtainClock: number | null = null;
+
+function getCurtainClock() {
+  if (curtainClock === null) {
+    // First open on this page load: the server HTML started animating at first paint
+    const fcp = performance.getEntriesByName('first-contentful-paint')[0]?.startTime;
+    curtainClock = fcp !== undefined && performance.now() - fcp < CURTAIN_TOTAL_MS ? fcp : performance.now();
+  }
+  return curtainClock;
+}
 const FADE_OUT_MS = 1400;
 // Handoff: the loader's content fades away first, then the envelope screen fades in
 // (photos mode: over the same, uninterrupted photo marquee)
@@ -137,13 +152,17 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
   const reduceMotion = useReducedMotion();
   const [fadeOut, setFadeOut] = useState(false);
   const [statusIndex, setStatusIndex] = useState(0);
-  const [now, setNow] = useState(() => new Date());
+  // Set after mount: the server's clock / timezone can disagree with the guest's, and a text
+  // mismatch makes React re-render the loader from scratch (restarting the curtains)
+  const [now, setNow] = useState<Date | null>(null);
+  const curtainsRef = useRef<HTMLDivElement>(null);
+  const [curtainsDone, setCurtainsDone] = useState(false);
 
   const weddingDate = useMemo(() => new Date(siteConfig.wedding.date), [siteConfig.wedding.date]);
   const hasValidDate = !Number.isNaN(weddingDate.getTime());
 
   const countdownText = useMemo(() => {
-    if (!hasValidDate) return '';
+    if (!hasValidDate || !now) return '';
     const days = Math.round((startOfDay(weddingDate) - startOfDay(now)) / MS_PER_DAY);
     if (days < 0) return content.countdownPastText;
     if (days === 0) return content.countdownTodayText;
@@ -187,6 +206,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
   // Photos mode: the curtains part first (the photo marquee is already loading behind them),
   // then the text plays in
   const showCurtains = !isPlain && !reduceMotion;
+  // Rendered regardless of reduceMotion (CSS hides them for reduced motion), so the curtain
+  // DOM never mounts/unmounts while the open is playing
+  const renderCurtains = !isPlain && !curtainsDone;
   const pin = (ms: number) => ms + (showCurtains ? CURTAIN_LEAD_MS : 0);
   const revealDelay = (photoMs: number, plainOffsetMs: number) =>
     ({ '--ls-delay': `${isPlain ? afterHeadlineMs + plainOffsetMs : pin(photoMs)}ms` }) as React.CSSProperties;
@@ -213,6 +235,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
   }, []);
 
   useEffect(() => {
+    setNow(new Date());
     const t = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(t);
   }, []);
@@ -226,6 +249,27 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
     );
     return () => clearInterval(t);
   }, [statusMessages.length, totalDurationMs]);
+
+  // Keep the curtains on the page clock: a fresh mount mid-open continues the open instead of
+  // snapping shut and reopening; one mounted after the open has finished isn't shown at all
+  useLayoutEffect(() => {
+    const el = curtainsRef.current;
+    if (!el) return;
+    const elapsed = performance.now() - getCurtainClock();
+    if (elapsed >= CURTAIN_TOTAL_MS) {
+      setCurtainsDone(true);
+    } else {
+      for (const anim of el.getAnimations({ subtree: true })) {
+        const current = Number(anim.currentTime ?? 0);
+        // Only animations that are clearly behind (re-created) — the hydrated originals are in sync
+        if (current < elapsed - 200) anim.currentTime = elapsed;
+      }
+    }
+    return () => {
+      // A real unmount after the open (e.g. navigating back later) starts a fresh run next time
+      if (performance.now() - getCurtainClock() >= CURTAIN_TOTAL_MS) curtainClock = null;
+    };
+  }, []);
 
   useEffect(() => {
     let fadeTimer: ReturnType<typeof setTimeout> | undefined;
@@ -602,8 +646,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
       {/* Opening curtains (photos mode): pastel-blue (#C7DDF0) silk drapes hung in folds part from the
           centre — inner folds are pulled first and travel furthest, gathering toward the
           wings — then slide off and dissolve. Pure CSS, so they open on first paint. */}
-      {showCurtains && (
-        <div className="ls-curtains" aria-hidden="true">
+      {renderCurtains && (
+        <div ref={curtainsRef} className="ls-curtains" aria-hidden="true">
           {(['left', 'right'] as const).map((side) => (
             <div key={side} className={`ls-curtain ls-curtain--${side}`}>
               {Array.from({ length: CURTAIN_FOLDS }, (_, i) => (
