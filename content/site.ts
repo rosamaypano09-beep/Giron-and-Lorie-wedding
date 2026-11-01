@@ -743,7 +743,13 @@ export const siteConfig = {
     lightboxSwipeHint: "Swipe to navigate", // inside the full-screen photo view
     resetZoomText: "Reset Zoom",
     // Full gallery page (/gallery)
+    // Button under the photos on the main page that opens the full gallery ("" hides it)
+    viewAllText: "View Full Gallery",
     page: {
+      // Photo behind the gallery page header — landscape for 768px+, portrait for phones ("" hides it)
+      heroDesktop: "/desktop-background/couples (49).webp",
+      heroMobile: "/mobile-background/couples (110).webp",
+      countLabel: "{count} photos",
       backText: "Back to invitation",
       backTextShort: "Back", // narrow phones
       label: "Gallery", // top bar, beside the couple's names

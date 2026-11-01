@@ -2,6 +2,7 @@
 
 import { Section } from "@/components/section"
 import { useState, useEffect, type ReactNode } from "react"
+import { createPortal } from "react-dom"
 import { useQrColors } from "@/hooks/use-css-color"
 import { QRCodeSVG } from "qrcode.react"
 import { useSiteConfig } from "@/hooks/use-site-config"
@@ -9,7 +10,7 @@ import type { AttireColor } from "@/content/site"
 import Image from "next/image"
 import localFont from "next/font/local"
 import { cinzel } from "@/lib/fonts"
-import { Shirt, Copy, Check, Navigation, MapPin, House, Video } from "lucide-react"
+import { Shirt, Copy, Check, Navigation, MapPin, House, Video, X, Maximize2 } from "lucide-react"
 import { motion, useReducedMotion, type Variants } from "motion/react"
 import { PlainBubbles } from "@/components/loader/PlainBubbles"
 import { TintedDeco } from "@/components/tinted-deco"
@@ -815,6 +816,131 @@ type EventVenueCardProps = {
   labels: VenueLabels
 }
 
+// Full-screen view of a venue's directions QR: big code, venue name, Get Directions
+function QrLightbox({
+  value,
+  title,
+  badge,
+  address,
+  labels,
+  onOpenMaps,
+  onClose,
+}: {
+  value: string
+  title: string
+  badge: string
+  address: string
+  labels: VenueLabels
+  onOpenMaps: (link: string) => void
+  onClose: () => void
+}) {
+  const { fg: qrFg, bg: qrBg } = useQrColors()
+  const reduceMotion = useReducedMotion()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose()
+    }
+    window.addEventListener("keydown", onKey)
+    const prevHtml = document.documentElement.style.overflow
+    const prevBody = document.body.style.overflow
+    document.documentElement.style.overflow = "hidden"
+    document.body.style.overflow = "hidden"
+    return () => {
+      window.removeEventListener("keydown", onKey)
+      document.documentElement.style.overflow = prevHtml
+      document.body.style.overflow = prevBody
+    }
+  }, [onClose])
+
+  if (!mounted) return null
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 backdrop-blur-[6px]"
+      style={{ background: "color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)" }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${title} — ${labels.scanForDirections}`}
+      onClick={onClose}
+    >
+      <motion.div
+        className="relative w-full max-w-[22rem] rounded-[1.75rem] px-6 pb-6 pt-7 text-center sm:max-w-sm sm:px-8 sm:pb-8"
+        style={{ background: cardStyle.background, boxShadow: `${cardStyle.boxShadow}, 0 30px 60px -20px rgb(0 0 0 / 35%)` }}
+        initial={reduceMotion ? false : { opacity: 0, y: 16, scale: 0.94 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.35, ease: revealEase }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-motif-accent)]"
+          aria-label="Close"
+          autoFocus
+        >
+          <X className="h-5 w-5" style={{ color: C.heading }} />
+        </button>
+
+        <span
+          className={`${cinzel.className} inline-block rounded-full px-3 py-1 text-[0.58rem] font-semibold uppercase tracking-[0.22em] sm:text-[0.64rem]`}
+          style={{ color: C.blue, ...softPanelStyle, border: `1px solid ${blushEdge}` }}
+        >
+          {badge}
+        </span>
+        <h3
+          className={`${theSeasons.className} mt-3 text-lg uppercase leading-tight tracking-[0.1em] sm:text-xl`}
+          style={{ color: C.heading }}
+        >
+          <SpecialCharFont text={title.trim()} />
+        </h3>
+        {address ? (
+          <p className="font-goudy-italic mt-1 text-sm leading-snug" style={{ color: C.body }}>
+            {address}
+          </p>
+        ) : null}
+
+        <div
+          className="mx-auto mt-5 w-fit rounded-2xl p-3 sm:p-4"
+          style={{ backgroundColor: qrBg, boxShadow: `0 0 0 1px ${blushEdge}, 0 16px 30px -18px color-mix(in srgb, var(--color-welcome-navy) 50%, transparent)` }}
+        >
+          <QRCodeSVG
+            value={value}
+            size={512}
+            level="M"
+            includeMargin={false}
+            fgColor={qrFg}
+            bgColor={qrBg}
+            className="block h-56 w-56 sm:h-64 sm:w-64"
+            aria-label={labels.scanForDirections}
+          />
+        </div>
+        <p className={`${cinzel.className} mt-3 text-[0.6rem] font-semibold uppercase tracking-[0.22em] sm:text-[0.66rem]`} style={{ color: C.label }}>
+          {labels.scanForDirections}
+        </p>
+
+        <button
+          type="button"
+          onClick={() => onOpenMaps(value)}
+          className={`${cinzel.className} mt-5 flex w-full items-center justify-center gap-2 rounded-full border px-5 py-3 font-semibold uppercase tracking-[0.12em] ${ct.btn} transition-all duration-300 hover:scale-[1.02] hover:brightness-110 active:scale-[0.98]`}
+          style={{
+            background: primaryButtonBg,
+            borderColor: "rgb(255 255 255 / 70%)",
+            color: "#FFFFFF",
+            boxShadow: "0 12px 24px -10px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)",
+          }}
+        >
+          <Navigation className="h-4 w-4 flex-shrink-0" />
+          <span>{labels.getDirections}</span>
+        </button>
+      </motion.div>
+    </div>,
+    document.body,
+  )
+}
+
 function EventVenueCard({
   badge,
   images,
@@ -842,9 +968,21 @@ function EventVenueCard({
   const hasDate = Boolean(eventDate && !Number.isNaN(eventDate.getTime()))
   const hasTimeLine = showTime && (!schedule || Boolean(arrivalTime))
   const hasSchedule = Boolean(schedule && schedule.length > 0)
+  const [qrOpen, setQrOpen] = useState(false)
 
   return (
     <div className="relative group">
+      {qrOpen && (
+        <QrLightbox
+          value={mapsLink}
+          title={locationName}
+          badge={badge}
+          address={venueAddress}
+          labels={labels}
+          onOpenMaps={onOpenMaps}
+          onClose={() => setQrOpen(false)}
+        />
+      )}
       <div
         className="absolute -inset-1 rounded-2xl opacity-0 blur-lg transition-opacity duration-500 group-hover:opacity-100"
         style={{
@@ -946,12 +1084,23 @@ function EventVenueCard({
             }}
           />
 
-          {/* Small directions QR in the photo's corner */}
-          <div
-            className="absolute bottom-3 right-3 z-30 rounded-md p-1 shadow-md sm:bottom-4 sm:right-4 sm:rounded-lg sm:p-1.5 md:bottom-6 md:right-6"
+          {/* Small directions QR in the photo's corner — tap to see it large */}
+          <button
+            type="button"
+            onClick={() => setQrOpen(true)}
+            className="group/qr absolute bottom-3 right-3 z-30 rounded-md p-1 shadow-md transition-transform duration-300 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:bottom-4 sm:right-4 sm:rounded-lg sm:p-1.5 md:bottom-6 md:right-6"
             style={{ backgroundColor: qrBg }}
             title={labels.scanForDirections}
+            aria-label={`Enlarge the directions QR code for ${locationName}`}
           >
+            {/* Small expand badge */}
+            <span
+              className="absolute -left-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full shadow sm:h-6 sm:w-6"
+              style={{ background: primaryButtonBg, color: "#FFFFFF" }}
+              aria-hidden
+            >
+              <Maximize2 className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+            </span>
             <QRCodeSVG
               value={mapsLink}
               size={128}
@@ -960,9 +1109,9 @@ function EventVenueCard({
               fgColor={qrFg}
               bgColor={qrBg}
               className="block h-11 w-11 sm:h-14 sm:w-14 md:h-16 md:w-16"
-              aria-label={labels.scanForDirections}
+              aria-hidden
             />
-          </div>
+          </button>
 
           <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 md:bottom-6 md:left-6 right-16 sm:right-22 md:right-26 z-30">
             <span

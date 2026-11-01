@@ -3,8 +3,9 @@
 import { useState, useEffect, useLayoutEffect, useCallback, useRef } from "react"
 import { createPortal } from "react-dom"
 import Image from "next/image"
+import Link from "next/link"
 import localFont from "next/font/local"
-import { X, ChevronLeft, ChevronRight, Camera } from "lucide-react"
+import { X, ChevronLeft, ChevronRight, Camera, Images, ArrowRight } from "lucide-react"
 import { cinzel } from "@/lib/fonts"
 import { Section } from "@/components/section"
 import { sectionType } from "@/lib/section-typography"
@@ -515,6 +516,30 @@ export function Gallery() {
                 </button>
               ))}
             </div>
+
+            {/* Opens the full gallery page (/gallery) */}
+            {(gallery as { viewAllText?: string }).viewAllText ? (
+              <div className="mt-8 flex justify-center sm:mt-12 lg:mt-14">
+                <Link
+                  href="/gallery"
+                  className={`${cinzel.className} group inline-flex items-center gap-2.5 rounded-full border py-2 pl-2 pr-5 text-[0.66rem] font-semibold uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-motif-accent)] sm:pr-6 sm:text-[0.72rem] sm:tracking-[0.24em]`}
+                  style={{
+                    background:
+                      "linear-gradient(180deg, var(--color-welcome-heading) 0%, color-mix(in srgb, var(--color-welcome-heading) 72%, var(--color-welcome-navy)) 100%)",
+                    borderColor: "rgb(255 255 255 / 70%)",
+                    color: "#FFFFFF",
+                    boxShadow:
+                      "0 0 0 4px color-mix(in srgb, var(--color-motif-blue) 45%, transparent), 0 14px 28px -12px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)",
+                  }}
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 sm:h-9 sm:w-9" aria-hidden>
+                    <Images className="h-4 w-4" />
+                  </span>
+                  {(gallery as { viewAllText?: string }).viewAllText}
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
+                </Link>
+              </div>
+            ) : null}
 
             {gallery.footnote ? (
               <p

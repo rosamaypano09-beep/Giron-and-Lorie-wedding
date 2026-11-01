@@ -9,6 +9,7 @@ import { SectionBackdrop } from "@/components/section-backdrop"
 import localFont from "next/font/local"
 import { cinzel } from "@/lib/fonts"
 import { Camera } from "lucide-react"
+import Image from "next/image"
 
 const theSeasons = localFont({
   src: "../../Font/Fontspring-DEMO-theseasons-reg.otf",
@@ -45,6 +46,12 @@ const HEART_PATH =
   "M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.5 5c2 0 3.5 1.1 4.3 2.6h2.4C14 6.1 15.5 5 17.5 5 21 5 23 8.6 21.6 11.8 19.5 16.4 12 21 12 21z"
 
 export const dynamic = "force-static"
+
+// Side sprigs (the header sprig, mirrored on the right; "" hides one)
+const DECOR_SIDE = {
+  left: "/deco/lovestorydeco/headerOrnament.png",
+  right: "/deco/lovestorydeco/headerOrnament.png",
+}
 
 function OutsideDivider() {
   return (
@@ -100,6 +107,10 @@ export default async function GalleryPage() {
   const gallery = siteConfig.gallery
   const decos = gallery.decos
   const { desktop, mobile } = await fetchGalleryImages()
+  const page = gallery.page as typeof gallery.page & { heroDesktop?: string; heroMobile?: string; countLabel?: string }
+  const heroDesktop = page.heroDesktop ?? ""
+  const heroMobile = page.heroMobile ?? ""
+  const photoCount = desktop.length + mobile.length
   const images = [
     ...desktop.map((image) => ({
       ...image,
@@ -123,8 +134,64 @@ export default async function GalleryPage() {
           (content/site.ts → gallery.decos / showFrame) */}
       <PlainBubbles />
       <SectionBackdrop />
+
+      {/* Photo behind the header: the couple, washed in cream and pastel blue, fading into the
+          page below (content/site.ts → gallery.page.heroDesktop / heroMobile) */}
+      {heroDesktop || heroMobile ? (
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[78vh] max-h-[760px] min-h-[420px] overflow-hidden" aria-hidden>
+          {heroMobile ? (
+            <Image
+              src={encodeURI(heroMobile)}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className={`object-cover object-[center_30%] ${heroDesktop ? "md:hidden" : ""}`}
+            />
+          ) : null}
+          {heroDesktop ? (
+            <Image
+              src={encodeURI(heroDesktop)}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className={`object-cover object-[center_35%] ${heroMobile ? "hidden md:block" : ""}`}
+            />
+          ) : null}
+          {/* Cream + pastel wash so the heading stays readable, fading out at the bottom */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(70% 55% at 50% 45%, rgb(255 251 240 / 82%) 0%, rgb(255 251 240 / 55%) 55%, rgb(255 251 240 / 30%) 100%), linear-gradient(180deg, color-mix(in srgb, var(--color-motif-blue) 35%, transparent) 0%, transparent 35%, transparent 60%, var(--color-bg-pattern-base) 100%)",
+            }}
+          />
+        </div>
+      ) : null}
+
       {gallery.showFrame && <div className="deco-frame" aria-hidden="true" />}
       <DecoCorners decos={decos} />
+
+      {/* Eucalyptus sprigs along both sides (large screens) */}
+      {DECOR_SIDE.left ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={DECOR_SIDE.left}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute -left-4 top-[34rem] z-10 hidden w-40 -rotate-[70deg] select-none opacity-70 lg:block xl:w-48"
+        />
+      ) : null}
+      {DECOR_SIDE.right ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={DECOR_SIDE.right}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute -right-4 top-[64rem] z-10 hidden w-40 rotate-[70deg] -scale-x-100 select-none opacity-70 lg:block xl:w-48"
+        />
+      ) : null}
 
       <section className="relative z-20 mx-auto max-w-7xl px-3 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
         <div className="relative z-20 mb-8 px-3 text-center sm:mb-10 sm:px-4 md:mb-12">
@@ -167,6 +234,31 @@ export default async function GalleryPage() {
             </span>
             <span className="h-px w-8 sm:w-12 md:w-16" style={sageDividerStyleLeft} />
           </div>
+
+          {photoCount > 0 && page.countLabel ? (
+            <p
+              className={`${cinzel.className} mx-auto mt-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.24em] sm:text-[0.7rem]`}
+              style={{
+                color: NAVY,
+                background: "rgb(255 255 255 / 75%)",
+                boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--color-motif-blush) 90%, transparent), 0 8px 18px -12px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent)",
+                WebkitBackdropFilter: "blur(6px)",
+                backdropFilter: "blur(6px)",
+              }}
+            >
+              <span className="h-1.5 w-1.5 rounded-full" style={{ background: SUN }} aria-hidden />
+              {page.countLabel.split("{count}").join(String(photoCount))}
+            </p>
+          ) : null}
+          {/* Pastel ribbon: blue · green · butter · pink · violet */}
+          <span
+            aria-hidden
+            className="mx-auto mt-5 block h-[2px] w-40 rounded-full sm:w-56"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, var(--color-motif-blue), var(--color-motif-green), var(--color-motif-butter), var(--color-motif-pink), var(--color-motif-violet), transparent)",
+            }}
+          />
         </div>
 
         {images.length > 0 ? (
