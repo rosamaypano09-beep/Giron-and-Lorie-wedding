@@ -80,18 +80,18 @@ const TIMES = {
   entourageCall: "7:00 AM", // entourage assembly ⚠ check — not confirmed yet
   guestArrival: "8:00 AM", // guests arrival / assembly (shown in Event Details + reminders) ⚠ check — not confirmed yet
   ceremony: "9:00 AM",
-  reception: "12:00 PM", // start of program
+  reception: "11:00 AM", // start of program
 }
 
 // ── Venues ──────────────────────────────────────────────────────────────────
 
 const CEREMONY_VENUE = {
   name: "Kingdom Hall of Jehovah's Witnesses",
-  address: "Victorias, Negros Occidental",
+  address: "Brgy Estado Kinghom Hall Location",
   // ⚠ check — Google Maps search link; swap for the exact pin when available
   map: "https://maps.app.goo.gl/vSx2t9VRE83GawbRA",
   // Place searched for the embedded map + church → reception route ⚠ check the pin lands on the chapel
-  mapQuery: "Kingdom Hall of Jehovah's Witnesses, Victorias, Negros Occidental",
+  mapQuery: "Kingdom Hall of Jehovah's Witnesses, Brgy Estado Kinghom Hall Location",
   photos: ["/Details/ceremony.png"] as string[],
 }
 const RECEPTION_VENUE = {
@@ -215,7 +215,7 @@ const RSVP = {
   coordinator: "{groom} / {bride}", // {groom} / {bride} → couple nicknames
   phone: "to be announced",
 }
-const HASHTAGS = ["#MelchorAndElizabeth2026", "#MelchorWedsElizabeth"]
+const HASHTAGS = ["#LifetimeAdMELCHORwithElizabeth"]
 
 // ── Attire guide (Event Details → Attire Guidelines) ────────────────────────
 // One card for everyone: ATTIRE.image on top, then one block per group (title, dress
@@ -278,24 +278,24 @@ const ATTIRE = {
 
   ushers: {
     title: "Ushers & Usherettes",
-    dressCode: "White, Black & Florals",
+    dressCode: "White, Black, Blue & Peach",
     palette: [
       { name: "White", hex: "#FAFAF7" },
       { name: "Black", hex: "#1E1E1E" },
-      { name: "Floral Blue", hex: "#BCD4EC" },
-      { name: "Floral Pink", hex: "#F2C4CF" },
+      { name: "Blue", hex: "#BCD4EC" },
+      { name: "Peach", hex: "#FAD0B5" },
     ] as AttireColor[],
     note: "",
     ladies: {
       label: "Usherettes",
-      details: "A floral dress in blue or pink.",
-      highlight: "floral dress",
+      details: "Blue dress and peach dress.",
+      highlight: "Blue dress and peach dress",
       roles: [] as { role: string; attire: string }[],
     },
     gentlemen: {
       label: "Ushers",
-      details: "A white long-sleeve shirt with black slacks.",
-      highlight: "white long-sleeve shirt",
+      details: "White long sleeve shirt with blue or peach necktie and black slacks.",
+      highlight: "White long sleeve shirt",
       roles: [] as { role: string; attire: string }[],
     },
   },
@@ -1011,7 +1011,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "4:00 PM", // ⚠ check — not confirmed yet
+        time: "10:00 AM",
         title: "Photo Session",
         description: "Join us for pictures with the newlyweds.",
         location: "{ceremony}",
@@ -1029,7 +1029,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "5:45 PM", // ⚠ check — not confirmed yet
+        time: "11:20 AM",
         title: "Grand Entrance",
         description: "Welcome the newlyweds as husband and wife.",
         location: "{reception}",
@@ -1038,7 +1038,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "6:00 PM", // ⚠ check — not confirmed yet
+        time: "11:30 AM",
         title: "Wedding Feast",
         description: "Let's share a meal and celebrate together.",
         location: "{reception}",
@@ -1047,7 +1047,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "7:00 PM", // ⚠ check — not confirmed yet
+        time: "11:45 AM",
         title: "Cake Cutting",
         description: "",
         location: "{reception}",
@@ -1056,7 +1056,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "7:30 PM", // ⚠ check — not confirmed yet
+        time: "12:00 PM",
         title: "First Dance",
         description: "Our first dance as husband and wife.",
         location: "{reception}",
@@ -1065,7 +1065,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "9:00 PM", // ⚠ check — not confirmed yet
+        time: "2:00 PM",
         title: "Send-off",
         description: "Thank you for celebrating with us!",
         location: "{reception}",
@@ -1360,7 +1360,7 @@ export const siteConfig = {
       {
         question: "What should I wear?",
         answer:
-          "Please see the [attire guide](#details) in Event Details.\n\n• Male & female entourage: Barong and dress in pastel blue, green, yellow, pink or violet.\n• Ushers: white long-sleeve shirt and black slacks. Usherettes: floral blue or floral pink dress.\n• Family members & witnesses: beige.\n• Guests: floral dress or Barong / suit in blue, pink, yellow, violet or green.\n\nKindly keep attire modest and elegant.",
+          "Please see the [attire guide](#details) in Event Details.\n\n• Male & female entourage: Barong and dress in pastel blue, green, yellow, pink or violet.\n• Ushers: white long sleeve shirt with blue or peach necktie and black slacks. Usherettes: blue dress and peach dress.\n• Family members & witnesses: beige.\n• Guests: floral dress or Barong / suit in blue, pink, yellow, violet or green.\n\nKindly keep attire modest and elegant.",
       },
       {
         question: "What if I have dietary restrictions or allergies?",
