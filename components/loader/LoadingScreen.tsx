@@ -68,6 +68,7 @@ function getCurtainClock() {
   }
   return curtainClock;
 }
+const MIN_DURATION_MS = 8000;
 const FADE_OUT_MS = 1400;
 // Handoff: the loader's content fades away first, then the envelope screen fades in
 // (photos mode: over the same, uninterrupted photo marquee)
@@ -137,7 +138,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete, onFade
   const siteConfig = useSiteConfig();
   // Fall back to the bundled config if a remote override is missing this block.
   const content = siteConfig.loadingScreen ?? defaultSiteConfig.loadingScreen;
-  const totalDurationMs = content.durationMs;
+  // The loader always stays up for at least 8s, even if a config sets a shorter time
+  const totalDurationMs = Math.max(content.durationMs ?? 0, MIN_DURATION_MS);
   const statusMessages = content.statusMessages;
   const isPlain = content.display === 'plain';
   const backgroundPhotos = useMemo(

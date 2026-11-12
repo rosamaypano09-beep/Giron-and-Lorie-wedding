@@ -572,7 +572,7 @@ export const siteConfig = {
       "Setting the table for you",
       "Crafting your invitation experience",
     ],
-    durationMs: 5000, // loader shows for 5s, then hands off to the envelope
+    durationMs: 8000, // loader shows for 8s, then hands off to the envelope
     // Invitation envelope (components/loader/Hero.tsx) — shares display + photos with loader above
     hintText: "Tap the Seal to Open",
     enterButtonText: "View the Invitation",
