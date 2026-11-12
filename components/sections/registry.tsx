@@ -1,13 +1,11 @@
 "use client"
 
 import { RisingHearts } from "@/components/rising-hearts"
-import { useState, type CSSProperties, type KeyboardEvent } from "react"
-import { QRCodeSVG } from "qrcode.react"
-import { useQrColors } from "@/hooks/use-css-color"
+import { type CSSProperties } from "react"
 import localFont from "next/font/local"
 import { cinzel } from "@/lib/fonts"
-import { Gift, Heart, Copy, Check } from "lucide-react"
-import { AnimatePresence, motion, useReducedMotion, type Variants } from "motion/react"
+import { Gift } from "lucide-react"
+import { motion, useReducedMotion, type Variants } from "motion/react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { layeredSectionTitleSize, sectionType } from "@/lib/section-typography"
 
@@ -98,200 +96,16 @@ function RegistryTitle({ title, subtitle }: { title: string; subtitle: string })
   )
 }
 
-type GiftAccount = { provider: string; name: string; number: string }
-
-// "09309324933" → "0930 932 4933"; other numbers in groups of four
-function formatAccountNumber(number: string) {
-  const digits = number.replace(/\s+/g, "")
-  if (/^09\d{9}$/.test(digits)) return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7)}`
-  return digits.replace(/(\d{4})(?=\d)/g, "$1 ")
-}
-
-type RegistryColors = { title: string; script: string; eyebrow: string; body: string; soft: string; cardEdge: string }
-
-// Tab label: "GCash · Melchor" (first name only), or just the provider when there's no name
-function tabLabel(account: GiftAccount) {
-  const first = account.name.trim().split(/\s+/)[0]
-  return first ? { provider: account.provider, who: first } : { provider: account.provider, who: "" }
-}
-
-// One account at a time: tabs on top, a large QR with the name, number and Copy below
-function AccountTabs({
-  accounts,
-  colors,
-  buttonBg,
-}: {
-  accounts: readonly GiftAccount[]
-  colors: RegistryColors
-  buttonBg: string
-}) {
-  const { fg: qrFg, bg: qrBg } = useQrColors()
-  const reduceMotion = useReducedMotion()
-  const [active, setActive] = useState(0)
-  const [copied, setCopied] = useState(false)
-  const account = accounts[Math.min(active, accounts.length - 1)]
-  const number = account.number.replace(/\s+/g, "")
-
-  const select = (index: number) => {
-    setActive(index)
-    setCopied(false)
-  }
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(number)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch {
-      /* clipboard blocked — the number is still shown to copy by hand */
-    }
-  }
-
-  // Arrow keys move between tabs
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return
-    e.preventDefault()
-    const next = (active + (e.key === "ArrowRight" ? 1 : -1) + accounts.length) % accounts.length
-    select(next)
-    document.getElementById(`gift-tab-${next}`)?.focus()
-  }
-
-  return (
-    <motion.div variants={itemVariants} className="mx-auto mt-4 w-full max-w-sm">
-      {/* Tabs */}
-      <div
-        role="tablist"
-        aria-label="Gift accounts"
-        onKeyDown={onKeyDown}
-        className="relative flex rounded-full p-1"
-        style={{ background: "color-mix(in srgb, var(--color-motif-blush) 22%, white)", boxShadow: `inset 0 0 0 1px ${colors.cardEdge}` }}
-      >
-        {accounts.map((acc, i) => {
-          const isActive = i === active
-          const { provider, who } = tabLabel(acc)
-          return (
-            <button
-              key={`${acc.provider}-${acc.number}`}
-              id={`gift-tab-${i}`}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              aria-controls="gift-tab-panel"
-              tabIndex={isActive ? 0 : -1}
-              onClick={() => select(i)}
-              className="relative flex min-w-0 flex-1 flex-col items-center rounded-full px-1.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-motif-accent)] sm:py-2"
-            >
-              {isActive && (
-                <motion.span
-                  layoutId="gift-tab-pill"
-                  className="absolute inset-0 rounded-full"
-                  style={{ background: buttonBg, boxShadow: "0 6px 14px -8px color-mix(in srgb, var(--color-welcome-navy) 70%, transparent)" }}
-                  transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 32 }}
-                />
-              )}
-              <span
-                className={`${cinzel.className} relative text-[0.58rem] font-semibold uppercase leading-tight tracking-[0.14em] sm:text-[0.66rem]`}
-                style={{ color: isActive ? "#FFFFFF" : colors.title }}
-              >
-                {provider}
-              </span>
-              {who ? (
-                <span
-                  className="font-goudy-italic relative mt-0.5 truncate text-[0.66rem] leading-none sm:text-[0.74rem]"
-                  style={{ color: isActive ? "rgb(255 255 255 / 85%)" : colors.soft }}
-                >
-                  {who}
-                </span>
-              ) : null}
-            </button>
-          )
-        })}
-      </div>
-
-      {/* Panel */}
-      <div
-        id="gift-tab-panel"
-        role="tabpanel"
-        aria-labelledby={`gift-tab-${active}`}
-        className="mt-3 rounded-2xl px-4 pb-5 pt-5 text-center sm:px-6"
-        style={{ background: "color-mix(in srgb, var(--color-motif-blush) 14%, white)", border: `1px solid ${colors.cardEdge}` }}
-      >
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={active}
-            className="flex flex-col items-center"
-            initial={reduceMotion ? false : { opacity: 0, y: 10, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.97 }}
-            transition={{ duration: 0.3, ease }}
-          >
-            <div
-              className="rounded-2xl p-2.5 sm:p-3"
-              style={{ backgroundColor: qrBg, boxShadow: `0 0 0 1px ${colors.cardEdge}, 0 14px 28px -16px color-mix(in srgb, var(--color-welcome-navy) 50%, transparent)` }}
-            >
-              <QRCodeSVG
-                value={number}
-                size={220}
-                level="M"
-                includeMargin={false}
-                fgColor={qrFg}
-                bgColor={qrBg}
-                className="block h-40 w-40 sm:h-44 sm:w-44"
-                aria-label={`QR code for ${account.provider} ${number}`}
-              />
-            </div>
-            <span
-              className={`${cinzel.className} mt-4 rounded-full px-3 py-0.5 text-[0.58rem] font-semibold uppercase tracking-[0.2em] sm:text-[0.64rem]`}
-              style={{ background: "#FFFFFF", color: colors.eyebrow, border: `1px solid ${colors.cardEdge}` }}
-            >
-              {account.provider}
-            </span>
-            {account.name ? (
-              <p
-                className={`${cinzel.className} mt-2 text-[0.7rem] font-semibold uppercase leading-snug tracking-[0.14em] sm:text-[0.78rem]`}
-                style={{ color: colors.title }}
-              >
-                {account.name}
-              </p>
-            ) : null}
-            <p
-              className={`${cinzel.className} mt-1 text-[1.15rem] font-semibold tabular-nums tracking-[0.06em] sm:text-[1.3rem]`}
-              style={{ color: colors.script }}
-            >
-              {formatAccountNumber(number)}
-            </p>
-            <button
-              type="button"
-              onClick={copy}
-              className={`${cinzel.className} mt-3 inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.14em] transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] sm:text-[0.68rem]`}
-              style={{ color: "#FFFFFF", background: buttonBg, borderColor: "rgb(255 255 255 / 70%)" }}
-              aria-label={`Copy ${account.provider} number ${number}`}
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? "Copied" : "Copy Number"}
-            </button>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </motion.div>
-  )
-}
-
 export function Registry() {
   const siteConfig = useSiteConfig()
   const content = siteConfig.registry
   const c = content.colors // siteConfig.registry.colors (content/site.ts)
   const { brideNickname, groomNickname } = siteConfig.couple
+  // Same corner florals as the loader / welcome card (content/site.ts → CORNER_DECOS)
+  const decos = siteConfig.loadingScreen?.cornerDecos
   const reduceMotion = useReducedMotion()
   const initial = reduceMotion ? false : "hidden"
 
-  // Older configs (e.g. from /api/wedding-details) may not have accounts
-  const extra = content as { accounts?: GiftAccount[]; accountsTitle?: string; accountsHint?: string }
-  const accounts = extra.accounts ?? []
-  const accountsTitle = extra.accountsTitle || "Ways to Send Your Gift"
-  const accountsHint = extra.accountsHint ?? ""
-
-  const buttonBg = c.button
   const buttonText = "#FFFFFF"
   const cardStyle = {
     background: c.card,
@@ -345,28 +159,69 @@ export function Registry() {
         <div className="relative z-20 mx-auto max-w-2xl px-4 sm:px-6 md:px-8">
           {/* Letter card */}
           <motion.div
-            className="relative mt-8 rounded-[1.75rem] px-7 pb-10 pt-12 text-center sm:mt-10 sm:rounded-[2.25rem] sm:px-12 sm:pb-12 sm:pt-14 md:px-14"
+            className="relative mt-8 rounded-[1.75rem] px-7 pb-12 pt-14 text-center sm:mt-10 sm:rounded-[2.25rem] sm:px-12 sm:pb-12 sm:pt-14 md:px-14"
             style={cardStyle}
             variants={staggerVariants}
             initial={initial}
             whileInView="show"
             viewport={{ once: true, amount: 0.05 }}
           >
-            {/* Seal sitting on the top edge */}
-            <motion.div variants={itemVariants} className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+            {/* Soft sky light at the top, blush at the foot */}
+            <div
+              className="pointer-events-none absolute inset-0 rounded-[inherit]"
+              style={{
+                background:
+                  "radial-gradient(80% 35% at 50% 0%, color-mix(in srgb, #90E3F4 22%, transparent) 0%, transparent 70%), radial-gradient(70% 30% at 50% 100%, color-mix(in srgb, #F7D6E0 40%, transparent) 0%, transparent 70%)",
+              }}
+              aria-hidden
+            />
+            {/* Fine gold double frame inside the card */}
+            <div
+              className="pointer-events-none absolute inset-2.5 rounded-[1.35rem] sm:inset-3.5 sm:rounded-[1.8rem]"
+              style={{
+                border: "1px solid color-mix(in srgb, #C9A24E 45%, transparent)",
+                boxShadow: "inset 0 0 0 4px transparent, inset 0 0 0 5px color-mix(in srgb, #C9A24E 18%, transparent)",
+              }}
+              aria-hidden
+            />
+            {/* Corner florals: top-left and bottom-right */}
+            {decos?.topLeft ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={encodeURI(decos.topLeft)}
+                alt=""
+                aria-hidden
+                className="registry-deco registry-deco--tl pointer-events-none absolute z-10 select-none"
+              />
+            ) : null}
+            {decos?.bottomRight ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={encodeURI(decos.bottomRight)}
+                alt=""
+                aria-hidden
+                className="registry-deco registry-deco--br pointer-events-none absolute z-10 select-none"
+              />
+            ) : null}
+
+            {/* Gold wax seal on the top edge with a gift */}
+            <motion.div variants={itemVariants} className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2">
               <span
                 className="flex h-14 w-14 items-center justify-center rounded-full sm:h-16 sm:w-16"
                 style={{
-                  background: buttonBg,
-                  boxShadow: `0 0 0 5px ${c.card}, 0 0 0 6px ${c.cardEdge}, 0 16px 30px -12px color-mix(in srgb, ${c.title} 55%, transparent)`,
+                  background: "radial-gradient(circle at 35% 30%, #D9B66A 0%, #B08440 55%, #8F6730 100%)",
+                  boxShadow: `0 0 0 4px ${c.card}, 0 0 0 5px color-mix(in srgb, #C9A24E 60%, transparent), 0 14px 26px -10px rgb(47 90 120 / 45%), inset 0 1px 2px rgb(255 255 255 / 45%)`,
                 }}
                 aria-hidden
               >
-                <Gift className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: buttonText }} />
+                <Gift
+                  className="h-6 w-6 sm:h-7 sm:w-7"
+                  style={{ color: buttonText, filter: "drop-shadow(0 1px 1px rgb(0 0 0 / 25%))" }}
+                />
               </span>
             </motion.div>
 
-            <div className={`font-goudy-italic relative mx-auto max-w-xl space-y-4 ${ct.bodyLg} leading-relaxed`} style={{ color: c.body }}>
+            <div className={`font-goudy-italic relative z-20 mx-auto max-w-xl space-y-4 ${ct.bodyLg} leading-relaxed`} style={{ color: c.body }}>
               {content.paragraphs.map((text, i) => (
                 <motion.p key={i} variants={itemVariants} className={i === 0 ? "text-left sm:text-center" : ""}>
                   {i === 0 && text.length > 1 ? (
@@ -389,32 +244,10 @@ export function Registry() {
               ))}
             </div>
 
-            {/* Gift accounts with QR codes */}
-            {accounts.length > 0 && (
-              <div className="mt-7 sm:mt-8">
-                <motion.div variants={itemVariants} className="flex items-center justify-center gap-2.5">
-                  <span className="h-px w-8 sm:w-12" style={{ background: `linear-gradient(to right, transparent, ${c.line})` }} aria-hidden />
-                  <p
-                    className={`${cinzel.className} text-[0.66rem] font-semibold uppercase tracking-[0.22em] sm:text-[0.74rem]`}
-                    style={{ color: c.eyebrow }}
-                  >
-                    {accountsTitle}
-                  </p>
-                  <span className="h-px w-8 sm:w-12" style={{ background: `linear-gradient(to left, transparent, ${c.line})` }} aria-hidden />
-                </motion.div>
-                {accountsHint ? (
-                  <motion.p variants={itemVariants} className={`font-goudy-italic mt-1.5 ${ct.body}`} style={{ color: c.soft }}>
-                    {accountsHint}
-                  </motion.p>
-                ) : null}
-                <AccountTabs accounts={accounts} colors={c} buttonBg={buttonBg} />
-              </div>
-            )}
-
             <div className="h-6 sm:h-7" aria-hidden />
 
             {/* Sign-off */}
-            <motion.div variants={itemVariants} className="relative space-y-1.5">
+            <motion.div variants={itemVariants} className="relative z-20 space-y-1.5">
               {content.thankYou ? (
                 <p className={`font-goudy-italic ${ct.body}`} style={{ color: c.body }}>
                   {content.thankYou}
@@ -456,7 +289,11 @@ export function Registry() {
                   </div>
                 )
               })()}
-              <Heart className="mx-auto mt-3 h-3.5 w-3.5" style={{ color: "var(--color-motif-accent)", fill: "var(--color-motif-accent)" }} aria-hidden />
+              <span
+                className="mx-auto mt-4 block h-px w-24"
+                style={{ background: "linear-gradient(to right, transparent, #C9A24E, transparent)" }}
+                aria-hidden
+              />
             </motion.div>
           </motion.div>
         </div>

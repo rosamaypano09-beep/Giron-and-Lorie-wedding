@@ -73,15 +73,15 @@
   --primary: #5B7FA6;
   --primary-foreground: oklch(0.145 0 0);
   /* Secondary: pastel blue */
-  --secondary: #C7DDF0;
+  --secondary: #90E3F4;
   --secondary-foreground: oklch(0.145 0 0);
   /* Sage green */
   --sage: #A9B9A1;
   /* Muted/light surfaces: butter yellow */
-  --muted: #F7E5A9;
+  --muted: #EFF7F6;
   --muted-foreground: oklch(0.145 0 0);
   /* Accent: lavender */
-  --accent: #DCCFF0;
+  --accent: #F6CBE0;
   --accent-foreground: oklch(0.145 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
@@ -98,7 +98,7 @@
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: #5B7FA6;
   --sidebar-primary-foreground: oklch(0.145 0 0);
-  --sidebar-accent: #C7DDF0;
+  --sidebar-accent: #90E3F4;
   --sidebar-accent-foreground: oklch(0.145 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: #5B7FA6;
@@ -127,7 +127,7 @@
   --secondary-foreground: oklch(0.985 0 0);
   /* Sage for dark mode */
   --sage: #9EB9D4;
-  --muted: #F7E5A9;
+  --muted: #EFF7F6;
   --muted-foreground: oklch(0.145 0 0);
   --accent: #9EB9D4;
   --accent-foreground: oklch(0.985 0 0);
@@ -158,31 +158,30 @@
   
 /* ==========================================
    MOTIF COLORS
-   Theme: Pastel garden — blue, green, yellow, pink and violet
-     pastel blue    #C7DDF0
-     mint green     #D5E3D0
-     sage green     #A9B9A1
-     butter yellow  #F7E5A9
-     blush pink     #F3CED6
-     lavender       #DCCFF0
+   Theme: Modern Filipiniana (Bridgerton) — blues and pinks
+     non photo blue #90E3F4
+     celeste        #B2F7EF
+     mint cream     #EFF7F6
+     mimi pink      #F7D6E0
+     fairy tale     #F6CBE0
    (+ cream paper #FFFBF0, soft gold #D6B779, and dusty blue #5B7FA6 / navy #2F4A66
     kept for readable text, headings and buttons)
    ========================================== */
 
-   /* The six motif colors — use these anywhere */
-   --color-motif-blue: #C7DDF0;
-   --color-motif-green: #D5E3D0;
+   /* Motif colors — use these anywhere (token names kept from the previous palette) */
+   --color-motif-blue: #90E3F4;   /* non photo blue */
+   --color-motif-green: #B2F7EF;  /* celeste */
    --color-motif-sage: #A9B9A1;
-   --color-motif-butter: #F7E5A9;
-   --color-motif-pink: #F3CED6;
-   --color-motif-violet: #DCCFF0;
+   --color-motif-butter: #EFF7F6; /* mint cream */
+   --color-motif-pink: #F7D6E0;   /* mimi pink */
+   --color-motif-violet: #F6CBE0; /* fairy tale */
 
 /* ------------------------------------------
    Background / Linen
    ------------------------------------------ */
 
-   --color-motif-cream: color-mix(in srgb, #F7E5A9 55%, #FFFBF0); /* soft butter yellow */
-   --color-motif-yellow: #F7E5A9; /* butter yellow */
+   --color-motif-cream: color-mix(in srgb, #EFF7F6 55%, #FFFBF0); /* soft mint cream */
+   --color-motif-yellow: #EFF7F6; /* mint cream (was butter yellow) */
    --color-motif-soft: #FFFBF0; /* cream paper */
    
    /* ------------------------------------------
@@ -191,21 +190,21 @@
    
    --color-motif-accent: #5B7FA6; /* dusty blue (readable accent) */
    --color-motif-deep: #2F4A66; /* navy */
-   --color-motif-medium: color-mix(in srgb, #C7DDF0 62%, #5B7FA6); /* mid pastel blue */
+   --color-motif-medium: color-mix(in srgb, #90E3F4 62%, #5B7FA6); /* mid pastel blue */
    
    /* ------------------------------------------
       Pastel Blue Accents
       ------------------------------------------ */
    
    --color-motif-teal: #2F4A66; /* navy */
-   --color-motif-teal-medium: color-mix(in srgb, #C7DDF0 62%, #5B7FA6); /* mid pastel blue */
-   --color-motif-teal-light: #C7DDF0; /* pastel blue */
+   --color-motif-teal-medium: color-mix(in srgb, #90E3F4 62%, #5B7FA6); /* mid pastel blue */
+   --color-motif-teal-light: #90E3F4; /* pastel blue */
    
    /* ------------------------------------------
       Botanical / Spring Accent
       ------------------------------------------ */
    
-   --color-motif-blush: #F3CED6; /* blush pink */
+   --color-motif-blush: #F7D6E0; /* blush pink */
    
    /* ------------------------------------------
       Neutral / Paper
@@ -218,7 +217,7 @@
       ========================================== */
    
    /* Main background */
-   --color-welcome-bg: color-mix(in srgb, #F7E5A9 55%, #FFFBF0); /* soft butter yellow */
+   --color-welcome-bg: color-mix(in srgb, #EFF7F6 55%, #FFFBF0); /* soft mint cream */
    
    /* Soft background */
    --color-welcome-bg-soft: #FFFBF0; /* cream paper */
@@ -256,7 +255,7 @@
    --color-welcome-gold: #D6B779; /* soft gold */
    
    /* Floral accents */
-   --color-welcome-blush: #F3CED6; /* blush pink */
+   --color-welcome-blush: #F7D6E0; /* blush pink */
    
    /* ==========================================
       ADDITIONAL FRESH SPRING COLORS
@@ -264,13 +263,13 @@
    
    --color-coastal-deep: #2F4A66; /* navy */
    --color-coastal-teal: #5B7FA6; /* dusty blue */
-   --color-coastal-soft: #C7DDF0; /* pastel blue */
-   --color-coastal-light: #DCCFF0; /* lavender */
+   --color-coastal-soft: #90E3F4; /* pastel blue */
+   --color-coastal-light: #F6CBE0; /* lavender */
    
    --color-romantic-coral: #5B7FA6; /* dusty blue */
    --color-romantic-deep: #2F4A66; /* navy */
-   --color-romantic-peach: #F7E5A9; /* butter yellow */
-   --color-romantic-blush: #F3CED6; /* blush pink */
+   --color-romantic-peach: #EFF7F6; /* mint cream */
+   --color-romantic-blush: #F7D6E0; /* blush pink */
    
    --color-coastal-sand: #D6B779; /* soft gold */
    --color-coastal-ivory: #FFFBF0; /* cream paper */
@@ -293,24 +292,24 @@
       ========================================== */
    
    /* Flat base behind the circles — white with a whisper of butter yellow */
-   --color-bg-pattern-base: color-mix(in srgb, #F7E5A9 28%, white);
+   --color-bg-pattern-base: color-mix(in srgb, #EFF7F6 28%, white);
    
    /* Main circles — pastel blue, lavender, mint */
-   --color-bg-circle-deep: color-mix(in srgb, #C7DDF0 70%, transparent);
+   --color-bg-circle-deep: color-mix(in srgb, #90E3F4 70%, transparent);
    
-   --color-bg-circle-mid: color-mix(in srgb, #DCCFF0 62%, transparent);
+   --color-bg-circle-mid: color-mix(in srgb, #F6CBE0 62%, transparent);
    
    --color-bg-circle-light: color-mix(in srgb, white 72%, transparent);
    
    /* Accent circles */
-   --color-bg-circle-accent-1: color-mix(in srgb, #D5E3D0 70%, transparent);
+   --color-bg-circle-accent-1: color-mix(in srgb, #B2F7EF 70%, transparent);
    
    --color-bg-circle-accent-2: color-mix(in srgb, white 58%, transparent);
    
-   --color-bg-circle-accent-3: color-mix(in srgb, #F7E5A9 60%, transparent);
+   --color-bg-circle-accent-3: color-mix(in srgb, #EFF7F6 60%, transparent);
    
    /* Warm touches — blush pink and a little sage */
-   --color-bg-circle-rose: color-mix(in srgb, #F3CED6 60%, transparent);
+   --color-bg-circle-rose: color-mix(in srgb, #F7D6E0 60%, transparent);
    
    --color-bg-circle-peach: color-mix(in srgb, #A9B9A1 22%, transparent);
    
@@ -334,7 +333,7 @@
    --color-countdown-text: var(--color-motif-soft);
    
    /* Unit labels */
-   --color-countdown-label: #C7DDF0;
+   --color-countdown-label: #90E3F4;
    
    /* ==========================================
       ENVELOPE — DUSTY BLUE FAMILY (blue paper, deeper navy folds)
@@ -356,7 +355,7 @@
    --color-envelope-shadow: color-mix(in srgb, #5B7FA6 60%, #1F3249);
    
    /* Crease hairlines */
-   --color-envelope-crease: rgb(199 221 240 / 35%);
+   --color-envelope-crease: rgb(144 227 244 / 35%);
    
    /* ==========================================
       OPTIONAL SEMANTIC COLORS
@@ -375,7 +374,7 @@
    --color-romantic-hover: #46698F;
    
    /* Soft highlight */
-   --color-highlight: #F7E5A9; /* butter yellow */
+   --color-highlight: #EFF7F6; /* mint cream */
    
    /* Highlight — Save the Date, couple names, day number (dusty blue) */
    --color-highlight-deep: #5B7FA6;
@@ -405,7 +404,7 @@
    /* Paper surfaces */
    --invite-paper: var(--color-motif-soft);
    
-   --invite-paper-tint: color-mix(in srgb, #C7DDF0 22%, var(--color-motif-soft));
+   --invite-paper-tint: color-mix(in srgb, #90E3F4 22%, var(--color-motif-soft));
    
    /* Hairlines and frames */
    --invite-line: color-mix(in srgb, #A9B9A1 55%, transparent);
@@ -429,10 +428,10 @@
    --invite-page-bg: var(--color-welcome-bg);
    
    /* Section accent */
-   --color-section-accent: color-mix(in srgb, #C7DDF0 62%, #5B7FA6);
+   --color-section-accent: color-mix(in srgb, #90E3F4 62%, #5B7FA6);
    
    /* Light section */
-   --color-section-light: #C7DDF0;
+   --color-section-light: #90E3F4;
    
    /* Card background */
    --color-card: #FFFBF0;
@@ -677,7 +676,7 @@ img[src*="%2Flovestorydeco%2F"] {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F7E5A9;
+  background: #EFF7F6;
 }
 
 /* Scrollbar thumb: dusty blue, sky blue on hover */
@@ -687,7 +686,7 @@ img[src*="%2Flovestorydeco%2F"] {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #C7DDF0;
+  background: #90E3F4;
 }
 
 /* Mobile: no visible scrollbar on the page or inside any section — scrolling still
@@ -790,7 +789,7 @@ img[src*="%2Flovestorydeco%2F"] {
 
 /* Countdown gradient text — butter yellow to pastel blue */
 .countdown-gradient-text * {
-  background: linear-gradient(180deg, #F7E5A9 0%, #C7DDF0 100%);
+  background: linear-gradient(180deg, #EFF7F6 0%, #90E3F4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1333,7 +1332,7 @@ img[src*="%2Flovestorydeco%2F"] {
   position: absolute;
   inset: 0;
   /* Pastel wash so the photos sit softly under the palette: butter → cream → blush */
-  background: linear-gradient(180deg, #F7E5A9 0%, #FFFBF0 50%, #F3CED6 100%);
+  background: linear-gradient(180deg, #EFF7F6 0%, #FFFBF0 50%, #F7D6E0 100%);
 }
 
 /* ==========================================================================
@@ -1429,11 +1428,11 @@ img[src*="%2Flovestorydeco%2F"] {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(120% 60% at 50% -10%, color-mix(in srgb, #C7DDF0 85%, transparent) 0%, transparent 65%),
-    radial-gradient(80% 40% at 0% 100%, color-mix(in srgb, #F3CED6 40%, transparent) 0%, transparent 70%),
-    radial-gradient(80% 40% at 100% 100%, color-mix(in srgb, #DCCFF0 45%, transparent) 0%, transparent 70%),
-    radial-gradient(60% 30% at 50% 100%, color-mix(in srgb, #D5E3D0 45%, transparent) 0%, transparent 70%),
-    linear-gradient(180deg, color-mix(in srgb, #F7E5A9 60%, #FFFBF0) 0%, #FFFBF0 55%, color-mix(in srgb, #F7E5A9 60%, #FFFBF0) 100%);
+    radial-gradient(120% 60% at 50% -10%, color-mix(in srgb, #90E3F4 85%, transparent) 0%, transparent 65%),
+    radial-gradient(80% 40% at 0% 100%, color-mix(in srgb, #F7D6E0 40%, transparent) 0%, transparent 70%),
+    radial-gradient(80% 40% at 100% 100%, color-mix(in srgb, #F6CBE0 45%, transparent) 0%, transparent 70%),
+    radial-gradient(60% 30% at 50% 100%, color-mix(in srgb, #B2F7EF 45%, transparent) 0%, transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, #EFF7F6 60%, #FFFBF0) 0%, #FFFBF0 55%, color-mix(in srgb, #EFF7F6 60%, #FFFBF0) 100%);
 }
 
 .invite-blush-backdrop::after {
@@ -1548,10 +1547,10 @@ img[src*="%2Flovestorydeco%2F"] {
   pointer-events: none;
   background:
     radial-gradient(90% 18% at 50% 0%, rgb(255 255 255 / 60%) 0%, transparent 70%),
-    radial-gradient(60% 16% at 0% 40%, color-mix(in srgb, #C7DDF0 30%, transparent) 0%, transparent 70%),
-    radial-gradient(60% 16% at 100% 70%, color-mix(in srgb, #F3CED6 30%, transparent) 0%, transparent 70%),
-    radial-gradient(50% 14% at 0% 85%, color-mix(in srgb, #DCCFF0 26%, transparent) 0%, transparent 70%),
-    radial-gradient(50% 14% at 100% 15%, color-mix(in srgb, #D5E3D0 32%, transparent) 0%, transparent 70%),
+    radial-gradient(60% 16% at 0% 40%, color-mix(in srgb, #90E3F4 30%, transparent) 0%, transparent 70%),
+    radial-gradient(60% 16% at 100% 70%, color-mix(in srgb, #F7D6E0 30%, transparent) 0%, transparent 70%),
+    radial-gradient(50% 14% at 0% 85%, color-mix(in srgb, #F6CBE0 26%, transparent) 0%, transparent 70%),
+    radial-gradient(50% 14% at 100% 15%, color-mix(in srgb, #B2F7EF 32%, transparent) 0%, transparent 70%),
     linear-gradient(180deg, rgb(255 255 255 / 52%) 0%, color-mix(in srgb, #FFF8E1 46%, transparent) 50%, rgb(255 255 255 / 46%) 100%);
 }
 
@@ -1682,4 +1681,104 @@ img[src*="%2Flovestorydeco%2F"] {
 
 @media (prefers-reduced-motion: reduce) {
   .ghost-backdrop { animation: none; }
+}
+
+/* ==========================================================================
+   Welcome card (components/sections/welcome.tsx) — top-left and bottom-right
+   corner florals tucked over the card's corners
+   ========================================================================== */
+.welcome-deco {
+  display: block;
+  height: auto;
+  max-width: none;
+  filter: drop-shadow(0 6px 12px rgb(47 74 102 / 16%));
+}
+
+.welcome-deco--tl {
+  top: 0;
+  left: 0;
+  width: clamp(130px, 40vw, 250px);
+  transform: translate(-16%, -20%);
+}
+
+.welcome-deco--br {
+  right: 0;
+  bottom: 0;
+  width: clamp(140px, 42vw, 270px);
+  transform: translate(16%, 20%);
+}
+
+@media (min-width: 768px) {
+  .welcome-deco--tl {
+    transform: translate(-22%, -24%);
+  }
+
+  .welcome-deco--br {
+    transform: translate(22%, 24%);
+  }
+}
+
+/* ==========================================================================
+   Entourage (components/sections/entourage.tsx) — scroll reveal
+   Headings, captions, dividers and names fade and rise in once as they enter the
+   screen (IntersectionObserver adds .is-in), then stay fully readable. Left-column
+   names drift in from the left, right-column names from the right. Nothing is
+   hidden until the script has switched the effect on (.ent-reveal-on).
+   ========================================================================== */
+.ent-reveal-on .ent-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ent-reveal-on .ent-reveal--right {
+  transform: translateX(-16px);
+}
+
+.ent-reveal-on .ent-reveal--left {
+  transform: translateX(16px);
+}
+
+.ent-reveal-on .ent-reveal--line {
+  transform: scaleX(0.4);
+}
+
+.ent-reveal-on .ent-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ent-reveal-on .ent-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+
+/* Registry letter card (components/sections/registry.tsx) — top-left and bottom-right
+   corner florals tucked into the card's corners, under the text */
+.registry-deco {
+  display: block;
+  height: auto;
+  max-width: none;
+  opacity: 0.95;
+  filter: drop-shadow(0 6px 12px rgb(47 74 102 / 14%));
+}
+
+.registry-deco--tl {
+  top: 0;
+  left: 0;
+  width: clamp(110px, 32vw, 190px);
+  transform: translate(-14%, -16%);
+}
+
+.registry-deco--br {
+  right: 0;
+  bottom: 0;
+  width: clamp(120px, 34vw, 210px);
+  transform: translate(14%, 16%);
 }

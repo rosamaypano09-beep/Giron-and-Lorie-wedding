@@ -5,7 +5,7 @@ import React from 'react';
 // Falling leaves and petals in the motif pastels (blue, mint, sage, butter, blush, lavender)
 // plus a few gold flecks — used over the photo marquee on the loading screen and the
 // envelope screen (styles: loading-screen.css → .ls-photo-particle*)
-const LEAF_COLORS = ['#A9B9A1', '#C7DDF0', '#F3CED6', '#D5E3D0', '#DCCFF0', '#F7E5A9', '#9FB596', '#B9CBE6'] as const;
+const LEAF_COLORS = ['#A9B9A1', '#90E3F4', '#F7D6E0', '#B2F7EF', '#F6CBE0', '#EFF7F6', '#9FB596', '#B9CBE6'] as const;
 
 const LEAVES = Array.from({ length: 24 }, (_, i) => ({
   x: (i * 41 + 7) % 100,

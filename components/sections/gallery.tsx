@@ -5,7 +5,6 @@ import { createPortal } from "react-dom"
 import Image from "next/image"
 import Link from "next/link"
 import localFont from "next/font/local"
-import { X, ChevronLeft, ChevronRight, Camera, Images, ArrowRight } from "lucide-react"
 import { cinzel } from "@/lib/fonts"
 import { Section } from "@/components/section"
 import { sectionType } from "@/lib/section-typography"
@@ -13,7 +12,6 @@ import { useSiteConfig } from "@/hooks/use-site-config"
 import { TintedDeco } from "@/components/tinted-deco"
 import { PlainBubbles } from "@/components/loader/PlainBubbles"
 import { DecoCorners } from "@/components/deco-corners"
-import { HEART_PATH } from "@/components/rising-hearts"
 import { SectionBackdrop } from "@/components/section-backdrop"
 
 const theSeasons = localFont({
@@ -57,20 +55,54 @@ const lineLeft = {
   background: "linear-gradient(to left, transparent, var(--color-motif-medium))",
 } as const
 
-// Paper photo frame with a blush edge (matches .story-open-photo)
+const GOLD = "#C9A24E"
+const GOLD_INK = "#8F6730"
+
+// Boxed photo frame: cream mat, gold hairline outside, a second fine gold line inside
+// the mat, soft blue-grey shadow
+const BOX = "14px"
+const BOX_INNER = "9px"
+
 const frameStyle: React.CSSProperties = {
-  background: "var(--color-motif-soft)",
-  border: "1px solid color-mix(in srgb, var(--color-motif-blush) 85%, transparent)",
-  boxShadow: "0 18px 34px -16px color-mix(in srgb, var(--color-welcome-navy) 32%, transparent)",
+  borderRadius: BOX,
+  background: "linear-gradient(180deg, #FFFDF7 0%, #FFF8EC 100%)",
+  border: `1px solid color-mix(in srgb, ${GOLD} 70%, transparent)`,
+  boxShadow:
+    "0 0 0 4px rgb(255 255 255 / 55%), 0 0 0 5px color-mix(in srgb, #C9A24E 28%, transparent), 0 22px 40px -18px rgb(47 90 120 / 42%)",
 }
 
 const innerFrameStyle: React.CSSProperties = {
-  boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--color-motif-soft) 70%, transparent)",
+  borderRadius: BOX_INNER,
+  boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${GOLD} 55%, transparent), inset 0 0 0 4px rgb(255 251 240 / 35%)`,
 }
 
+// Photo counter on each card: a cream pill with a gold hairline — "01 / 10"
 const badgeStyle: React.CSSProperties = {
-  backgroundColor: "color-mix(in srgb, var(--color-motif-deep) 75%, transparent)",
-  color: C.light,
+  background: "rgb(255 251 240 / 88%)",
+  border: "1px solid color-mix(in srgb, #C9A24E 65%, transparent)",
+  boxShadow: "0 0 0 2px rgb(255 255 255 / 45%), 0 6px 14px -6px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent)",
+  WebkitBackdropFilter: "blur(6px)",
+  backdropFilter: "blur(6px)",
+}
+
+const pad2 = (n: number) => String(n).padStart(2, "0")
+
+function CountBadge({ index, total, className = "" }: { index: number; total: number; className?: string }) {
+  return (
+    <div
+      className={`absolute bottom-0 left-1/2 flex -translate-x-1/2 translate-y-1/2 items-center gap-1.5 rounded-full px-3 py-1 ${className}`}
+      style={badgeStyle}
+      aria-hidden
+    >
+      <span className={`${cinzel.className} text-[0.8rem] font-bold leading-none tracking-[0.06em]`} style={{ color: "#8F6730" }}>
+        {pad2(index + 1)}
+      </span>
+      <span className="h-3 w-px rotate-[20deg]" style={{ background: "color-mix(in srgb, #C9A24E 80%, transparent)" }} />
+      <span className={`${cinzel.className} text-[0.6rem] font-semibold leading-none tracking-[0.12em]`} style={{ color: C.title }}>
+        {pad2(total)}
+      </span>
+    </div>
+  )
 }
 
 function DecoImg({ src, className }: { src: string; className: string }) {
@@ -78,14 +110,12 @@ function DecoImg({ src, className }: { src: string; className: string }) {
   return <TintedDeco src={src} className={className} />
 }
 
-function DiamondDivider({ children }: { children?: React.ReactNode }) {
+function GoldDivider({ children }: { children?: React.ReactNode }) {
   return (
     <div className="flex items-center justify-center gap-2">
       <span className="h-px w-10 sm:w-16 md:w-20" style={lineRight} />
       {children ?? (
-        <svg viewBox="0 0 24 24" className="h-3 w-3 sm:h-3.5 sm:w-3.5" fill={C.accent} aria-hidden>
-          <path d={HEART_PATH} />
-        </svg>
+        <span className="h-px w-6 sm:w-8" style={{ background: GOLD }} aria-hidden />
       )}
       <span className="h-px w-10 sm:w-16 md:w-20" style={lineLeft} />
     </div>
@@ -204,8 +234,8 @@ function MobileInfiniteCarousel({
       <div
         ref={stripRef}
         onScroll={handleScroll}
-        className="relative flex gap-2.5 overflow-x-auto pt-1 pb-5 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        style={{ paddingInline: "7%" }}
+        className="relative flex gap-3 overflow-x-auto pt-3 pb-9 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ paddingInline: "11%" }}
         aria-label="Gallery carousel"
       >
         {slides.map((item, i) => {
@@ -215,8 +245,8 @@ function MobileInfiniteCarousel({
             <button
               key={`${item.image}-${i}`}
               type="button"
-              className={`group relative snap-center shrink-0 w-[86%] rounded-xl p-1.5 transition-[transform,opacity] duration-500 ${
-                isActive ? "scale-100 opacity-100" : "scale-[0.94] opacity-75"
+              className={`group relative snap-center shrink-0 w-[78%] p-2 transition-[transform,opacity,filter] duration-500 ${
+                isActive ? "scale-100 opacity-100" : "scale-[0.9] opacity-60 saturate-[0.8]"
               }`}
               style={frameStyle}
               onPointerDown={onPointerDown}
@@ -226,42 +256,42 @@ function MobileInfiniteCarousel({
               tabIndex={loop && (i < n || i >= 2 * n) ? -1 : 0}
               aria-hidden={loop && (i < n || i >= 2 * n) ? true : undefined}
             >
-              <div className="relative aspect-[2/3] overflow-hidden rounded-lg">
+              <div className="relative aspect-[2/3] overflow-hidden" style={{ borderRadius: BOX_INNER }}>
                 <Image
                   src={encodeURI(item.image)}
                   alt={item.text || `Gallery image ${index + 1}`}
                   fill
-                  sizes="86vw"
+                  sizes="78vw"
                   className="object-cover"
-                  priority={i === n}
                 />
-                <div className="pointer-events-none absolute inset-0 rounded-lg" style={innerFrameStyle} />
+                {/* Soft light at the foot so the photo melts into the mat */}
+                <div
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4"
+                  style={{ background: "linear-gradient(to top, rgb(255 251 240 / 40%), transparent)" }}
+                />
+                <div className="pointer-events-none absolute inset-0" style={innerFrameStyle} />
               </div>
 
-              <div className="absolute top-3.5 right-3.5 rounded-full px-2 py-0.5 backdrop-blur-sm" style={badgeStyle}>
-                <span className="text-[11px] font-medium tracking-wider">
-                  {index + 1}/{n}
-                </span>
-              </div>
+              <CountBadge index={index} total={n} />
             </button>
           )
         })}
       </div>
 
-      {/* Swipe hint: animated arrows either side, dots for each photo */}
+      {/* Indicator: "03 of 10" between gold hairlines, a row of slim bars (the current one
+          larger and gold), then the swipe hint in small caps */}
       {loop && (
-        <div className="flex flex-col items-center gap-2.5">
-          <div className="flex items-center gap-3" style={{ color: C.blue }}>
-            <ChevronLeft className="gallery-swipe-arrow gallery-swipe-arrow--left h-4 w-4" aria-hidden />
-            <span
-              className={`${cinzel.className} text-[0.62rem] font-semibold uppercase tracking-[0.3em]`}
-              style={{ textShadow: onBgGlow }}
-            >
-              {swipeHint}
+        <div className="flex flex-col items-center gap-3">
+          <div className="flex items-center gap-3">
+            <span className="h-px w-10" style={{ background: `linear-gradient(to right, transparent, ${GOLD})` }} />
+            <span className={`${cinzel.className} text-[0.72rem] font-bold tracking-[0.18em]`} style={{ color: GOLD_INK, textShadow: onBgGlow }}>
+              {pad2(active + 1)}
+              <span className="mx-1.5 font-semibold" style={{ color: C.title }}>of</span>
+              {pad2(n)}
             </span>
-            <ChevronRight className="gallery-swipe-arrow gallery-swipe-arrow--right h-4 w-4" aria-hidden />
+            <span className="h-px w-10" style={{ background: `linear-gradient(to left, transparent, ${GOLD})` }} />
           </div>
-          <div className="flex items-center gap-1.5" role="tablist" aria-label="Choose a photo">
+          <div className="flex items-center gap-1" role="tablist" aria-label="Choose a photo">
             {items.map((item, idx) => (
               <button
                 key={item.image + idx}
@@ -270,14 +300,25 @@ function MobileInfiniteCarousel({
                 aria-selected={idx === active}
                 aria-label={`Show photo ${idx + 1}`}
                 onClick={() => centerOn(n + idx, "smooth")}
-                className="h-1.5 rounded-full transition-all duration-300"
-                style={{
-                  width: idx === active ? "1.25rem" : "0.375rem",
-                  background: idx === active ? C.accent : "color-mix(in srgb, var(--color-welcome-heading) 35%, transparent)",
-                }}
-              />
+                className="flex h-4 items-center justify-center px-0.5"
+              >
+                <span
+                  className="block rounded-full transition-all duration-300"
+                  style={{
+                    width: idx === active ? "1.5rem" : "0.6rem",
+                    height: "2px",
+                    background: idx === active ? GOLD : "color-mix(in srgb, #C9A24E 40%, transparent)",
+                  }}
+                />
+              </button>
             ))}
           </div>
+          <span
+            className={`${cinzel.className} text-[0.56rem] font-semibold uppercase tracking-[0.34em]`}
+            style={{ color: C.title, textShadow: onBgGlow }}
+          >
+            {swipeHint}
+          </span>
         </div>
       )}
     </div>
@@ -417,7 +458,7 @@ export function Gallery() {
           src={decos.headerOrnament}
           className="mx-auto mb-3 block h-auto w-28 select-none sm:mb-4 sm:w-36 md:w-44"
         />
-        <DiamondDivider />
+        <GoldDivider />
         <p
           className={`${cinzel.className} mx-auto mt-4 max-w-[20rem] px-2 text-[0.6875rem] font-semibold leading-snug tracking-[0.12em] uppercase min-[400px]:max-w-none min-[400px]:text-[0.75rem] min-[400px]:tracking-[0.16em] sm:mt-5 sm:text-[0.9375rem] sm:tracking-[0.2em] md:text-base md:tracking-[0.22em]`}
           style={{ color: C.eyebrow, textShadow: onBgGlow }}
@@ -435,17 +476,7 @@ export function Gallery() {
         </p>
 
         <div className="mt-5 sm:mt-6">
-          <DiamondDivider>
-            <span
-              className="flex h-7 w-7 items-center justify-center rounded-full sm:h-8 sm:w-8"
-              style={{
-                border: "1px solid color-mix(in srgb, var(--color-motif-blush) 90%, transparent)",
-                background: "var(--color-motif-soft)",
-              }}
-            >
-              <Camera className="h-3.5 w-3.5 sm:h-4 sm:w-4" style={{ color: C.blue }} aria-hidden />
-            </span>
-          </DiamondDivider>
+          <GoldDivider />
         </div>
       </div>
 
@@ -475,19 +506,19 @@ export function Gallery() {
             </div>
 
             {/* Tablet/Desktop: framed grid with a gentle stagger */}
-            <div className="hidden sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5 lg:gap-6 lg:pb-8">
+            <div className="hidden sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-5 gap-y-10 md:gap-x-6 lg:gap-x-7 lg:pb-10">
               {galleryItems.map((item, index) => (
                 <button
                   key={item.image + index}
                   type="button"
-                  className={`group relative w-full rounded-xl p-1.5 transition-all duration-300 hover:-translate-y-1 ${index % 2 === 1 ? "lg:translate-y-8 lg:hover:translate-y-7" : ""}`}
+                  className={`group relative w-full p-2 transition-all duration-500 hover:-translate-y-1.5 ${index % 2 === 1 ? "lg:translate-y-8 lg:hover:translate-y-6" : ""}`}
                   style={frameStyle}
                   onPointerDown={handleThumbPointerDown}
                   onPointerMove={handleThumbPointerMove}
                   onClick={() => openLightbox(item, index)}
                   aria-label={`Open image ${index + 1}`}
                 >
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-lg">
+                  <div className="relative aspect-[3/4] overflow-hidden" style={{ borderRadius: BOX_INNER }}>
                     <Image
                       src={encodeURI(item.image)}
                       alt={item.text || `Gallery image ${index + 1}`}
@@ -495,24 +526,19 @@ export function Gallery() {
                       sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
+                    {/* Hover: cream veil with "View" in small caps */}
                     <div
-                      className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                      style={{
-                        background:
-                          "linear-gradient(to top, color-mix(in srgb, var(--color-welcome-navy) 55%, transparent), transparent 55%)",
-                      }}
-                    />
-                    <div className="pointer-events-none absolute inset-0 rounded-lg" style={innerFrameStyle} />
+                      className="absolute inset-0 flex items-end justify-center pb-8 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      style={{ background: "linear-gradient(to top, rgb(255 251 240 / 78%), transparent 55%)" }}
+                    >
+                      <span className={`${cinzel.className} text-[0.62rem] font-bold uppercase tracking-[0.34em]`} style={{ color: GOLD_INK }}>
+                        View Photo
+                      </span>
+                    </div>
+                    <div className="pointer-events-none absolute inset-0" style={innerFrameStyle} />
                   </div>
 
-                  <div
-                    className="absolute top-3.5 right-3.5 rounded-full px-2 py-0.5 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100"
-                    style={badgeStyle}
-                  >
-                    <span className="text-[11px] font-medium tracking-wider">
-                      {index + 1}/{galleryItems.length}
-                    </span>
-                  </div>
+                  <CountBadge index={index} total={galleryItems.length} />
                 </button>
               ))}
             </div>
@@ -522,21 +548,16 @@ export function Gallery() {
               <div className="mt-8 flex justify-center sm:mt-12 lg:mt-14">
                 <Link
                   href="/gallery"
-                  className={`${cinzel.className} group inline-flex items-center gap-2.5 rounded-full border py-2 pl-2 pr-5 text-[0.66rem] font-semibold uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-motif-accent)] sm:pr-6 sm:text-[0.72rem] sm:tracking-[0.24em]`}
+                  className={`${cinzel.className} group relative inline-flex items-center rounded-full px-7 py-3 text-[0.68rem] font-bold uppercase tracking-[0.26em] transition-all duration-500 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A24E] sm:px-9 sm:text-[0.74rem] sm:tracking-[0.3em]`}
                   style={{
-                    background:
-                      "linear-gradient(180deg, var(--color-welcome-heading) 0%, color-mix(in srgb, var(--color-welcome-heading) 72%, var(--color-welcome-navy)) 100%)",
-                    borderColor: "rgb(255 255 255 / 70%)",
-                    color: "#FFFFFF",
+                    background: "linear-gradient(180deg, #FFFDF7 0%, #FFF4E2 100%)",
+                    border: `1px solid ${GOLD}`,
+                    color: GOLD_INK,
                     boxShadow:
-                      "0 0 0 4px color-mix(in srgb, var(--color-motif-blue) 45%, transparent), 0 14px 28px -12px color-mix(in srgb, var(--color-welcome-navy) 60%, transparent)",
+                      "0 0 0 4px rgb(255 255 255 / 70%), 0 0 0 5px color-mix(in srgb, #C9A24E 40%, transparent), 0 16px 30px -14px rgb(47 90 120 / 45%)",
                   }}
                 >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 sm:h-9 sm:w-9" aria-hidden>
-                    <Images className="h-4 w-4" />
-                  </span>
                   {(gallery as { viewAllText?: string }).viewAllText}
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
                 </Link>
               </div>
             ) : null}
@@ -647,7 +668,7 @@ export function Gallery() {
                 className="pointer-events-auto rounded-full border border-white/20 bg-black/40 p-2 backdrop-blur-md transition-all duration-200 hover:border-white/40 hover:bg-black/60 sm:p-3"
                 aria-label="Close lightbox"
               >
-                <X size={20} className="text-white sm:h-6 sm:w-6" />
+                <span className={`${cinzel.className} px-2 text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white`}>Close</span>
               </button>
             </div>
 
@@ -662,7 +683,7 @@ export function Gallery() {
                   className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/20 bg-black/40 p-3 backdrop-blur-md transition-all duration-200 hover:border-white/40 hover:bg-black/60 sm:left-4 sm:p-4"
                   aria-label="Previous image"
                 >
-                  <ChevronLeft size={24} className="text-white sm:h-7 sm:w-7" />
+                  <span className={`${cinzel.className} px-1 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white`}>Prev</span>
                 </button>
                 <button
                   type="button"
@@ -673,7 +694,7 @@ export function Gallery() {
                   className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/20 bg-black/40 p-3 backdrop-blur-md transition-all duration-200 hover:border-white/40 hover:bg-black/60 sm:right-4 sm:p-4"
                   aria-label="Next image"
                 >
-                  <ChevronRight size={24} className="text-white sm:h-7 sm:w-7" />
+                  <span className={`${cinzel.className} px-1 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-white`}>Next</span>
                 </button>
               </>
             )}

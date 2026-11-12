@@ -150,28 +150,11 @@ const ct = {
   reminderBody: "text-xs sm:text-sm md:text-[0.95rem]",
 } as const
 
-type PaletteColor = { name: string; hex: string }
+type PaletteColor = { name: string; hex: string; image?: string }
 
 // Palette entries may be a plain "#HEX" or { name, hex }
 function toPaletteColors(colors: readonly AttireColor[]): PaletteColor[] {
   return colors.map((c) => (typeof c === "string" ? { name: "", hex: c } : c))
-}
-
-function ColorPalette({ colors }: { colors: readonly string[] }) {
-  const widthClass = colors.length > 4 ? "max-w-md" : "max-w-xs sm:max-w-sm"
-
-  return (
-    <div
-      className={`mx-auto flex h-8 w-full overflow-hidden rounded-full border-2 shadow-sm sm:h-9 ${widthClass}`}
-      style={{ borderColor: C.light, boxShadow: `0 0 0 1px ${blushEdge}` }}
-      role="img"
-      aria-label={`Color palette: ${colors.join(", ")}`}
-    >
-      {colors.map((color) => (
-        <div key={color} className="min-w-0 flex-1" style={{ backgroundColor: color }} title={color} />
-      ))}
-    </div>
-  )
 }
 
 // Fanned deck of framed photos: the front photo sits in the middle, the rest fan out
@@ -190,11 +173,14 @@ function CoupleImagesCarousel({
 
   return (
     <div className="mb-5 flex flex-col items-center sm:mb-6">
-      <div className="relative h-[7.5rem] w-full max-w-[20rem] sm:h-[9.5rem] sm:max-w-[26rem]" aria-hidden>
-        {/* Soft blush glow behind the deck */}
+      <div className="relative h-[11rem] w-full max-w-[21rem] sm:h-[14rem] sm:max-w-[30rem]" aria-hidden>
+        {/* Soft sky-and-blush glow behind the deck */}
         <span
-          className="pointer-events-none absolute left-1/2 top-1/2 h-28 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl sm:h-32 sm:w-72"
-          style={{ background: "color-mix(in srgb, var(--color-motif-blush) 55%, transparent)" }}
+          className="pointer-events-none absolute left-1/2 top-1/2 h-36 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl sm:h-44 sm:w-80"
+          style={{
+            background:
+              "radial-gradient(closest-side, color-mix(in srgb, #90E3F4 40%, transparent), color-mix(in srgb, #F7D6E0 45%, transparent) 60%, transparent)",
+          }}
         />
         {coupleImages.map((image, index) => {
           // 0 = front; 1, 2, … alternate right / left, further out each step
@@ -207,14 +193,16 @@ function CoupleImagesCarousel({
               key={image}
               onClick={() => onSelect(index)}
               tabIndex={-1}
-              className="absolute left-1/2 top-1/2 -ml-[2.6rem] -mt-[3.3rem] w-[5.2rem] cursor-pointer rounded-[0.35rem] bg-white p-1 pb-3.5 sm:-ml-[3.25rem] sm:-mt-[4.1rem] sm:w-[6.5rem] sm:p-1.5 sm:pb-5"
+              className="absolute left-1/2 top-1/2 -ml-[3.6rem] -mt-[4.9rem] w-[7.2rem] cursor-pointer rounded-[0.4rem] p-1.5 pb-4 sm:-ml-[4.5rem] sm:-mt-[6.1rem] sm:w-[9rem] sm:p-2 sm:pb-6"
               style={{
                 zIndex: 20 - rank * 2 - (side < 0 ? 1 : 0),
-                boxShadow: `0 0 0 1px ${blushEdge}, 0 14px 26px -12px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)`,
+                background: "linear-gradient(180deg, #FFFDF7 0%, #FFF6E8 100%)",
+                boxShadow:
+                  "0 0 0 1px color-mix(in srgb, #C9A24E 55%, transparent), 0 16px 28px -12px color-mix(in srgb, var(--color-welcome-navy) 50%, transparent)",
               }}
               initial={false}
               animate={{
-                x: `${side * rank * 62}%`,
+                x: `${side * rank * 58}%`,
                 y: rank * 6,
                 rotate: side * (5 + rank * 4) + (place === 0 ? -1.5 : 0),
                 scale: place === 0 ? 1.08 : 1 - rank * 0.1,
@@ -228,7 +216,7 @@ function CoupleImagesCarousel({
                   alt=""
                   fill
                   className="object-cover"
-                  sizes="(min-width: 640px) 104px, 84px"
+                  sizes="(min-width: 640px) 144px, 116px"
                 />
                 {/* Slight sheen on the front photo */}
                 {place === 0 && (
@@ -243,19 +231,19 @@ function CoupleImagesCarousel({
         })}
       </div>
 
-      {/* Progress dots */}
+      {/* Progress: slim gold bars, the current one longer */}
       {count > 1 && (
-        <div className="mt-3 flex items-center gap-1.5" aria-hidden>
+        <div className="mt-4 flex items-center gap-1.5" aria-hidden>
           {coupleImages.map((image, index) => (
             <motion.span
               key={image}
-              className="block h-1.5 rounded-full"
+              className="block h-[2px] rounded-full"
               animate={{
-                width: index === currentImageIndex ? 16 : 6,
+                width: index === currentImageIndex ? 22 : 9,
                 opacity: index === currentImageIndex ? 1 : 0.45,
               }}
               transition={{ duration: 0.4, ease: revealEase }}
-              style={{ background: C.blue }}
+              style={{ background: "#C9A24E" }}
             />
           ))}
         </div>
@@ -286,9 +274,18 @@ const reminderItemVariants: Variants = {
   show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: revealEase } },
 }
 
-function ReminderItem({ title, children }: { title: string; children: ReactNode }) {
+function ReminderItem({ title, number, children }: { title: string; number?: number; children: ReactNode }) {
   return (
     <motion.div variants={reminderItemVariants} className="mx-auto flex max-w-xl flex-col items-center text-center">
+      {number ? (
+        <span
+          className={`${cinzel.className} mb-1 text-[0.62rem] font-bold tracking-[0.3em] sm:text-[0.7rem]`}
+          style={{ color: "#A27A3C" }}
+          aria-hidden
+        >
+          {String(number).padStart(2, "0")}
+        </span>
+      ) : null}
       <h4
         className={`${cinzel.className} ${ct.reminderHead} font-semibold uppercase tracking-[0.16em]`}
         style={{ color: C.heading }}
@@ -326,27 +323,47 @@ type AttireHalf = {
   roles: readonly { role: string; attire: string }[]
 }
 
-// Small round swatches with their names underneath — compact palette for one group
+// Fabric swatches: tall silk panels in a cream mat with a fine gold line, the color name
+// underneath. Colors without a swatch photo fall back to a panel filled with the hex.
 function PaletteDots({ palette }: { palette: readonly PaletteColor[] }) {
   return (
     <ul
-      className="flex flex-wrap items-start justify-center gap-x-2.5 gap-y-2 sm:gap-x-4"
+      className="mx-auto grid max-w-md gap-2 sm:gap-3"
+      style={{ gridTemplateColumns: `repeat(${Math.min(palette.length, 4)}, minmax(0, 1fr))` }}
       aria-label={`Color palette: ${palette.map((c) => c.name || c.hex).join(", ")}`}
     >
       {palette.map((color, i) => (
-        <li key={`${color.hex}-${i}`} className="flex w-11 flex-col items-center sm:w-14">
+        <li key={`${color.hex}-${i}`} className="flex flex-col items-center">
           <span
-            className="block h-6 w-6 rounded-full sm:h-7 sm:w-7"
+            className="relative block aspect-[1/2] w-full overflow-hidden rounded-[6px] p-[3px] sm:p-1"
             style={{
-              backgroundColor: color.hex,
-              boxShadow: `0 0 0 2px #FFFFFF, 0 0 0 3px ${blushEdge}, 0 4px 10px -4px color-mix(in srgb, var(--color-welcome-navy) 45%, transparent)`,
+              background: "linear-gradient(180deg, #FFFDF7 0%, #FFF6E8 100%)",
+              boxShadow:
+                "0 0 0 1px color-mix(in srgb, #C9A24E 55%, transparent), 0 10px 20px -12px color-mix(in srgb, var(--color-welcome-navy) 50%, transparent)",
             }}
             title={color.name || color.hex}
-          />
+          >
+            <span className="relative block h-full w-full overflow-hidden rounded-[3px]" style={{ backgroundColor: color.hex }}>
+              {color.image ? (
+                <Image
+                  src={encodeURI(color.image)}
+                  alt=""
+                  fill
+                  sizes="(min-width: 640px) 110px, 22vw"
+                  className="object-cover"
+                />
+              ) : null}
+              {/* Soft sheen across the silk */}
+              <span
+                className="pointer-events-none absolute inset-0"
+                style={{ background: "linear-gradient(135deg, rgb(255 255 255 / 18%) 0%, transparent 40%)" }}
+              />
+            </span>
+          </span>
           {color.name ? (
             <span
-              className={`${cinzel.className} mt-1.5 text-center text-[0.5rem] font-semibold uppercase leading-tight tracking-[0.06em] sm:text-[0.56rem]`}
-              style={{ color: C.soft }}
+              className={`${cinzel.className} mt-2 text-center text-[0.5rem] font-semibold uppercase leading-tight tracking-[0.1em] sm:text-[0.6rem]`}
+              style={{ color: C.heading }}
             >
               {color.name}
             </span>
@@ -1069,9 +1086,8 @@ function EventVenueCard({
                     isActive && images.length > 1 ? "scale-[1.08] group-hover:scale-[1.12]" : "scale-100"
                   }`}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1280px"
-                  // Load every slide up front so the next one is ready before it fades in
-                  priority={index === 0}
-                  loading={index === 0 ? undefined : "eager"}
+                  // Venue card is below the fold: load when it nears the screen
+                  loading="lazy"
                 />
               </div>
             )
@@ -1206,7 +1222,6 @@ export function Details() {
   const receptionImages = isCombined ? [] : reception.image
   // Photos above the reminders (older configs may not have them)
   const reminderImages = (reminders as { images?: string[] }).images ?? []
-  const paletteHexes = toPaletteColors(attire.palette).map((c) => c.hex)
   // Guard against null entries (e.g. a stray comma in ATTIRE.show)
   const attireGroups = attire.groups.filter(Boolean)
 
@@ -1252,7 +1267,10 @@ export function Details() {
   }
 
   const fillTimes = (text: string) =>
-    text.split("{guestsTime}").join(ceremony.guestsTime).split("{ceremonyTime}").join(ceremony.time)
+    text
+      .split("{guestsTime}").join(ceremony.guestsTime)
+      .split("{ceremonyTime}").join(ceremony.time)
+      .split("{receptionTime}").join(reception.time)
 
   const ceremonyVenue = `${ceremony.location}, ${ceremony.venue}`
   const receptionVenue = `${reception.location}, ${reception.venue}`
@@ -1435,7 +1453,7 @@ export function Details() {
           {/* One card for everyone: shared image, then each group with its palette below */}
           {attireGroups.length > 0 && (
             <div className="mx-auto mb-6 w-full max-w-3xl sm:mb-8 md:mb-10">
-              <AttireCard title="" image={attire.image} alt="Attire guide in pastel blue, green, yellow, pink and violet">
+              <AttireCard title="" image={attire.image} alt="Attire guide: formal attire in Non Photo Blue, Celeste, Mimi Pink and Fairy Tale">
                 <div className="space-y-3 sm:space-y-4">
                   {attireGroups.map((group) => (
                     <AttireGroupPanel key={group.id} group={group} />
@@ -1455,10 +1473,28 @@ export function Details() {
           >
             <div
               className="relative overflow-hidden rounded-[1.5rem] sm:rounded-[2rem]"
-              style={{ background: cardStyle.background, boxShadow: cardStyle.boxShadow }}
+              style={{
+                background: "linear-gradient(180deg, #FFFDF7 0%, #FFF8EE 100%)",
+                boxShadow:
+                  "0 0 0 1px color-mix(in srgb, #C9A24E 55%, transparent), 0 22px 48px -26px color-mix(in srgb, var(--color-welcome-navy) 40%, transparent)",
+              }}
             >
+              {/* Sky-and-blush light at the top, fine gold inner frame */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(80% 40% at 50% 0%, color-mix(in srgb, #90E3F4 22%, transparent) 0%, transparent 70%), radial-gradient(60% 30% at 50% 100%, color-mix(in srgb, #F7D6E0 35%, transparent) 0%, transparent 70%)",
+                }}
+                aria-hidden
+              />
+              <div
+                className="pointer-events-none absolute inset-2.5 rounded-[1.15rem] sm:inset-3.5 sm:rounded-[1.6rem]"
+                style={{ border: "1px solid color-mix(in srgb, #C9A24E 35%, transparent)" }}
+                aria-hidden
+              />
               <motion.div
-                className="relative z-10 flex flex-col items-center px-5 py-7 text-center sm:px-10 sm:py-9 md:px-12"
+                className="relative z-10 flex flex-col items-center px-6 py-8 text-center sm:px-12 sm:py-11 md:px-14"
                 variants={reminderListVariants}
                 initial={reduceMotion ? false : "hidden"}
                 whileInView="show"
@@ -1490,17 +1526,21 @@ export function Details() {
                       {index > 0 ? (
                         <motion.span
                           variants={reminderItemVariants}
-                          className="mx-auto my-4 block h-px w-1/2 max-w-[14rem] sm:my-5"
-                          style={{ background: "linear-gradient(to right, transparent, var(--color-motif-medium), transparent)" }}
+                          className="mx-auto my-5 block h-px w-1/2 max-w-[14rem] sm:my-6"
+                          style={{ background: "linear-gradient(to right, transparent, color-mix(in srgb, #C9A24E 70%, transparent), transparent)" }}
                           aria-hidden
                         />
                       ) : null}
-                      <ReminderItem title={item.title}>
+                      <ReminderItem title={item.title} number={index + 1}>
                         <div className="space-y-2">
                           {item.paragraphs.map((text, i) => (
                             <div key={i} className="space-y-2.5">
                               <p>{fillTimes(text)}</p>
-                              {item.showPalette && i === 0 ? <ColorPalette colors={paletteHexes} /> : null}
+                              {item.showPalette && i === 0 ? (
+                                <div className="pt-2">
+                                  <PaletteDots palette={toPaletteColors(attire.palette)} />
+                                </div>
+                              ) : null}
                             </div>
                           ))}
                         </div>

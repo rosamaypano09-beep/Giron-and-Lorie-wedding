@@ -43,8 +43,8 @@ export function CrossfadeImages({
               alt={isActive ? alt : ""}
               fill
               sizes={sizes}
-              priority={i === 0}
-              loading={i === 0 ? undefined : "eager"}
+              // Below the fold (See You There): load when near the screen, not with the page
+              loading="lazy"
               className={`${className} ease-out`}
               style={{
                 transform: isActive && !reduceMotion ? "scale(1.08)" : "scale(1)",

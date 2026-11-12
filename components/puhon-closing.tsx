@@ -247,7 +247,7 @@ export function PuhonBanner() {
             src={encodeURI(src)}
             alt=""
             fill
-            priority={i === 0}
+            loading="lazy"
             sizes="(max-width: 1024px) 100vw, 1152px"
             className="object-cover transition-transform ease-out"
             style={{

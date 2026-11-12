@@ -124,12 +124,14 @@ function readImagesFromPublicDir(relativeDir: string): GalleryImageFile[] {
 export type GalleryFolderImages = {
   desktop: GalleryImageFile[]
   mobile: GalleryImageFile[]
+  story: GalleryImageFile[]
 }
 
-/** Gallery list from public/desktop-background and public/mobile-background. */
+/** Gallery list from public/mobile-background, public/desktop-background and public/story. */
 export async function fetchGalleryImages(): Promise<GalleryFolderImages> {
   return {
     desktop: readImagesFromPublicDir("desktop-background"),
     mobile: readImagesFromPublicDir("mobile-background"),
+    story: readImagesFromPublicDir("story"),
   }
 }

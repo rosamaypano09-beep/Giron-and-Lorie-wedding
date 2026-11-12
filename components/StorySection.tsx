@@ -261,7 +261,7 @@ function PlainStoryCard({
                 className="object-cover"
                 style={{ objectPosition: imagePosition ?? "center 30%" }}
                 quality={85}
-                priority={chapterIndex < 1}
+                loading="lazy"
               />
             </div>
           </motion.figure>
@@ -486,7 +486,7 @@ export const StorySection: React.FC<StorySectionProps> = ({
                       sizes="(max-width: 768px) 45vw, (max-width: 1024px) 40vw, 33vw"
                       className="object-cover transition-transform duration-1000 group-hover:scale-105"
                       quality={90}
-                      priority={chapterIndex < 2}
+                      loading="lazy"
                     />
                     {isDark && (
                       <div className="pointer-events-none absolute inset-0 z-10 bg-black/5 mix-blend-multiply" />
@@ -524,7 +524,7 @@ export const StorySection: React.FC<StorySectionProps> = ({
                       sizes="(max-width: 640px) 70vw, 288px"
                       className="object-cover"
                       quality={85}
-                      priority={chapterIndex < 1}
+                      loading="lazy"
                     />
                   </div>
                 </div>

@@ -82,11 +82,19 @@ export function Welcome() {
   const siteConfig = useSiteConfig()
   const brideName = siteConfig.couple.brideNickname || siteConfig.couple.bride
   const groomName = siteConfig.couple.groomNickname || siteConfig.couple.groom
+  const weddingDate = new Date(siteConfig.wedding.date)
+  const dateLabel = Number.isNaN(weddingDate.getTime())
+    ? siteConfig.wedding.date
+    : weddingDate.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+  const venueName = siteConfig.ceremony.location
+  const venueArea = siteConfig.ceremony.venue
+  // Same corner florals as the loader and envelope (content/site.ts → CORNER_DECOS)
+  const decos = siteConfig.loadingScreen?.cornerDecos
 
   return (
     <section
       id="welcome"
-      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative px-4 py-10 sm:px-6 sm:py-14 md:px-8 md:py-16`}
+      className={`${theSeasons.variable} ${aboveTheBeyond.variable} relative overflow-x-clip px-4 py-12 sm:px-6 sm:py-16 md:px-8 md:py-20`}
     >
       <div className="mx-auto w-full max-w-3xl">
         <motion.article
@@ -102,6 +110,26 @@ export function Welcome() {
               "0 10px 30px color-mix(in srgb, var(--color-welcome-navy) 18%, transparent)",
           }}
         >
+          {/* Corner florals: top-left and bottom-right, tucked over the card's corners */}
+          {decos?.topLeft && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={encodeURI(decos.topLeft)}
+              alt=""
+              aria-hidden
+              className="welcome-deco welcome-deco--tl pointer-events-none absolute z-20 select-none"
+            />
+          )}
+          {decos?.bottomRight && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={encodeURI(decos.bottomRight)}
+              alt=""
+              aria-hidden
+              className="welcome-deco welcome-deco--br pointer-events-none absolute z-20 select-none"
+            />
+          )}
+
           <div
             className="wedding-frame-inner hidden min-[400px]:block"
             style={{ borderColor: "color-mix(in srgb, var(--color-welcome-navy) 22%, transparent)" }}
@@ -129,8 +157,8 @@ export function Welcome() {
                   className={`font-goudy-italic ${sectionType.textSnug}`}
                   style={{ color: "var(--color-welcome-navy)" }}
                 >
-                  &ldquo;Every love story is beautiful, but ours is our favorite — and we would love for you
-                  to be part of its next chapter.&rdquo;
+                  &ldquo;Of all the moments we have shared, none is sweeter than the one still ahead of
+                  us — and we would be honored to have you there as our forever begins.&rdquo;
                 </p>
                 <figcaption className="mt-2 sm:mt-2.5">
                   <cite
@@ -152,18 +180,21 @@ export function Welcome() {
               }}
             >
               <p>
-                Dear family and friends, we are overjoyed to begin this new chapter together and
-                grateful to God for every step that led us here. What began as a simple story has
-                grown into a love we cherish deeply — and we cannot imagine celebrating without you.
+                Dear beloved family and friends, with hearts full of joy and gratitude, we are
+                delighted to share the beginning of our forever with you. What started as a simple
+                hello has blossomed into a love we treasure, and we cannot imagine this day without
+                the people who have shaped our lives.
               </p>
               <p>
-                This invitation holds everything you may need for our wedding day: the schedule,
-                venue details, and a few gentle reminders along the way. Whether near or far, your
-                presence, prayers, and warm wishes will mean more to us than words can say.
+                On {dateLabel}
+                {venueName ? <>, at {venueName}{venueArea ? `, ${venueArea}` : ""}</> : null}, we will
+                exchange our vows in a celebration of Modern Filipiniana elegance, touched with a
+                little garden romance. Inside this invitation you will find everything you need: the
+                schedule, venue details, the attire guide and a few gentle reminders.
               </p>
               <p>
-                Thank you for being part of our journey. We look forward to sharing this beautiful
-                day with the people who have shaped our lives and our hearts.
+                Your presence, prayers and warm wishes are the greatest gifts we could ask for.
+                Thank you for being part of our story — we can&apos;t wait to celebrate with you.
               </p>
             </div>
 

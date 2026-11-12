@@ -34,17 +34,20 @@ const OUTSIDE_TITLE_SHADOW =
 const READABLE_SHADOW =
   "0 1px 2px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent), 0 2px 10px color-mix(in srgb, var(--color-welcome-navy) 40%, transparent)"
 
-// Card palette — white paper, navy headings, body-blue text, dusty-blue buttons.
+// Card palette — Regency stationery: cream paper, fine gold lines, navy headings,
+// gold-bronze accents and cream buttons with a gold edge.
 const TEAL = "var(--color-welcome-navy)"
-const BUTTON =
-  "linear-gradient(180deg, var(--color-welcome-heading) 0%, color-mix(in srgb, var(--color-welcome-heading) 72%, var(--color-welcome-navy)) 100%)"
-const BLUE = "var(--color-welcome-heading)"
-const IVORY = "#FFFFFF"
-const HAIRLINE = "color-mix(in srgb, var(--color-motif-medium) 60%, transparent)"
-const PALE = "color-mix(in srgb, var(--color-motif-medium) 16%, white)"
+const GOLD = "#C9A24E"
+const GOLD_INK = "#8F6730"
+const BUTTON = "linear-gradient(180deg, #FFFDF7 0%, #FFF3DF 100%)"
+const BUTTON_ACTIVE = "linear-gradient(180deg, #D9B66A 0%, #B08440 100%)"
+const BLUE = GOLD_INK
+const IVORY = "#FFFDF7"
+const HAIRLINE = "color-mix(in srgb, #C9A24E 45%, transparent)"
+const PALE = "color-mix(in srgb, #F7D6E0 30%, white)"
 const TEAL_SOFT = "color-mix(in srgb, var(--color-welcome-text) 75%, white)"
 const BUTTON_SHADOW =
-  "0 0 0 3px color-mix(in srgb, var(--color-motif-medium) 22%, transparent), 0 12px 24px -12px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)"
+  "0 0 0 1px #C9A24E, 0 0 0 4px rgb(255 255 255 / 70%), 0 0 0 5px color-mix(in srgb, #C9A24E 30%, transparent), 0 12px 24px -14px rgb(47 90 120 / 45%)"
 
 const palette = {
   body: "var(--color-welcome-text)",
@@ -58,7 +61,7 @@ const outsideDividerLineStyle = {
 } as const
 
 const insideDividerLineStyle = {
-  background: "linear-gradient(to right, transparent, var(--color-motif-yellow), transparent)",
+  background: `linear-gradient(to right, transparent, ${GOLD}, transparent)`,
 } as const
 
 const ct = {
@@ -71,12 +74,18 @@ const ct = {
 
 const cardStyle = {
   background:
-    "radial-gradient(90% 35% at 50% 0%, rgb(255 255 255 / 95%) 0%, transparent 70%), linear-gradient(180deg, #FFFFFF 0%, color-mix(in srgb, var(--color-motif-medium) 10%, white) 100%)",
-  border: `1px solid ${HAIRLINE}`,
+    "radial-gradient(85% 32% at 50% 0%, color-mix(in srgb, #90E3F4 20%, transparent) 0%, transparent 72%), radial-gradient(70% 28% at 50% 100%, color-mix(in srgb, #F7D6E0 38%, transparent) 0%, transparent 72%), linear-gradient(180deg, #FFFDF7 0%, #FFF8EE 100%)",
+  border: `1px solid color-mix(in srgb, ${GOLD} 60%, transparent)`,
   boxShadow:
-    "0 0 0 5px rgb(255 255 255 / 25%), 0 24px 50px -28px color-mix(in srgb, var(--color-welcome-navy) 55%, transparent)",
+    "0 0 0 5px rgb(255 255 255 / 35%), 0 24px 50px -28px rgb(47 74 102 / 55%)",
 } as const
 
+
+// Photo mat for "Our Favorite Moments": cream border, gold hairline, soft shadow
+const momentFrame: React.CSSProperties = {
+  background: "#FFFDF7",
+  boxShadow: `0 0 0 1px color-mix(in srgb, ${GOLD} 60%, transparent), 0 12px 24px -14px rgb(47 74 102 / 45%)`,
+}
 
 function OutsideDivider() {
   return (
@@ -126,6 +135,12 @@ function SnapShareTitle({ title, subtitle }: { title: string; subtitle: string }
 function ContentCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <div className={`relative overflow-hidden rounded-[1.5rem] sm:rounded-[1.75rem] ${className}`} style={cardStyle}>
+      {/* Fine gold inner frame */}
+      <div
+        className="pointer-events-none absolute inset-2 rounded-[1.15rem] sm:inset-2.5 sm:rounded-[1.35rem]"
+        style={{ border: `1px solid color-mix(in srgb, ${GOLD} 32%, transparent)` }}
+        aria-hidden
+      />
       <div className="relative z-20 flex flex-col gap-3 px-4 py-6 sm:gap-4 sm:px-6 sm:py-7 md:px-7">{children}</div>
     </div>
   )
@@ -133,12 +148,20 @@ function ContentCard({ children, className = "" }: { children: React.ReactNode; 
 
 function CardTitle({ children, as: Tag = "h4" }: { children: React.ReactNode; as?: "h4" | "h5" }) {
   return (
-    <Tag
-      className={`${cinzel.className} ${ct.cardTitle} text-center font-semibold uppercase tracking-[0.1em]`}
-      style={{ color: palette.heading }}
-    >
-      {children}
-    </Tag>
+    <div className="flex flex-col items-center gap-2">
+      <Tag
+        className={`${cinzel.className} ${ct.cardTitle} text-center font-semibold uppercase tracking-[0.12em]`}
+        style={{ color: palette.heading }}
+      >
+        {children}
+      </Tag>
+      {/* Gold hairline under each card title */}
+      <span
+        className="block h-px w-20 sm:w-24"
+        style={{ background: `linear-gradient(to right, transparent, ${GOLD}, transparent)` }}
+        aria-hidden
+      />
+    </div>
   )
 }
 
@@ -157,9 +180,9 @@ function PrimaryButton({
       onClick={onClick}
       className={`${cinzel.className} inline-flex items-center justify-center gap-1.5 rounded-full border px-5 py-2.5 font-semibold uppercase tracking-[0.16em] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-motif-accent)] sm:px-6 ${ct.btn}`}
       style={{
-        background: active ? TEAL : BUTTON,
-        borderColor: "rgb(255 255 255 / 70%)",
-        color: IVORY,
+        background: active ? BUTTON_ACTIVE : BUTTON,
+        borderColor: "transparent",
+        color: active ? "#FFFFFF" : GOLD_INK,
         boxShadow: BUTTON_SHADOW,
       }}
     >
@@ -247,7 +270,7 @@ export function SnapShare() {
   ) => (
     <div
       className="mx-auto flex w-full max-w-[240px] flex-col items-center rounded-2xl p-3 sm:p-4"
-      style={{ background: IVORY, boxShadow: `0 0 0 1px ${HAIRLINE}, 0 0 0 5px color-mix(in srgb, var(--color-motif-medium) 12%, transparent), 0 14px 28px -20px color-mix(in srgb, var(--color-welcome-navy) 50%, transparent)` }}
+      style={{ background: "#FFFFFF", boxShadow: `0 0 0 1px ${HAIRLINE}, 0 0 0 5px rgb(255 255 255 / 80%), 0 0 0 6px color-mix(in srgb, ${GOLD} 25%, transparent), 0 14px 28px -20px rgb(47 74 102 / 50%)` }}
     >
       <div className="flex w-full max-w-full justify-center overflow-hidden rounded-xl bg-white">
         <QRCodeCanvas
@@ -314,7 +337,7 @@ export function SnapShare() {
               className="flex w-full min-w-0 items-center justify-between gap-2 rounded-xl px-3.5 py-2.5 transition-all duration-200 active:scale-[0.98]"
               style={{
                 background: isCopied ? PALE : IVORY,
-                boxShadow: `inset 0 0 0 1px ${isCopied ? "color-mix(in srgb, var(--color-motif-yellow) 75%, transparent)" : HAIRLINE}`,
+                boxShadow: `inset 0 0 0 1px ${isCopied ? GOLD : HAIRLINE}`,
               }}
             >
               <span
@@ -325,7 +348,7 @@ export function SnapShare() {
               </span>
               <span
                 className={`${cinzel.className} flex flex-shrink-0 items-center gap-1 whitespace-nowrap ${sectionType.label} font-semibold uppercase tracking-wider`}
-                style={{ color: isCopied ? "color-mix(in srgb, var(--color-motif-yellow) 70%, #2C3619)" : BLUE }}
+                style={{ color: GOLD_INK }}
               >
                 {isCopied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                 {isCopied ? content.hashtags.copied : content.hashtags.copy}
@@ -347,7 +370,7 @@ export function SnapShare() {
           style={
             copiedAllHashtags
               ? { background: PALE, color: palette.accent }
-              : { background: BUTTON, color: IVORY, boxShadow: BUTTON_SHADOW }
+              : { background: BUTTON, color: GOLD_INK, boxShadow: BUTTON_SHADOW }
           }
         >
           {copiedAllHashtags ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
@@ -376,8 +399,8 @@ export function SnapShare() {
               className="group flex w-full min-w-0 items-center justify-center gap-2 rounded-xl px-3 py-3 transition-all duration-200 hover:-translate-y-0.5"
               style={{ background: BUTTON, boxShadow: BUTTON_SHADOW }}
             >
-              <Icon className="h-4 w-4 flex-shrink-0 sm:h-5 sm:w-5" style={{ color: IVORY }} />
-              <span className={`${cinzel.className} ${ct.btn} truncate font-semibold uppercase tracking-[0.08em]`} style={{ color: IVORY }}>
+              <Icon className="h-4 w-4 flex-shrink-0 sm:h-5 sm:w-5" style={{ color: GOLD_INK }} />
+              <span className={`${cinzel.className} ${ct.btn} truncate font-semibold uppercase tracking-[0.08em]`} style={{ color: TEAL }}>
                 {label}
               </span>
             </button>
@@ -422,7 +445,7 @@ export function SnapShare() {
           target="_blank"
           rel="noopener noreferrer"
           className={`${cinzel.className} inline-flex items-center justify-center gap-1.5 rounded-full px-5 py-2.5 font-semibold uppercase tracking-[0.16em] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 sm:px-6 ${ct.btn}`}
-          style={{ background: BUTTON, color: IVORY, boxShadow: BUTTON_SHADOW, border: "1px solid rgb(255 255 255 / 70%)" }}
+          style={{ background: BUTTON, color: GOLD_INK, boxShadow: BUTTON_SHADOW }}
         >
           <Share2 className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4" />
           {content.upload.uploadButton}
@@ -466,13 +489,17 @@ export function SnapShare() {
               <CardTitle>{content.moments.title}</CardTitle>
               <div className="grid w-full min-w-0 grid-cols-2 gap-2 sm:gap-3">
                 {[momentA, momentB].filter(Boolean).map((src, i) => (
-                  <div key={src} className="relative aspect-[3/4] overflow-hidden rounded-xl" style={{ boxShadow: `0 0 0 1px ${HAIRLINE}` }}>
-                    <Image src={encodeURI(src)} alt={`Wedding moment ${i + 1}`} fill sizes="(max-width: 1024px) 45vw, 22vw" className="object-cover" />
+                  <div key={src} className="rounded-xl p-1.5" style={momentFrame}>
+                    <div className="relative aspect-[3/4] overflow-hidden rounded-lg" style={{ boxShadow: `inset 0 0 0 1px ${HAIRLINE}` }}>
+                      <Image src={encodeURI(src)} alt={`Wedding moment ${i + 1}`} fill sizes="(max-width: 1024px) 45vw, 22vw" className="object-cover" />
+                    </div>
                   </div>
                 ))}
                 {momentC ? (
-                  <div className="relative col-span-2 aspect-[4/3] overflow-hidden rounded-xl" style={{ boxShadow: `0 0 0 1px ${HAIRLINE}` }}>
-                    <Image src={encodeURI(momentC)} alt="Wedding moment 3" fill sizes="(max-width: 1024px) 90vw, 45vw" className="object-cover" />
+                  <div className="col-span-2 rounded-xl p-1.5" style={momentFrame}>
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+                      <Image src={encodeURI(momentC)} alt="Wedding moment 3" fill sizes="(max-width: 1024px) 90vw, 45vw" className="object-cover" />
+                    </div>
                   </div>
                 ) : null}
               </div>

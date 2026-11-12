@@ -12,7 +12,7 @@ const DIRECTORIES = args.length > 0
       path.resolve(process.cwd(), "public", "mobile-background"),
       path.resolve(process.cwd(), "public", "Details"),
       path.resolve(process.cwd(), "public", "frontboxes"),
-      path.resolve(process.cwd(), "public", "LoveStory"),
+      path.resolve(process.cwd(), "public", "story"),
       path.resolve(process.cwd(), "public", "desktop_slide"),
       path.resolve(process.cwd(), "public", "mobile_slide"),
       path.resolve(process.cwd(), "public", "monogram"),

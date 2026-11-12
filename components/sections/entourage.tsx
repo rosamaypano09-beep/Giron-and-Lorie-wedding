@@ -79,7 +79,7 @@ function OutsideDivider() {
 // Between role groups: hairlines fading out from a small diamond
 function SectionDivider() {
   return (
-    <div className="mb-1.5 flex items-center justify-center gap-2 py-2 sm:mb-2.5 sm:py-3 md:mb-3 md:py-3.5" aria-hidden>
+    <div className="ent-reveal ent-reveal--line mb-1.5 flex items-center justify-center gap-2 py-2 sm:mb-2.5 sm:py-3 md:mb-3 md:py-3.5" aria-hidden>
       <span
         className="h-px w-full max-w-[9rem] sm:max-w-[12rem]"
         style={{ background: "linear-gradient(to right, transparent, var(--color-motif-medium))" }}
@@ -95,7 +95,7 @@ function SectionDivider() {
 
 // Role category headings: one font (Cinzel capitals) for every heading — it has all
 // the glyphs ("&", "-", …), so nothing switches font mid-heading
-const SECTION_TITLE_CLASS = `${cinzel.className} font-semibold text-[0.7rem] sm:text-[0.8rem] md:text-[0.9rem] tracking-[0.14em] sm:tracking-[0.16em] md:tracking-[0.18em] uppercase leading-tight`
+const SECTION_TITLE_CLASS = `${cinzel.className} font-semibold text-[0.64rem] sm:text-[0.74rem] md:text-[0.82rem] tracking-[0.14em] sm:tracking-[0.16em] md:tracking-[0.18em] uppercase leading-tight`
 
 // Names in Cormorant Garamond (loaded in app/layout.tsx) — an elegant serif that
 // stays readable at small sizes; long names wrap rather than being cut off
@@ -104,16 +104,16 @@ const NAME_FONT = '"Cormorant Garamond", "SortsMillGoudy", Georgia, serif'
 const nameStyle: React.CSSProperties = {
   fontFamily: NAME_FONT,
   fontWeight: 600,
-  fontSize: "clamp(0.92rem, min(3.9vw, 5cqi), 1.2rem)",
+  fontSize: "clamp(0.84rem, min(3.6vw, 4.6cqi), 1.08rem)",
   lineHeight: 1.2,
   letterSpacing: "0.01em",
 }
 
-const featuredNameSize = "clamp(1.05rem, min(4.4vw, 5.6cqi), 1.4rem)"
+const featuredNameSize = "clamp(0.98rem, min(4.1vw, 5.2cqi), 1.28rem)"
 
 // Role titles: small engraved capitals in Cinzel
 const roleTitleStyle: React.CSSProperties = {
-  fontSize: "clamp(0.56rem, min(2.3vw, 2.9cqi), 0.68rem)",
+  fontSize: "clamp(0.52rem, min(2.1vw, 2.7cqi), 0.62rem)",
   lineHeight: 1.25,
   letterSpacing: "0.12em",
   textTransform: "uppercase",
@@ -219,8 +219,8 @@ function EntourageTitle({ title, subtitle }: { title: string; subtitle: string }
       className="welcome-title-lockup relative mx-auto w-full max-w-full text-center"
       style={
         {
-          "--title-size": "clamp(1.25rem, min(5.8vw, 8cqi), 3rem)",
-          "--script-size": "clamp(0.78rem, min(3.2vw, 4.8cqi), 1.85rem)",
+          "--title-size": "clamp(1.15rem, min(5.3vw, 7.4cqi), 2.7rem)",
+          "--script-size": "clamp(0.74rem, min(3vw, 4.4cqi), 1.65rem)",
         } as React.CSSProperties
       }
     >
@@ -595,6 +595,35 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
     }
   }, [])
 
+  // Scroll reveal for headings, captions, dividers and names (.ent-reveal): each one
+  // fades and rises in once as it enters the screen, then stays fully visible.
+  // Runs after every render because the name rows are re-created when data arrives.
+  useEffect(() => {
+    const root = sectionRef.current
+    if (!root || typeof IntersectionObserver === "undefined") return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    root.classList.add("ent-reveal-on")
+    const pending = Array.from(root.querySelectorAll<HTMLElement>(".ent-reveal:not(.is-in)"))
+    if (!pending.length) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Stagger the elements that come into view together
+        let order = 0
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          const el = entry.target as HTMLElement
+          el.style.transitionDelay = `${Math.min(order, 8) * 70}ms`
+          el.classList.add("is-in")
+          order += 1
+          observer.unobserve(el)
+        })
+      },
+      { rootMargin: "0px 0px -6% 0px", threshold: 0.01 },
+    )
+    pending.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  })
+
   // Group entourage by role category
   const grouped = useMemo(() => {
     const grouped: Record<string, EntourageMember[]> = {}
@@ -631,7 +660,7 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
       align === "right" ? "text-right" : align === "left" ? "text-left" : "text-center"
     return (
       <h3
-        className={`relative ${SECTION_TITLE_CLASS} mb-1 sm:mb-2 md:mb-2.5 ${textAlign} ${className} transition-all duration-300`}
+        className={`ent-reveal relative ${SECTION_TITLE_CLASS} mb-1 sm:mb-2 md:mb-2.5 ${textAlign} ${className} transition-all duration-300`}
         style={{ color: NAVY }}
       >
         {typeof children === "string" ? content.headingLabels[children] ?? children : children}
@@ -642,7 +671,7 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
   // Short italic line under a heading (e.g. what the role means)
   const SectionCaption = ({ children }: { children: React.ReactNode }) => (
     <p
-      className="font-goudy-italic mx-auto -mt-0.5 mb-2 max-w-md px-4 text-center text-[0.74rem] leading-snug sm:mb-3 sm:text-sm md:text-[0.95rem]"
+      className="ent-reveal font-goudy-italic mx-auto -mt-0.5 mb-2 max-w-md px-4 text-center text-[0.7rem] leading-snug sm:mb-3 sm:text-[0.82rem] md:text-[0.9rem]"
       style={{ color: SCRIPT }}
     >
       {children}
@@ -668,7 +697,7 @@ export function Entourage({ sponsorsList }: { sponsorsList?: SponsorsList } = {}
     const displayRole = member.roleTitle ? toDisplayName(member.roleTitle) : ""
     return (
       <div
-        className={`relative flex flex-col ${containerAlign} justify-center py-0.5 sm:py-1.5 min-w-0 w-full max-w-full group/item transition-all duration-300`}
+        className={`ent-reveal ent-reveal--${align} relative flex flex-col ${containerAlign} justify-center py-0.5 sm:py-1.5 min-w-0 w-full max-w-full group/item transition-all duration-300`}
       >
         <div
           className="absolute inset-0 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 rounded-md"

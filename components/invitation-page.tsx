@@ -88,7 +88,7 @@ const sectionsRevealVariants = {
 }
 
 /** WebGL Silk needs a hex color. */
-const SILK_COLOR = "#C7DDF0"
+const SILK_COLOR = "#90E3F4"
 
 type InvitationPageProps = {
   /** Which principal-sponsor sheet the entourage shows (googleAPI.sponsorsInviteOne / Two) */

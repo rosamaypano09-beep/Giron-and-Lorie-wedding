@@ -196,7 +196,9 @@ export function BookOfGuests({ background = true }: { background?: boolean } = {
   const [rsvpCount, setRsvpCount] = useState(0)
   const [confirmedGuests, setConfirmedGuests] = useState<Guest[]>([])
   const [isRefreshing, setIsRefreshing] = useState(false)
-  const [lastUpdate, setLastUpdate] = useState<Date>(new Date())
+  // Set after mount: a time rendered on the server never matches the guest's clock,
+  // which caused a hydration mismatch ("8:50 PM" vs "8:51 PM")
+  const [lastUpdate, setLastUpdate] = useState<Date | null>(null)
   const [showIncrease, setShowIncrease] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   // Cards whose full companion list is open
@@ -227,8 +229,8 @@ export function BookOfGuests({ background = true }: { background?: boolean } = {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
   }
 
-  const formatLastUpdate = (date: Date): string =>
-    date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
+  const formatLastUpdate = (date: Date | null): string =>
+    date ? date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }) : ""
 
   const fetchGuests = async (showLoading = false) => {
     if (showLoading) setIsRefreshing(true)
@@ -479,12 +481,14 @@ export function BookOfGuests({ background = true }: { background?: boolean } = {
                 {copy.thankYou}
               </p>
 
-              <p
-                className={`${cinzel.className} ${ct.meta} mt-3 sm:mt-4 uppercase tracking-[0.14em]`}
-                style={{ color: TEAL_SOFT }}
-              >
-                {copy.updatedLabel} {formatLastUpdate(lastUpdate)}
-              </p>
+              {lastUpdate ? (
+                <p
+                  className={`${cinzel.className} ${ct.meta} mt-3 sm:mt-4 uppercase tracking-[0.14em]`}
+                  style={{ color: TEAL_SOFT }}
+                >
+                  {copy.updatedLabel} {formatLastUpdate(lastUpdate)}
+                </p>
+              ) : null}
             </div>
           </div>
         </motion.div>

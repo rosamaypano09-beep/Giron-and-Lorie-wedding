@@ -80,8 +80,9 @@ export function SeeYouThere(_props: { background?: boolean } = {}) {
   const fill = (text: string) => text.split("{couple}").join(couple)
   const alt = fill(content.photoAlt)
   const photos = (content.photos ?? [content.photo]).filter(Boolean).map((src) => encodeURI(src))
-  // md+: three panels, panel i cycles through photos i, i+3, i+6, …
-  const panelCount = Math.min(3, photos.length)
+  // md+: side-by-side panels, panel i cycles through photos i, i+n, i+2n, …
+  // (4 photos → 2 panels of 2 so every panel keeps changing; otherwise up to 3 panels)
+  const panelCount = photos.length === 4 ? 2 : Math.min(3, photos.length)
   const panels = Array.from({ length: panelCount }, (_, p) => photos.filter((_, i) => i % panelCount === p))
   const [active, setActive] = useState(0)
 
@@ -123,7 +124,7 @@ export function SeeYouThere(_props: { background?: boolean } = {}) {
               <CrossfadeImages
                 images={set}
                 active={set.length ? (Math.floor(active / panelCount) + (active % panelCount > p ? 1 : 0)) % set.length : 0}
-                sizes="34vw"
+                sizes={panelCount === 2 ? "50vw" : "34vw"}
                 alt={p === 0 ? alt : ""}
                 className="object-cover object-[center_30%]"
                 reduceMotion={reduceMotion}

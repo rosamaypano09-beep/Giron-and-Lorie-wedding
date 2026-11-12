@@ -3584,7 +3584,7 @@
   --hh-ink: var(--color-welcome-text);        /* #2F4A66 */
   --hh-sky: var(--color-motif-medium);        /* #9EB9D4 */
   --hh-leaf: var(--color-motif-yellow);       /* #9EB9D4 */
-  --hh-butter: var(--color-motif-silver);     /* #C7DDF0 */
+  --hh-butter: var(--color-motif-silver);     /* #90E3F4 */
   /* Tight white edge: keeps thin strokes crisp instead of washing them out */
   --hh-edge:
     0 0 1px rgb(255 255 255 / 100%),
@@ -3973,13 +3973,13 @@
    dusty blue script and small caps, sky-blue hairlines.
    ========================================================================== */
 .loading-screen--plain {
-  --ls-blush: #C7DDF0;
-  --ls-pastel: #F7E5A9;
+  --ls-blush: #90E3F4;
+  --ls-pastel: #EFF7F6;
   --ls-ivory: #FFFBF0;
   --ls-burgundy: #2F4A66;
   --ls-rose: #9EB9D4;
   --ls-rose-ink: #5B7FA6;
-  --ls-sage: #C7DDF0;
+  --ls-sage: #90E3F4;
 
   --ls-sky: var(--ls-rose);
   --ls-blue: var(--ls-rose-ink);
@@ -4056,10 +4056,10 @@
   --hh-blue: #5B7FA6;
   --hh-ink: #4A5A6B;
   --hh-sky: #9EB9D4;
-  --hh-leaf: #C7DDF0;
-  --hh-butter: #C7DDF0;
+  --hh-leaf: #90E3F4;
+  --hh-butter: #90E3F4;
   --hh-edge: none;
-  background: #F7E5A9;
+  background: #EFF7F6;
 }
 
 .home-hero--plain .home-hero-title-main,
@@ -4135,7 +4135,7 @@
   aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: 999px 999px 16px 16px;
-  background: #C7DDF0;
+  background: #90E3F4;
   border: 5px solid #FFFBF0;
   box-shadow:
     0 0 0 1px color-mix(in srgb, #9EB9D4 35%, transparent),
@@ -4150,7 +4150,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, #F7E5A9 35%, transparent) 100%);
+  background: linear-gradient(180deg, transparent 72%, color-mix(in srgb, #EFF7F6 35%, transparent) 100%);
 }
 
 /* Natural colour, only the faintest warm lift — no heavy filter */
@@ -4259,8 +4259,8 @@
      behind the section shows through softly */
   background:
     radial-gradient(90% 16% at 50% 0%, rgb(255 255 255 / 65%) 0%, transparent 70%),
-    radial-gradient(60% 14% at 0% 30%, color-mix(in srgb, #C7DDF0 30%, transparent) 0%, transparent 70%),
-    radial-gradient(60% 14% at 100% 62%, color-mix(in srgb, #C7DDF0 26%, transparent) 0%, transparent 70%),
+    radial-gradient(60% 14% at 0% 30%, color-mix(in srgb, #90E3F4 30%, transparent) 0%, transparent 70%),
+    radial-gradient(60% 14% at 100% 62%, color-mix(in srgb, #90E3F4 26%, transparent) 0%, transparent 70%),
     linear-gradient(
       180deg,
       rgb(255 255 255 / 58%) 0%,
@@ -4344,12 +4344,12 @@
 
 .story-open-wash--left {
   left: -18%;
-  background: radial-gradient(closest-side, color-mix(in srgb, #9EB9D4 30%, transparent) 0%, color-mix(in srgb, #C7DDF0 50%, transparent) 55%, transparent 100%);
+  background: radial-gradient(closest-side, color-mix(in srgb, #9EB9D4 30%, transparent) 0%, color-mix(in srgb, #90E3F4 50%, transparent) 55%, transparent 100%);
 }
 
 .story-open-wash--right {
   right: -18%;
-  background: radial-gradient(closest-side, color-mix(in srgb, #9EB9D4 30%, transparent) 0%, color-mix(in srgb, #C7DDF0 50%, transparent) 55%, transparent 100%);
+  background: radial-gradient(closest-side, color-mix(in srgb, #9EB9D4 30%, transparent) 0%, color-mix(in srgb, #90E3F4 50%, transparent) 55%, transparent 100%);
 }
 
 /* Text colors (loading screen palette): charcoal title, slate details, warm-gray rule */
@@ -5756,7 +5756,7 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   }
 }
 
-/* ---- Curtains: pastel-blue silk (#C7DDF0) with a pastel vibe ----
+/* ---- Curtains: pastel-blue silk (#90E3F4) with a pastel vibe ----
    Soft folds shaded from a deeper powder blue to near-white highlights, a gentle
    lavender / blush sheen, butter-and-blush tassel fringe, and a pearly trim down
    the meeting edges. Shadows are soft blue-grey instead of black. */
@@ -5765,17 +5765,17 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
     /* top + hem shade */
     linear-gradient(180deg, rgb(91 127 166 / 22%) 0%, transparent 14%, transparent 80%, rgb(91 127 166 / 26%) 100%),
     /* faint pastel sheen drifting across the fabric */
-    linear-gradient(160deg, color-mix(in srgb, #DCCFF0 35%, transparent) 0%, transparent 40%, color-mix(in srgb, #F3CED6 30%, transparent) 100%),
+    linear-gradient(160deg, color-mix(in srgb, #F6CBE0 35%, transparent) 0%, transparent 40%, color-mix(in srgb, #F7D6E0 30%, transparent) 100%),
     /* the fold itself */
     linear-gradient(
       90deg,
-      color-mix(in srgb, #C7DDF0 70%, #5B7FA6) 0%,
-      color-mix(in srgb, #C7DDF0 86%, #5B7FA6) 16%,
-      #C7DDF0 36%,
-      color-mix(in srgb, #C7DDF0 45%, white) 49%,
-      #C7DDF0 62%,
-      color-mix(in srgb, #C7DDF0 86%, #5B7FA6) 84%,
-      color-mix(in srgb, #C7DDF0 70%, #5B7FA6) 100%
+      color-mix(in srgb, #90E3F4 70%, #5B7FA6) 0%,
+      color-mix(in srgb, #90E3F4 86%, #5B7FA6) 16%,
+      #90E3F4 36%,
+      color-mix(in srgb, #90E3F4 45%, white) 49%,
+      #90E3F4 62%,
+      color-mix(in srgb, #90E3F4 86%, #5B7FA6) 84%,
+      color-mix(in srgb, #90E3F4 70%, #5B7FA6) 100%
     );
   box-shadow: -6px 0 14px rgb(47 74 102 / 16%);
 }
@@ -5788,16 +5788,16 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 .ls-curtain__fold::after {
   height: clamp(10px, 1.6dvh, 16px);
   background:
-    linear-gradient(180deg, #FFFBF0, color-mix(in srgb, #F7E5A9 80%, white)) top / 100% 2px no-repeat,
+    linear-gradient(180deg, #FFFBF0, color-mix(in srgb, #EFF7F6 80%, white)) top / 100% 2px no-repeat,
     repeating-linear-gradient(
       90deg,
-      #F7E5A9 0 2px,
+      #EFF7F6 0 2px,
       transparent 2px 4px,
-      #F3CED6 4px 6px,
+      #F7D6E0 4px 6px,
       transparent 6px 8px,
-      #DCCFF0 8px 10px,
+      #F6CBE0 8px 10px,
       transparent 10px 12px,
-      #D5E3D0 12px 14px,
+      #B2F7EF 12px 14px,
       transparent 14px 16px
     );
   filter: drop-shadow(0 1px 1px rgb(47 74 102 / 18%));
@@ -5806,16 +5806,16 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 /* Meeting edges: pearly ribbon trim with a soft blush glow */
 .ls-curtain__fold:last-child::before {
   width: 3px;
-  background: linear-gradient(180deg, #FFFBF0, #F3CED6 30%, #F7E5A9 55%, #DCCFF0 80%, #FFFBF0);
-  box-shadow: 0 0 10px color-mix(in srgb, #F3CED6 70%, transparent);
+  background: linear-gradient(180deg, #FFFBF0, #F7D6E0 30%, #EFF7F6 55%, #F6CBE0 80%, #FFFBF0);
+  box-shadow: 0 0 10px color-mix(in srgb, #F7D6E0 70%, transparent);
 }
 
 /* Light through the seam: soft white with a blush-lavender halo */
 .ls-curtains__seam {
   background: linear-gradient(180deg, transparent, #FFFFFF 25%, #FFFBF0 75%, transparent);
   box-shadow:
-    0 0 22px 6px color-mix(in srgb, #F3CED6 60%, transparent),
-    0 0 40px 12px color-mix(in srgb, #DCCFF0 40%, transparent);
+    0 0 22px 6px color-mix(in srgb, #F7D6E0 60%, transparent),
+    0 0 40px 12px color-mix(in srgb, #F6CBE0 40%, transparent);
 }
 
 @media (max-width: 640px) {
@@ -6024,8 +6024,8 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 
 /* ==========================================================================
    Photos loader — pastel particles (LoadingScreen.tsx → PHOTO_PARTICLES)
-   Light motif pastels (#C7DDF0 blue, #D5E3D0 mint, #F7E5A9 butter, #F3CED6 blush,
-   #DCCFF0 lavender) rising over the photos as glowing dots, soft petals and
+   Light motif pastels (#90E3F4 blue, #B2F7EF mint, #EFF7F6 butter, #F7D6E0 blush,
+   #F6CBE0 lavender) rising over the photos as glowing dots, soft petals and
    four-point sparkles. Above the photos, under the corner florals and text.
    ========================================================================== */
 .ls-photo-particles {
@@ -6117,18 +6117,18 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.45  0 0 0 0 0.3  0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23g%29'/%3E%3C/svg%3E"),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.02' numOctaves='4' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 0.98  0 0 0 0 0.93  0 0 0 -0.9 0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23p%29'/%3E%3C/svg%3E") 0 0 / 300px 300px,
     /* watercolor blooms */
-    radial-gradient(34% 22% at 12% 10%, color-mix(in srgb, #8FB3DC 70%, transparent) 0%, color-mix(in srgb, #C7DDF0 55%, transparent) 45%, transparent 75%),
-    radial-gradient(26% 18% at 30% 4%, color-mix(in srgb, #DCCFF0 70%, transparent) 0%, transparent 72%),
-    radial-gradient(30% 20% at 88% 8%, color-mix(in srgb, #A9B9A1 55%, transparent) 0%, color-mix(in srgb, #D5E3D0 45%, transparent) 50%, transparent 76%),
-    radial-gradient(32% 22% at 96% 32%, color-mix(in srgb, #B8A3E6 60%, transparent) 0%, color-mix(in srgb, #DCCFF0 50%, transparent) 45%, transparent 75%),
-    radial-gradient(30% 20% at 4% 42%, color-mix(in srgb, #F3CED6 75%, transparent) 0%, transparent 72%),
-    radial-gradient(26% 18% at 0% 64%, color-mix(in srgb, #F7E5A9 80%, transparent) 0%, transparent 72%),
-    radial-gradient(28% 18% at 92% 56%, color-mix(in srgb, #F3CED6 70%, transparent) 0%, transparent 72%),
-    radial-gradient(30% 20% at 98% 80%, color-mix(in srgb, #A9B9A1 55%, transparent) 0%, color-mix(in srgb, #C7DDF0 45%, transparent) 50%, transparent 76%),
-    radial-gradient(34% 20% at 14% 92%, color-mix(in srgb, #F3A9B9 55%, transparent) 0%, color-mix(in srgb, #F3CED6 50%, transparent) 45%, transparent 75%),
+    radial-gradient(34% 22% at 12% 10%, color-mix(in srgb, #8FB3DC 70%, transparent) 0%, color-mix(in srgb, #90E3F4 55%, transparent) 45%, transparent 75%),
+    radial-gradient(26% 18% at 30% 4%, color-mix(in srgb, #F6CBE0 70%, transparent) 0%, transparent 72%),
+    radial-gradient(30% 20% at 88% 8%, color-mix(in srgb, #A9B9A1 55%, transparent) 0%, color-mix(in srgb, #B2F7EF 45%, transparent) 50%, transparent 76%),
+    radial-gradient(32% 22% at 96% 32%, color-mix(in srgb, #B8A3E6 60%, transparent) 0%, color-mix(in srgb, #F6CBE0 50%, transparent) 45%, transparent 75%),
+    radial-gradient(30% 20% at 4% 42%, color-mix(in srgb, #F7D6E0 75%, transparent) 0%, transparent 72%),
+    radial-gradient(26% 18% at 0% 64%, color-mix(in srgb, #EFF7F6 80%, transparent) 0%, transparent 72%),
+    radial-gradient(28% 18% at 92% 56%, color-mix(in srgb, #F7D6E0 70%, transparent) 0%, transparent 72%),
+    radial-gradient(30% 20% at 98% 80%, color-mix(in srgb, #A9B9A1 55%, transparent) 0%, color-mix(in srgb, #90E3F4 45%, transparent) 50%, transparent 76%),
+    radial-gradient(34% 20% at 14% 92%, color-mix(in srgb, #F3A9B9 55%, transparent) 0%, color-mix(in srgb, #F7D6E0 50%, transparent) 45%, transparent 75%),
     radial-gradient(30% 18% at 40% 98%, color-mix(in srgb, #C9B3EC 60%, transparent) 0%, transparent 72%),
-    radial-gradient(30% 18% at 66% 90%, color-mix(in srgb, #9FBFE2 60%, transparent) 0%, color-mix(in srgb, #C7DDF0 45%, transparent) 50%, transparent 76%),
-    radial-gradient(26% 16% at 82% 100%, color-mix(in srgb, #F7E5A9 80%, transparent) 0%, transparent 72%),
+    radial-gradient(30% 18% at 66% 90%, color-mix(in srgb, #9FBFE2 60%, transparent) 0%, color-mix(in srgb, #90E3F4 45%, transparent) 50%, transparent 76%),
+    radial-gradient(26% 16% at 82% 100%, color-mix(in srgb, #EFF7F6 80%, transparent) 0%, transparent 72%),
     /* warm cream base */
     linear-gradient(180deg, rgb(253 247 230 / 60%), rgb(252 244 222 / 55%));
 }
@@ -6436,7 +6436,7 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   --ls-shadow: #FFFBF0;
   border: 1px solid rgb(255 255 255 / 85%);
   box-shadow:
-    0 0 0 1px color-mix(in srgb, #DCCFF0 70%, transparent),
+    0 0 0 1px color-mix(in srgb, #F6CBE0 70%, transparent),
     0 10px 24px rgb(110 92 154 / 22%);
 }
 
@@ -6444,9 +6444,9 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   background: linear-gradient(
     180deg,
     transparent 38%,
-    color-mix(in srgb, #C7DDF0 45%, transparent) 58%,
-    color-mix(in srgb, #DCCFF0 82%, transparent) 78%,
-    color-mix(in srgb, #F3CED6 92%, white) 100%
+    color-mix(in srgb, #90E3F4 45%, transparent) 58%,
+    color-mix(in srgb, #F6CBE0 82%, transparent) 78%,
+    color-mix(in srgb, #F7D6E0 92%, white) 100%
   );
 }
 
@@ -6478,7 +6478,7 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 .loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-bar::after {
   background: #FFFFFF;
   box-shadow:
-    0 0 0 2px color-mix(in srgb, #DCCFF0 80%, transparent),
+    0 0 0 2px color-mix(in srgb, #F6CBE0 80%, transparent),
     0 0 10px 2px color-mix(in srgb, #E8A9B8 70%, transparent);
 }
 
@@ -6582,7 +6582,7 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 }
 
 .home-hero--photos .home-hero-cover__frame {
-  background: #DCCFF0;
+  background: #F6CBE0;
   border-color: #FFFFFF;
   box-shadow:
     0 0 0 1px color-mix(in srgb, #C9A24E 45%, transparent),
@@ -6591,7 +6591,7 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 }
 
 .home-hero--photos .home-hero-cover__frame::after {
-  background: linear-gradient(180deg, transparent 76%, color-mix(in srgb, #F3CED6 30%, transparent) 100%);
+  background: linear-gradient(180deg, transparent 76%, color-mix(in srgb, #F7D6E0 30%, transparent) 100%);
 }
 
 /* Countdown band: fades up from the bottom in lavender → pastel blue, navy numbers */
@@ -6600,8 +6600,8 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
     180deg,
     transparent 0%,
     rgb(255 251 240 / 55%) 26%,
-    color-mix(in srgb, #DCCFF0 80%, transparent) 62%,
-    color-mix(in srgb, #C7DDF0 92%, white) 100%
+    color-mix(in srgb, #F6CBE0 80%, transparent) 62%,
+    color-mix(in srgb, #90E3F4 92%, white) 100%
   );
 }
 
@@ -6690,11 +6690,11 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   pointer-events: none;
   background: linear-gradient(
     90deg,
-    color-mix(in srgb, #C7DDF0 85%, transparent) 0%,
-    color-mix(in srgb, #DCCFF0 85%, transparent) 26%,
-    color-mix(in srgb, #F3CED6 80%, transparent) 50%,
-    color-mix(in srgb, #D5E3D0 85%, transparent) 74%,
-    color-mix(in srgb, #F7E5A9 80%, transparent) 100%
+    color-mix(in srgb, #90E3F4 85%, transparent) 0%,
+    color-mix(in srgb, #F6CBE0 85%, transparent) 26%,
+    color-mix(in srgb, #F7D6E0 80%, transparent) 50%,
+    color-mix(in srgb, #B2F7EF 85%, transparent) 74%,
+    color-mix(in srgb, #EFF7F6 80%, transparent) 100%
   );
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 45%, #000 100%);
   mask-image: linear-gradient(180deg, transparent 0%, #000 45%, #000 100%);
@@ -6840,11 +6840,11 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 
 /* ---- Love story cards: one motif pastel per chapter (StorySection.tsx → STORY_TONES),
    cycling blue · mint · butter · blush · lavender across all chapters ---- */
-.story-card--blue { --story-card-tint: #C7DDF0; }
-.story-card--mint { --story-card-tint: #D5E3D0; }
-.story-card--butter { --story-card-tint: #F7E5A9; }
-.story-card--blush { --story-card-tint: #F3CED6; }
-.story-card--lavender { --story-card-tint: #DCCFF0; }
+.story-card--blue { --story-card-tint: #90E3F4; }
+.story-card--mint { --story-card-tint: #B2F7EF; }
+.story-card--butter { --story-card-tint: #EFF7F6; }
+.story-card--blush { --story-card-tint: #F7D6E0; }
+.story-card--lavender { --story-card-tint: #F6CBE0; }
 
 /* Card edge picks up a deeper shade of its own pastel */
 .story-card {
@@ -6981,4 +6981,1061 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 @keyframes ls-backdrop-in-quick {
   from { opacity: 0.35; }
   to { opacity: 1; }
+}
+
+/* ==========================================================================
+   Photos loader — couple portrait (LoadingScreen.tsx → .ls-couple)
+   The couple cut-out stands centre stage under the headline: it rises and
+   fades in from the bottom, its lower half dissolves into the backdrop, and
+   the names are set over the gown (poster style). The date follows in type.
+   ========================================================================== */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-names-slot.ls-couple-stage {
+  flex: 1 1 auto;
+  align-items: flex-end;
+  min-height: clamp(16rem, 46dvh, 36rem);
+  padding: 0 1rem 0.1rem;
+}
+
+/* Headline + countdown sit over the top of the portrait */
+.loading-screen__save-date:has(.ls-couple-stage) .ls-photo-header {
+  position: relative;
+  z-index: 2;
+}
+
+.ls-couple {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: 0;
+  /* Reaches up behind the headline so the heads sit right under "Save the Date" */
+  top: -4.5rem;
+  width: min(100%, 36rem);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.ls-couple__halo {
+  position: absolute;
+  left: 50%;
+  top: 36%;
+  width: 110%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgb(255 251 240 / 70%) 0%,
+    color-mix(in srgb, #F7D6E0 32%, transparent) 32%,
+    color-mix(in srgb, #90E3F4 24%, transparent) 52%,
+    transparent 70%
+  );
+  filter: blur(8px);
+}
+
+.ls-couple__figure {
+  position: absolute;
+  inset: 0;
+  /* Lower half melts into the backdrop so the names read cleanly over the gown */
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, rgb(0 0 0 / 30%) 16%, rgb(0 0 0 / 80%) 36%, #000 52%);
+  mask-image: linear-gradient(to top, transparent 0%, rgb(0 0 0 / 30%) 16%, rgb(0 0 0 / 80%) 36%, #000 52%);
+  filter: drop-shadow(0 14px 28px rgb(110 92 154 / 22%));
+}
+
+.ls-couple__img {
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+/* Entrance: rises from the bottom while fading in and coming into focus,
+   then breathes gently while the loader runs */
+.ls-couple--in {
+  opacity: 0;
+  animation: ls-couple-rise 1.9s cubic-bezier(0.16, 1, 0.3, 1) var(--ls-delay, 0ms) forwards;
+}
+
+.ls-couple--in .ls-couple__figure {
+  animation: ls-couple-breathe 6s ease-in-out calc(var(--ls-delay, 0ms) + 1.9s) infinite alternate;
+}
+
+.ls-couple--in .ls-couple__halo {
+  animation: ls-couple-halo 5s ease-in-out calc(var(--ls-delay, 0ms) + 1.2s) infinite alternate;
+}
+
+@keyframes ls-couple-rise {
+  0% {
+    opacity: 0;
+    translate: 0 20%;
+    filter: blur(10px);
+  }
+  55% {
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0);
+  }
+}
+
+@keyframes ls-couple-breathe {
+  from { translate: 0 0; }
+  to { translate: 0 -6px; }
+}
+
+@keyframes ls-couple-halo {
+  from { opacity: 0.8; scale: 0.97; }
+  to { opacity: 1; scale: 1.03; }
+}
+
+/* Names over the gown: a soft, low cream glow (not a big white block) */
+.loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage::before {
+  z-index: 1;
+  top: auto;
+  bottom: 0;
+  width: min(100%, 26rem);
+  height: min(60%, 8.5rem);
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse 60% 55% at 50% 60%,
+    rgb(255 251 240 / 70%) 0%,
+    rgb(255 251 240 / 35%) 50%,
+    transparent 76%
+  );
+  filter: blur(10px);
+}
+
+.ls-couple-stage .loading-screen__std-names {
+  z-index: 2;
+}
+
+/* Slightly smaller names so the couple stays the hero */
+.loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage .ls-names__nick {
+  font-size: clamp(2.5rem, 13cqi, 4.4rem);
+  text-shadow:
+    0 0 2px rgb(255 251 240 / 95%),
+    0 0 14px rgb(255 251 240 / 90%),
+    0 2px 22px rgb(255 251 240 / 80%);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage .ls-names__and {
+  font-size: clamp(1.6rem, 7.5cqi, 2.5rem);
+  margin: 0 0 0.05em;
+  text-shadow: 0 0 12px rgb(255 251 240 / 95%), 0 0 3px rgb(255 251 240 / 90%);
+}
+
+/* ---- Date in type (replaces the photo date cards) ---- */
+.ls-date-text {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.5rem 1.5rem 0.75rem;
+  text-align: center;
+}
+
+.ls-date-text__weekday {
+  font-size: clamp(0.68rem, 2.9vw, 0.85rem);
+  font-weight: 700;
+  letter-spacing: 0.42em;
+  margin-right: -0.42em;
+  text-transform: uppercase;
+  color: #9A7632;
+  text-shadow: 0 0 10px rgb(255 251 240 / 95%);
+}
+
+.ls-date-text__main {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  font-size: clamp(1.45rem, 6.6vw, 2.3rem);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: var(--color-welcome-navy);
+  text-shadow: 0 0 3px rgb(255 251 240 / 95%), 0 0 16px rgb(255 251 240 / 90%);
+}
+
+.ls-date-text__main::before,
+.ls-date-text__main::after {
+  content: "";
+  width: clamp(1.25rem, 7vw, 3rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #9A7632);
+}
+
+.ls-date-text__main::after {
+  background: linear-gradient(90deg, #9A7632, transparent);
+}
+
+.ls-date-text__time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-size: clamp(0.72rem, 3vw, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  margin-right: -0.28em;
+  text-transform: uppercase;
+  color: var(--color-welcome-navy);
+  text-shadow: 0 0 10px rgb(255 251 240 / 95%);
+}
+
+.ls-date-text__time::before,
+.ls-date-text__time::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+  background: #9A7632;
+}
+
+@media (min-width: 768px) {
+  .loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-names-slot.ls-couple-stage {
+    min-height: clamp(18rem, 50vh, 40rem);
+  }
+
+  .ls-couple {
+    top: -5.5rem;
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage .ls-names__nick {
+    font-size: clamp(3rem, min(5.5vw, 8vh), 6rem);
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage .ls-names__and {
+    font-size: clamp(1.6rem, min(2.8vw, 4.2vh), 3rem);
+  }
+
+  .ls-date-text__main {
+    font-size: clamp(1.8rem, min(2.8vw, 4.6vh), 3rem);
+  }
+}
+
+/* Short phones: a little less room for the portrait so the footer still fits */
+@media (max-height: 700px) and (max-width: 767px) {
+  .loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-names-slot.ls-couple-stage {
+    min-height: clamp(12rem, 38dvh, 16rem);
+  }
+
+  .ls-couple {
+    top: -3.5rem;
+  }
+
+  .ls-date-text {
+    padding: 0.25rem 1.5rem 0.5rem;
+  }
+}
+
+.loading-screen.is-reduced-motion .ls-couple--in,
+.loading-screen.is-reduced-motion .ls-couple--in .ls-couple__figure,
+.loading-screen.is-reduced-motion .ls-couple--in .ls-couple__halo {
+  animation: none;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-couple--in,
+  .ls-couple--in .ls-couple__figure,
+  .ls-couple--in .ls-couple__halo {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   Photos loader — poster layout (invite line, script headline over the couple,
+   side notes, gold frame, names over the gown, date in type)
+   ========================================================================== */
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-names-slot.ls-couple-stage {
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Gold double frame inset from the screen edge, with a small gem top and bottom */
+.ls-poster-frame {
+  position: absolute;
+  inset: clamp(10px, 2.6vw, 18px);
+  z-index: 2;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, #C9A24E 70%, transparent);
+  box-shadow:
+    inset 0 0 0 4px transparent,
+    inset 0 0 0 5px color-mix(in srgb, #C9A24E 35%, transparent);
+}
+
+.ls-poster-frame__gem {
+  position: absolute;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  background: #C9A24E;
+  border: 2px solid #FFFBF0;
+  outline: 1px solid color-mix(in srgb, #C9A24E 70%, transparent);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.ls-poster-frame__gem--top { top: 0; }
+.ls-poster-frame__gem--bottom { top: 100%; }
+
+/* Top invitation line */
+.ls-poster-invite {
+  margin: 0;
+  font-size: clamp(0.66rem, 2.9vw, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  margin-right: -0.34em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-welcome-navy);
+  text-shadow: 0 0 10px rgb(255 251 240 / 95%);
+}
+
+/* Hairline with a centre diamond */
+.ls-poster-rule {
+  position: relative;
+  display: block;
+  width: min(62%, 15rem);
+  height: 1px;
+  margin: 0.55rem auto 0.1rem;
+  background: linear-gradient(90deg, transparent, #C9A24E 30%, #C9A24E 70%, transparent);
+  transform: scaleX(0);
+}
+
+.ls-poster-rule::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  background: #C9A24E;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* Big script headline, laid over the couple's heads */
+.loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+  font-size: clamp(3.4rem, 17vw, 6.5rem);
+  line-height: 1;
+  color: var(--color-welcome-navy);
+  text-shadow:
+    0 0 2px rgb(255 251 240 / 95%),
+    0 0 18px rgb(255 251 240 / 85%),
+    0 4px 24px rgb(255 251 240 / 70%);
+}
+
+/* Couple reaches further up so the headline overlaps the heads */
+.ls-couple {
+  top: -3.25rem;
+}
+
+/* Short notes either side of the couple, at shoulder height */
+.ls-poster-side {
+  position: absolute;
+  z-index: 2;
+  top: 26%;
+  width: clamp(5.5rem, 24vw, 9rem);
+  margin: 0;
+  padding-bottom: 0.6rem;
+  white-space: pre-line;
+  font-size: clamp(0.58rem, 2.4vw, 0.8rem);
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-welcome-navy);
+  text-shadow: 0 0 2px rgb(255 251 240 / 95%), 0 0 10px rgb(255 251 240 / 95%);
+}
+
+.ls-poster-side::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 70%;
+  height: 1px;
+}
+
+.ls-poster-side--left {
+  left: clamp(0.4rem, 2vw, 2rem);
+  text-align: left;
+}
+
+.ls-poster-side--left::after {
+  left: 0;
+  background: linear-gradient(90deg, #C9A24E, transparent);
+}
+
+.ls-poster-side--right {
+  right: clamp(0.4rem, 2vw, 2rem);
+  text-align: right;
+}
+
+.ls-poster-side--right::after {
+  right: 0;
+  background: linear-gradient(90deg, transparent, #C9A24E);
+}
+
+/* "The wedding of" above the names */
+.ls-poster-lead {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 0.15rem;
+  font-size: clamp(0.66rem, 2.8vw, 0.88rem);
+  font-weight: 700;
+  letter-spacing: 0.38em;
+  margin-right: -0.38em;
+  text-transform: uppercase;
+  color: #9A7632;
+  text-shadow: 0 0 3px rgb(255 251 240 / 95%), 0 0 12px rgb(255 251 240 / 95%);
+}
+
+/* Date: main line, then weekday · time */
+.ls-date-text {
+  gap: 0.3rem;
+  padding: 0.35rem 1.5rem 0.4rem;
+}
+
+.ls-date-text__time {
+  font-size: clamp(0.66rem, 2.8vw, 0.86rem);
+}
+
+.ls-date-text__time::before,
+.ls-date-text__time::after {
+  display: none;
+}
+
+.ls-date-text__dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin: 0 0.75em;
+  transform: rotate(45deg);
+  background: #C9A24E;
+  vertical-align: middle;
+}
+
+/* Countdown under the date: soft italic, like a closing line */
+.loading-screen--invitation:not(.loading-screen--plain) .ls-poster-countdown {
+  margin: 0 0 0.35rem;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: none;
+  color: var(--color-welcome-navy);
+}
+
+@media (min-width: 768px) {
+  .ls-couple {
+    top: -4.25rem;
+  }
+
+  .ls-poster-side {
+    top: 30%;
+    width: clamp(8rem, 16vw, 12rem);
+    font-size: clamp(0.72rem, 1vw, 0.9rem);
+  }
+
+  .ls-poster-side--left { left: calc(50% - min(26rem, 46vw)); }
+  .ls-poster-side--right { right: calc(50% - min(26rem, 46vw)); }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+    font-size: clamp(4rem, min(7vw, 11vh), 8rem);
+  }
+}
+
+@media (max-height: 700px) and (max-width: 767px) {
+  .ls-couple {
+    top: -2.25rem;
+  }
+
+  .ls-poster-side {
+    top: 20%;
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+    font-size: clamp(2.8rem, 14vw, 4rem);
+  }
+}
+
+/* ==========================================================================
+   Photos loader poster — balance pass
+   Couple is the hero: bigger and centred, its bottom half fading out
+   smoothly (bottom → top); the type around it is smaller.
+   ========================================================================== */
+.ls-couple__figure {
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    rgb(0 0 0 / 12%) 10%,
+    rgb(0 0 0 / 40%) 22%,
+    rgb(0 0 0 / 72%) 34%,
+    rgb(0 0 0 / 92%) 46%,
+    #000 58%
+  );
+  mask-image: linear-gradient(
+    to top,
+    transparent 0%,
+    rgb(0 0 0 / 12%) 10%,
+    rgb(0 0 0 / 40%) 22%,
+    rgb(0 0 0 / 72%) 34%,
+    rgb(0 0 0 / 92%) 46%,
+    #000 58%
+  );
+}
+
+@media (max-width: 767px) {
+  /* Less padding top and bottom so the stage gets the room */
+  .loading-screen__save-date:has(.ls-couple-stage) .ls-photo-header {
+    padding-top: clamp(3rem, 14vw, 4rem);
+  }
+
+  .loading-screen__save-date:has(.ls-couple-stage) .ls-photo-footer {
+    padding-bottom: max(clamp(3.25rem, 15vw, 4.5rem), calc(0.75rem + env(safe-area-inset-bottom, 0px)));
+  }
+
+  /* Stage takes all the free height; the couple reaches up behind the headline */
+  .loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-names-slot.ls-couple-stage {
+    min-height: 0;
+    padding: 0 0.75rem 0;
+  }
+
+  .ls-couple {
+    top: -4.25rem;
+    bottom: -0.5rem;
+    width: min(112%, 30rem);
+  }
+
+  .ls-couple__halo {
+    top: 34%;
+    width: 100%;
+  }
+
+  /* Smaller type all round */
+  .ls-poster-invite {
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    margin-right: -0.3em;
+  }
+
+  .ls-poster-rule {
+    width: min(46%, 10rem);
+    margin: 0.4rem auto 0;
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+    font-size: clamp(2.5rem, 12.5vw, 3.4rem);
+  }
+
+  .ls-poster-side {
+    top: 30%;
+    width: 4.6rem;
+    padding-bottom: 0.4rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+  }
+
+  .ls-poster-side--left { left: 0.35rem; }
+  .ls-poster-side--right { right: 0.35rem; }
+
+  .ls-poster-lead {
+    font-size: 0.55rem;
+    letter-spacing: 0.32em;
+    margin-right: -0.32em;
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage .ls-names__nick {
+    font-size: clamp(1.9rem, 10cqi, 2.8rem);
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage .ls-names__and {
+    font-size: clamp(1.15rem, 5.6cqi, 1.6rem);
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage .ls-names__and::before,
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage .ls-names__and::after {
+    width: 1.75rem;
+  }
+
+  /* Smaller, softer glow behind the names */
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage::before {
+    width: min(86%, 20rem);
+    height: min(45%, 6.5rem);
+    background: radial-gradient(
+      ellipse 60% 55% at 50% 60%,
+      rgb(255 251 240 / 55%) 0%,
+      rgb(255 251 240 / 25%) 50%,
+      transparent 76%
+    );
+  }
+
+  .ls-date-text {
+    gap: 0.15rem;
+    padding: 0.3rem 1rem 0.2rem;
+  }
+
+  .ls-date-text__main {
+    font-size: clamp(1.1rem, 5vw, 1.35rem);
+  }
+
+  .ls-date-text__main::before,
+  .ls-date-text__main::after {
+    width: 1.25rem;
+  }
+
+  .ls-date-text__time {
+    font-size: 0.56rem;
+    letter-spacing: 0.24em;
+  }
+
+  .ls-date-text__dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-poster-countdown {
+    margin: 0.15rem 0 0;
+    font-size: 0.62rem;
+  }
+
+  .loading-screen__save-date:has(.ls-couple-stage) .loading-screen__std-rule {
+    margin: 0.3rem 0 0.35rem;
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage ~ .loading-screen__std-footer .loading-screen__std-status {
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage ~ .loading-screen__std-footer [role="progressbar"] {
+    max-width: 9.5rem;
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage ~ .loading-screen__std-footer .ls-progress-pct {
+    font-size: 0.6rem;
+  }
+}
+
+/* Short phones: tighter still */
+@media (max-width: 767px) and (max-height: 700px) {
+  .loading-screen__save-date:has(.ls-couple-stage) .ls-photo-header {
+    padding-top: 2.6rem;
+  }
+
+  .ls-couple {
+    top: -3.5rem;
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+    font-size: clamp(2.2rem, 11vw, 2.8rem);
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage .ls-names__nick {
+    font-size: clamp(1.7rem, 9cqi, 2.4rem);
+  }
+}
+
+/* Couple sits below "Save the Date" (no overlap) and reaches down behind the date */
+.ls-couple {
+  top: 0.35rem;
+  bottom: -3rem;
+}
+
+@media (min-width: 768px) {
+  .ls-couple {
+    top: 0.5rem;
+    bottom: -3.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .ls-couple {
+    top: 0.35rem;
+    bottom: -3.25rem;
+  }
+}
+
+@media (max-width: 767px) and (max-height: 700px) {
+  .ls-couple {
+    top: 0.25rem;
+    bottom: -2.5rem;
+  }
+}
+
+/* ==========================================================================
+   Photos loader — Regency garden vibe (Bridgerton / Modern Filipiniana)
+   Dreamy sky wash over the photos, warm gold-bronze type, larger corner
+   florals that frame the screen like a garden arch.
+   ========================================================================== */
+.loading-screen--invitation:not(.loading-screen--plain) {
+  --ls-bronze: #8C6A3A;      /* body caps */
+  --ls-gold-ink: #A27A3C;    /* script + names */
+  --ls-gold-line: #C9A24E;   /* hairlines + diamonds */
+  --ls-cream-glow: rgb(255 251 240 / 92%);
+}
+
+/* Sky wash: pastel blue sky at the top, cream through the middle, blush at the foot */
+.ls-sky-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 45% at 50% 42%, rgb(255 253 248 / 62%) 0%, transparent 72%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #90E3F4 34%, rgb(236 246 252 / 70%)) 0%,
+      rgb(244 250 252 / 52%) 26%,
+      rgb(255 251 244 / 46%) 55%,
+      color-mix(in srgb, #F7D6E0 46%, rgb(255 248 246 / 40%)) 100%
+    );
+}
+
+/* ---- Warm gold-bronze type ---- */
+.loading-screen--invitation:not(.loading-screen--plain) .ls-poster-invite,
+.loading-screen--invitation:not(.loading-screen--plain) .ls-poster-side,
+.loading-screen--invitation:not(.loading-screen--plain) .ls-date-text__time,
+.loading-screen--invitation:not(.loading-screen--plain) .ls-date-text__venue,
+.loading-screen--invitation:not(.loading-screen--plain) .ls-poster-countdown,
+.loading-screen--invitation:not(.loading-screen--plain) .loading-screen__std-status,
+.loading-screen--invitation:not(.loading-screen--plain) .ls-progress-pct {
+  color: var(--ls-bronze);
+  text-shadow: 0 0 2px var(--ls-cream-glow), 0 0 12px var(--ls-cream-glow);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline,
+.loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage .ls-names__nick,
+.loading-screen--invitation:not(.loading-screen--plain) .ls-date-text__main {
+  color: var(--ls-gold-ink);
+  -webkit-text-fill-color: var(--ls-gold-ink);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-couple-stage .ls-names__and {
+  color: var(--ls-bronze);
+  -webkit-text-fill-color: var(--ls-bronze);
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-poster-lead {
+  color: var(--ls-bronze);
+}
+
+.ls-poster-frame {
+  border-color: color-mix(in srgb, var(--ls-gold-line) 60%, transparent);
+}
+
+/* Venue under the date: name in script-like serif, address in small caps */
+.ls-date-text__venue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.05rem;
+  margin-top: 0.15rem;
+  font-size: clamp(0.62rem, 2.6vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  margin-right: -0.26em;
+  text-transform: uppercase;
+}
+
+.ls-date-text__venue-sub {
+  font-size: 0.82em;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  opacity: 0.85;
+}
+
+/* ---- Larger corner florals: they frame the screen like a garden arch ---- */
+.ls-photo-corners {
+  z-index: 3;
+}
+
+.ls-photo-corner__img {
+  filter:
+    drop-shadow(0 6px 14px rgb(110 92 154 / 18%))
+    drop-shadow(0 0 10px rgb(255 251 240 / 55%));
+}
+
+.ls-photo-corner--tl,
+.ls-photo-corner--tr {
+  width: min(60vw, 330px);
+  margin-top: calc(min(60vw, 330px) * -0.06);
+}
+.ls-photo-corner--tl { margin-left: calc(min(60vw, 330px) * -0.08); }
+.ls-photo-corner--tr { margin-right: calc(min(60vw, 330px) * -0.08); }
+
+.ls-photo-corner--bl,
+.ls-photo-corner--br {
+  width: min(62vw, 340px);
+  margin-bottom: calc(min(62vw, 340px) * -0.06);
+}
+.ls-photo-corner--bl { margin-left: calc(min(62vw, 340px) * -0.08); }
+.ls-photo-corner--br { margin-right: calc(min(62vw, 340px) * -0.08); }
+
+@media (min-width: 768px) {
+  .ls-photo-corner--tl,
+  .ls-photo-corner--tr {
+    width: clamp(320px, 30vw, 520px);
+    margin-top: calc(clamp(320px, 30vw, 520px) * -0.06);
+  }
+  .ls-photo-corner--tl { margin-left: calc(clamp(320px, 30vw, 520px) * -0.06); }
+  .ls-photo-corner--tr { margin-right: calc(clamp(320px, 30vw, 520px) * -0.06); }
+
+  .ls-photo-corner--bl,
+  .ls-photo-corner--br {
+    width: clamp(340px, 32vw, 560px);
+    margin-bottom: calc(clamp(340px, 32vw, 560px) * -0.06);
+  }
+  .ls-photo-corner--bl { margin-left: calc(clamp(340px, 32vw, 560px) * -0.06); }
+  .ls-photo-corner--br { margin-right: calc(clamp(340px, 32vw, 560px) * -0.06); }
+}
+
+/* Mobile: the bigger corners take room at the edges — keep the type clear of them */
+@media (max-width: 767px) {
+  .ls-poster-side {
+    top: 40%;
+  }
+
+  .ls-date-text__venue {
+    font-size: 0.54rem;
+    letter-spacing: 0.22em;
+    margin-right: -0.22em;
+  }
+}
+
+/* ==========================================================================
+   Photos loader — "Save the Date" lockup
+   Big gold script words with the joining word ("the") in small serif caps
+   between hairlines, a soft cream cartouche behind, and a gold flourish under.
+   ========================================================================== */
+.loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.18em;
+  margin: 0.1rem 0 0;
+  padding: 0 0.4em;
+  font-size: clamp(3rem, 15vw, 5.5rem);
+  line-height: 1.1;
+  white-space: nowrap;
+  text-shadow: none;
+}
+
+/* Cream cartouche glow so the script reads over the photos */
+.loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline::before {
+  content: "";
+  position: absolute;
+  inset: -0.2em -0.6em -0.15em;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 55%,
+    rgb(255 251 244 / 88%) 0%,
+    rgb(255 251 244 / 55%) 55%,
+    transparent 100%
+  );
+  filter: blur(6px);
+}
+
+.ls-poster-headline__word {
+  display: inline-block;
+  padding: 0 0.04em;
+  /* Gold leaf: lighter at the top, deeper bronze at the foot */
+  background: linear-gradient(180deg, #D4AE63 0%, #B08440 45%, #8A6430 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter:
+    drop-shadow(0 1px 0 rgb(255 255 255 / 85%))
+    drop-shadow(0 3px 8px rgb(140 106 58 / 22%));
+}
+
+.ls-poster-headline__join {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  margin: 0 0.05em;
+  font-size: 0.24em;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ls-bronze, #8C6A3A);
+  -webkit-text-fill-color: var(--ls-bronze, #8C6A3A);
+  transform: translateY(0.15em);
+}
+
+.ls-poster-headline__join::before,
+.ls-poster-headline__join::after {
+  content: "";
+  width: 0.9em;
+  height: 1px;
+  background: var(--ls-gold-line, #C9A24E);
+}
+
+/* Flourish under the headline: hairline with a small diamond trio */
+.ls-poster-flourish {
+  position: relative;
+  display: block;
+  width: min(58%, 14rem);
+  height: 10px;
+  margin: 0.1rem auto 0;
+  background:
+    linear-gradient(90deg, transparent, var(--ls-gold-line, #C9A24E) 35%, transparent 47%, transparent 53%, var(--ls-gold-line, #C9A24E) 65%, transparent)
+    center / 100% 1px no-repeat;
+  transform: scaleX(0);
+}
+
+.ls-poster-flourish::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--ls-gold-line, #C9A24E);
+  transform: translate(-50%, -50%) rotate(45deg);
+  box-shadow:
+    -11px 11px 0 -1.5px var(--ls-gold-line, #C9A24E),
+    11px -11px 0 -1.5px var(--ls-gold-line, #C9A24E);
+}
+
+/* Invitation line: two short lines, clear of the top florals */
+.ls-poster-invite {
+  max-width: 13rem;
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+/* The script hairline under the invite line is replaced by the flourish */
+.loading-screen__save-date:has(.ls-couple-stage) .ls-poster-rule {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .loading-screen__save-date:has(.ls-couple-stage) .ls-photo-header {
+    padding-top: clamp(4rem, 19vw, 5rem);
+  }
+
+  .ls-poster-invite {
+    max-width: 10.5rem;
+    font-size: 0.56rem;
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+    font-size: clamp(2.7rem, 14vw, 3.6rem);
+  }
+}
+
+@media (max-width: 767px) and (max-height: 700px) {
+  .loading-screen__save-date:has(.ls-couple-stage) .ls-photo-header {
+    padding-top: 3.25rem;
+  }
+
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+    font-size: clamp(2.3rem, 12vw, 3rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+    font-size: clamp(3.8rem, min(6.5vw, 10vh), 7rem);
+  }
+
+  .ls-poster-invite {
+    max-width: none;
+  }
+}
+
+/* "Save the Date" — no clipped swashes, more legible on small phones (iPhone SE).
+   background-clip: text only paints inside the element's box, so script letters whose
+   swashes reach past their box (the "D") were cut off: give each word generous padding
+   (cancelled out with negative margins so the spacing stays the same). */
+.ls-poster-headline__word {
+  padding: 0.12em 0.32em 0.2em;
+  margin: -0.12em -0.24em -0.2em;
+  background: linear-gradient(180deg, #C79C50 0%, #9A7135 50%, #74522A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter:
+    drop-shadow(0 0 1px rgb(255 251 240 / 95%))
+    drop-shadow(0 1px 0 rgb(255 255 255 / 90%))
+    drop-shadow(0 2px 6px rgb(116 82 42 / 25%));
+}
+
+.loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+  overflow: visible;
+  padding: 0.05em 0.5em;
+}
+
+@media (max-width: 767px) {
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+    font-size: clamp(2.9rem, 14.5vw, 3.6rem);
+    gap: 0.12em;
+  }
+
+  .ls-poster-headline__join {
+    font-size: 0.22em;
+    letter-spacing: 0.26em;
+  }
+}
+
+/* iPhone SE and other short phones: keep the headline big enough to read */
+@media (max-width: 767px) and (max-height: 700px) {
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+    font-size: clamp(2.7rem, 13.5vw, 3.2rem);
+  }
+
+  .ls-poster-invite {
+    font-size: 0.54rem;
+  }
+
+  .ls-poster-flourish {
+    margin-top: 0;
+  }
+}
+
+/* "Save the Date" — solid ink instead of a gradient clipped to the text.
+   background-clip: text cut off the script's swashes that reach outside each glyph
+   box (the loop of the "D"); a solid color always paints the whole glyph. */
+.ls-poster-headline__word {
+  padding: 0 0.04em;
+  margin: 0;
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  color: #8F6730;
+  -webkit-text-fill-color: #8F6730;
+  filter: none;
+  text-shadow:
+    0 0 1px rgb(255 251 240 / 100%),
+    0 1px 0 rgb(255 255 255 / 90%),
+    0 0 10px rgb(255 251 240 / 95%),
+    0 2px 14px rgb(255 251 240 / 80%);
+}
+
+/* Room for the swashes on both sides so nothing touches the screen edge */
+.loading-screen--invitation:not(.loading-screen--plain) .ls-poster-headline {
+  padding: 0.08em 0.6em 0.12em;
+  overflow: visible;
+}
+
+.loading-screen__save-date:has(.ls-couple-stage) .ls-photo-header {
+  overflow: visible;
+}
+
+@media (max-width: 767px) {
+  .loading-screen__save-date:has(.ls-couple-stage) .ls-photo-header {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+/* Faster opening: curtains part sooner (matches CURTAIN_LEAD_MS in LoadingScreen.tsx) */
+.loading-screen .ls-in--headline {
+  animation-duration: 1s;
+}
+
+.ls-couple--in {
+  animation-duration: 1.4s;
 }

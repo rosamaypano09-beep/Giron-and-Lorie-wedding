@@ -49,8 +49,8 @@ export const dynamic = "force-static"
 
 // Side sprigs (the header sprig, mirrored on the right; "" hides one)
 const DECOR_SIDE = {
-  left: "/deco/lovestorydeco/headerOrnament.png",
-  right: "/deco/lovestorydeco/headerOrnament.png",
+  left: "/deco/lovestorydeco/headerOrnament.webp",
+  right: "/deco/lovestorydeco/headerOrnament.webp",
 }
 
 function OutsideDivider() {
@@ -106,22 +106,20 @@ function GalleryTitle({ title, subtitle }: { title: string; subtitle: string }) 
 export default async function GalleryPage() {
   const gallery = siteConfig.gallery
   const decos = gallery.decos
-  const { desktop, mobile } = await fetchGalleryImages()
+  const { desktop, mobile, story } = await fetchGalleryImages()
   const page = gallery.page as typeof gallery.page & { heroDesktop?: string; heroMobile?: string; countLabel?: string }
   const heroDesktop = page.heroDesktop ?? ""
   const heroMobile = page.heroMobile ?? ""
-  const photoCount = desktop.length + mobile.length
+  const photoCount = mobile.length + desktop.length + story.length
+  const withOrientation = <T extends { width: number; height: number }>(image: T) => ({
+    ...image,
+    orientation: (image.width >= image.height ? "landscape" : "portrait") as "portrait" | "landscape",
+  })
+  // public/mobile-background → public/desktop-background → public/story
   const images = [
-    ...desktop.map((image) => ({
-      ...image,
-      category: "desktop" as const,
-      orientation: (image.width >= image.height ? "landscape" : "portrait") as "portrait" | "landscape",
-    })),
-    ...mobile.map((image) => ({
-      ...image,
-      category: "mobile" as const,
-      orientation: (image.width >= image.height ? "landscape" : "portrait") as "portrait" | "landscape",
-    })),
+    ...mobile.map((image) => ({ ...withOrientation(image), category: "mobile" as const })),
+    ...desktop.map((image) => ({ ...withOrientation(image), category: "desktop" as const })),
+    ...story.map((image) => ({ ...withOrientation(image), category: "gallery" as const })),
   ]
 
   return (
