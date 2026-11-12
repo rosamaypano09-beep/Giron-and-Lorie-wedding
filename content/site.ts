@@ -403,7 +403,7 @@ const BRAND = {
   monogram: "/monogram/monogramnew.png",
   coupleNameImage: "/Details/newcoupelNames.png", // couple-name lettering (loader, envelope)
   seal: "/monogram/sealnew.png", // envelope wax seal
-  backgroundMusic: "/background_music/Kyla - Beautiful Days (Official Lyric Video).mp3",
+  backgroundMusic: "/background_music/Ordinary (Alex Warren) Violin Cover by Violin Valenti.mp3",
 }
 
 // Couple photos reused across the site (gallery, loader, reminders, snap & share, closing)
@@ -1383,7 +1383,7 @@ export const siteConfig = {
     // {couple} → "Groom & Bride" nicknames. "" hides a line or image.
     qrCard: {
       coupleNameImage: BRAND.coupleNameImage, // unused: the card sets the names in type like the loader
-      coupleImage: "/Details/wedding.png", // couple illustration beside the text
+      coupleImage: "/Details/coupleImage.png", // couple illustration beside the text
       eyebrow: "The wedding of",
       title: "Find Your Table",
       script: "please be seated",
@@ -1406,7 +1406,7 @@ export const siteConfig = {
   proposal: {
     decos: { ...CORNER_DECOS },
     coupleNameImage: BRAND.coupleNameImage, // unused: names are set in type like the loader
-    coupleImage: "/Details/wedding.png", // wedding party illustration above the question ("" hides it)
+    coupleImage: "/Details/coupleImage.png", // wedding party illustration above the question ("" hides it)
     ornament: DECOR.headerOrnament, // small sprig at the top of the card; "" to hide
     // Eucalyptus sprigs on either side of the couple name; "" to hide one
     nameDecos: { left: DECOR.sideLeft, right: DECOR.sideRight },
@@ -2010,7 +2010,7 @@ Now, as they prepare to say yes before God and the people they love most, Cather
   // Snap & Share (components/sections/snap-share.tsx). {couple} → "Groom & Bride" nicknames.
   snapShare: {
     googleDriveLink:
-      "https://drive.google.com/drive/folders/1bVCFwnkukeHo69HilMcQnS-g9NJMUnKI?usp=sharing",
+      "https://drive.google.com/drive/folders/1r3UY605WdJjDIBaz16U-30XUm6stPCMM?usp=sharing",
     albumQR: "/QR/AlbumQR.png",
     hashtag: HASHTAGS,
     instructions: "Please scan this QR Code and upload the photos and videos you have taken during our wedding reception. We are delighted to see your snaps too!",
