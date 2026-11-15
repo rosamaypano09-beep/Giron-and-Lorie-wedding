@@ -945,7 +945,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "3:00 PM", // ⚠ waiting on Miss Liz — clashes with the new 3:00 PM ceremony
+        time: "3:30 PM", // ⚠ waiting on Miss Liz — clashes with the new 3:00 PM ceremony
         title: "Photo Session",
         description: "Join us for pictures with the newlyweds.",
         location: "{ceremony}",
