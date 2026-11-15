@@ -170,13 +170,24 @@ function CoupleImagesCarousel({
 }) {
   const reduceMotion = useReducedMotion()
   const count = coupleImages.length
+  // Phones: one card each side, tucked in tighter so the fan stays inside the card
+  const [isPhone, setIsPhone] = useState(false)
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 639px)")
+    const update = () => setIsPhone(mql.matches)
+    update()
+    mql.addEventListener("change", update)
+    return () => mql.removeEventListener("change", update)
+  }, [])
+  const spread = isPhone ? 46 : 54
+  const maxRank = isPhone ? 1 : 2
 
   return (
-    <div className="mb-5 flex flex-col items-center sm:mb-6">
-      <div className="relative h-[11rem] w-full max-w-[21rem] sm:h-[14rem] sm:max-w-[30rem]" aria-hidden>
+    <div className="mb-6 flex w-full flex-col items-center overflow-x-clip sm:mb-7">
+      <div className="relative h-[15.5rem] w-full max-w-[21rem] sm:h-[18rem] sm:max-w-[34rem]" aria-hidden>
         {/* Soft sky-and-blush glow behind the deck */}
         <span
-          className="pointer-events-none absolute left-1/2 top-1/2 h-36 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl sm:h-44 sm:w-80"
+          className="pointer-events-none absolute left-1/2 top-1/2 h-44 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl sm:h-56 sm:w-96"
           style={{
             background:
               "radial-gradient(closest-side, color-mix(in srgb, #90E3F4 40%, transparent), color-mix(in srgb, #F7D6E0 45%, transparent) 60%, transparent)",
@@ -193,7 +204,7 @@ function CoupleImagesCarousel({
               key={image}
               onClick={() => onSelect(index)}
               tabIndex={-1}
-              className="absolute left-1/2 top-1/2 -ml-[3.6rem] -mt-[4.9rem] w-[7.2rem] cursor-pointer rounded-[0.4rem] p-1.5 pb-4 sm:-ml-[4.5rem] sm:-mt-[6.1rem] sm:w-[9rem] sm:p-2 sm:pb-6"
+              className="absolute left-1/2 top-1/2 -ml-[4.375rem] -mt-[5.7rem] w-[8.75rem] cursor-pointer rounded-[0.4rem] p-1.5 pb-4 sm:-ml-[5rem] sm:-mt-[6.625rem] sm:w-[10rem] sm:p-2 sm:pb-6"
               style={{
                 zIndex: 20 - rank * 2 - (side < 0 ? 1 : 0),
                 background: "linear-gradient(180deg, #FFFDF7 0%, #FFF6E8 100%)",
@@ -202,11 +213,11 @@ function CoupleImagesCarousel({
               }}
               initial={false}
               animate={{
-                x: `${side * rank * 58}%`,
-                y: rank * 6,
-                rotate: side * (5 + rank * 4) + (place === 0 ? -1.5 : 0),
-                scale: place === 0 ? 1.08 : 1 - rank * 0.1,
-                opacity: rank > 2 ? 0 : 1 - rank * 0.12,
+                x: `${side * rank * spread}%`,
+                y: rank * 8,
+                rotate: side * (isPhone ? 7 : 5 + rank * 4) + (place === 0 ? -1.5 : 0),
+                scale: place === 0 ? 1.06 : 1 - rank * 0.1,
+                opacity: rank > maxRank ? 0 : 1 - rank * 0.12,
               }}
               transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 120, damping: 18, mass: 0.9 }}
             >
@@ -216,7 +227,7 @@ function CoupleImagesCarousel({
                   alt=""
                   fill
                   className="object-cover"
-                  sizes="(min-width: 640px) 144px, 116px"
+                  sizes="(min-width: 640px) 160px, 140px"
                 />
                 {/* Slight sheen on the front photo */}
                 {place === 0 && (
@@ -1453,7 +1464,7 @@ export function Details() {
           {/* One card for everyone: shared image, then each group with its palette below */}
           {attireGroups.length > 0 && (
             <div className="mx-auto mb-6 w-full max-w-3xl sm:mb-8 md:mb-10">
-              <AttireCard title="" image={attire.image} alt="Attire guide: formal attire in Non Photo Blue, Celeste, Mimi Pink and Fairy Tale">
+              <AttireCard title="" image={attire.image} alt="Attire guide: formal attire in Celeste, Mimi Pink, Non Photo Blue and Fairy Tale">
                 <div className="space-y-3 sm:space-y-4">
                   {attireGroups.map((group) => (
                     <AttireGroupPanel key={group.id} group={group} />

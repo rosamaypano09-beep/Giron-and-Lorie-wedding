@@ -79,8 +79,8 @@ const WEDDING_DATE = "November 27, 2026" // e.g. "June 5, 2027"
 const WEDDING_DAY = "Friday"
 const TIMES = {
   entourageCall: "12:00 PM", // entourage assembly ⚠ check — not confirmed yet
-  guestArrival: "1:30 PM", // guests arrival / assembly (shown in Event Details + reminders) ⚠ check — not confirmed yet
-  ceremony: "2:00 PM",
+  guestArrival: "2:30 PM", // guests arrival / assembly (shown in Event Details + reminders)
+  ceremony: "3:00 PM",
   reception: "4:00 PM", // start of program ⚠ check — not confirmed yet
 }
 
@@ -229,7 +229,7 @@ const RSVP = {
   coordinator: "{groom} / {bride}", // {groom} / {bride} → couple nicknames
   phone: "to be announced",
 }
-const HASHTAGS = ["#GironAndLorie"] // ⚠ check — placeholder until the couple confirms their hashtag
+const HASHTAGS = ["#agLORIEousforeverwithGIRONbegins"] // ⚠ check — placeholder until the couple confirms their hashtag
 
 // ── Attire guide (Event Details → Attire Guidelines) ────────────────────────
 // One card for everyone: ATTIRE.image on top, then one block per group (title, dress
@@ -251,10 +251,10 @@ const HASHTAGS = ["#GironAndLorie"] // ⚠ check — placeholder until the coupl
 // Modern Filipiniana (Bridgerton) palette — shared by the guests and the reminders palette
 // (Mint Cream is part of the motif but not worn, so it is left out here)
 const PASTELS: AttireColor[] = [
-  { name: "Non Photo Blue", hex: "#90E3F4", image: "/Details/colorPalette/NonPhotoBlue.png" },
-  { name: "Celeste", hex: "#B2F7EF", image: "/Details/colorPalette/Celeste.png" },
-  { name: "Mimi Pink", hex: "#F7D6E0", image: "/Details/colorPalette/MiniPink.png" },
-  { name: "Fairy Tale", hex: "#F6CBE0", image: "/Details/colorPalette/Fairytale.png" },
+  { name: "Celeste", hex: "#B2F7EF", image: "/Details/newpaletteupdate/Celeste Satin Waves.png" },
+  { name: "Mimi Pink", hex: "#F7D6E0", image: "/Details/newpaletteupdate/Luminous Mimi Pink Silk Waves.png" },
+  { name: "Non Photo Blue", hex: "#90E3F4", image: "/Details/newpaletteupdate/Luminous Blue Satin Waves.png" },
+  { name: "Fairy Tale", hex: "#F6CBE0", image: "/Details/newpaletteupdate/Pastel Pink Satin Waves.png" },
 ]
 // Guest dress code colors
 const DRESS_CODE_PALETTE: AttireColor[] = PASTELS
@@ -270,7 +270,7 @@ const ATTIRE = {
   // Only the couple's guest dress code is confirmed; other groups are kept but hidden
   show: ["guests"] as AttireGroupId[],
   // Shared illustration at the top of the attire card ("" = no image; any size/shape works)
-  image: "/Details/attireGuide.png",
+  image: "/Details/newpaletteupdate/guestAttire.png",
 
   entourage: {
     title: "Male & Female Entourage",
@@ -365,16 +365,16 @@ const ATTIRE = {
     title: "Wedding Guests",
     dressCode: "Formal Attire",
     palette: PASTELS,
-    note: "Any shade from the palette below: Non Photo Blue, Celeste, Mimi Pink or Fairy Tale.",
+    note: "Any shade from the palette below: Celeste, Mimi Pink, Non Photo Blue or Fairy Tale.",
     ladies: {
       label: "Ladies",
-      details: "Formal attire in Non Photo Blue, Celeste, Mimi Pink or Fairy Tale.",
+      details: "Formal attire in Celeste, Mimi Pink, Non Photo Blue or Fairy Tale.",
       highlight: "Formal attire",
       roles: [] as { role: string; attire: string }[],
     },
     gentlemen: {
       label: "Gentlemen",
-      details: "Formal attire in Non Photo Blue, Celeste, Mimi Pink or Fairy Tale.",
+      details: "Formal attire in Celeste, Mimi Pink, Non Photo Blue or Fairy Tale.",
       highlight: "Formal attire",
       roles: [] as { role: string; attire: string }[],
     },
@@ -705,7 +705,7 @@ export const siteConfig = {
       {
         date: "An Invitation",
         title: "Please Celebrate With Us",
-        image: "/story/story (37).webp",
+        image: "/loveStory/couples.jpg",
         paragraphs: [
           `And now, with joyful hearts, we invite you to celebrate the next chapter with us. On **${WEDDING_DATE}**, we will exchange our vows at **${CEREMONY_VENUE.name}**, ${CEREMONY_VENUE.address}, surrounded by the people we love most.`,
         ],
@@ -771,11 +771,11 @@ export const siteConfig = {
       "/mobile-background/couples (31).webp",
       "/mobile-background/couples (27).webp",
       "/story/story (10).webp",
-      "/story/story (7).webp",
+      "/loveStory/couples.jpg",
       "/story/story (27).webp",
       "/story/story (5).webp",
       "/story/story (39).webp",
-      "/story/story (37).webp",
+      "/loveStory/couples1.png",
     ].map((image, i) => ({ image, text: `${COUPLE.groomNickname} and ${COUPLE.brideNickname}, photo ${i + 1}` })),
   },
 
@@ -815,7 +815,7 @@ export const siteConfig = {
     // Cards, colors, images and which groups show → QUICK SETUP → ATTIRE
     attire: {
       title: "Attire Guide",
-      description: "Our theme is Modern Filipiniana, inspired by Bridgerton. We would love for you to join us in formal attire in Non Photo Blue, Celeste, Mimi Pink or Fairy Tale.",
+      description: "Our theme is Modern Filipiniana, inspired by Bridgerton. We would love for you to join us in formal attire in Celeste, Mimi Pink, Non Photo Blue or Fairy Tale.",
       image: ATTIRE.image,
       // Order and visibility come from ATTIRE.show (skips blanks, typos and repeats)
       groups: ATTIRE.show
@@ -851,7 +851,7 @@ export const siteConfig = {
           variant: "soft" as "accent" | "soft",
           showPalette: true,
           paragraphs: [
-            "Our theme is Modern Filipiniana, inspired by Bridgerton. Ladies and gentlemen, please come in formal attire in any of our colors: Non Photo Blue, Celeste, Mimi Pink or Fairy Tale.",
+            "Our theme is Modern Filipiniana, inspired by Bridgerton. Ladies and gentlemen, please come in formal attire in any of our colors: Celeste, Mimi Pink, Non Photo Blue or Fairy Tale.",
           ],
         },
         {
@@ -945,7 +945,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "3:00 PM", // ⚠ check
+        time: "3:00 PM", // ⚠ waiting on Miss Liz — clashes with the new 3:00 PM ceremony
         title: "Photo Session",
         description: "Join us for pictures with the newlyweds.",
         location: "{ceremony}",
@@ -1286,7 +1286,7 @@ export const siteConfig = {
       {
         question: "What should I wear?",
         answer:
-          "Please see the [attire guide](#details) in Event Details.\n\nOur theme is Modern Filipiniana (Bridgerton).\n• Ladies: formal attire in Non Photo Blue, Celeste, Mimi Pink or Fairy Tale.\n• Gentlemen: formal attire in Non Photo Blue, Celeste, Mimi Pink or Fairy Tale.",
+          "Please see the [attire guide](#details) in Event Details.\n\nOur theme is Modern Filipiniana (Bridgerton).\n• Ladies: formal attire in Celeste, Mimi Pink, Non Photo Blue or Fairy Tale.\n• Gentlemen: formal attire in Celeste, Mimi Pink, Non Photo Blue or Fairy Tale.",
       },
       {
         question: "What if I have dietary restrictions or allergies?",
@@ -1670,7 +1670,7 @@ export const siteConfig = {
     // Event Details → attire: guests only (no entourage / principal sponsors)
     attireGroups: ["guests"] as AttireGroupId[],
     attireDescription:
-      "Our theme is Modern Filipiniana, inspired by Bridgerton. We would love for you to join us in formal attire in Non Photo Blue, Celeste, Mimi Pink or Fairy Tale.",
+      "Our theme is Modern Filipiniana, inspired by Bridgerton. We would love for you to join us in formal attire in Celeste, Mimi Pink, Non Photo Blue or Fairy Tale.",
     // Event Details → Gentle Reminders shown on /invitetwo instead of eventDetails.reminders.items
     reminders: [
       {

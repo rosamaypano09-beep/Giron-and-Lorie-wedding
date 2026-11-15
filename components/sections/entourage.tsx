@@ -125,6 +125,9 @@ const SPECIAL_SPLIT = /(\b(?:I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV)\
 const DASH_GLYPH = /^[-—–]$/
 const PLUS_GLYPH = /^\+$/
 
+// Professional suffixes that always show in capitals (e.g. "Engr. Ramon Navarro Jr. PME")
+const UPPERCASE_SUFFIXES = new Set(["PME", "CPA", "RN", "RMT", "RPH", "MD", "DMD", "LPT", "REE", "RME", "MBA", "MPA"])
+
 function toDisplayName(value: string) {
   return value
     .trim()
@@ -136,6 +139,7 @@ function toDisplayName(value: string) {
         .map((part) => {
           if (!part) return part
           if (ROMAN_NUMERAL.test(part)) return part.toUpperCase()
+          if (UPPERCASE_SUFFIXES.has(part.replace(/[.,]/g, "").toUpperCase())) return part.toUpperCase()
           return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()
         })
         .join("-"),

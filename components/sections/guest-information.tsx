@@ -153,7 +153,7 @@ export function GuestInformation() {
                     <p className={`${cormorant.className} text-xs sm:text-sm md:text-base leading-relaxed`} style={{ color: GUEST_MEDIUM }}>
                       We kindly request guests to arrive by{" "}
                       <span className="font-semibold" style={{ color: GUEST_DARK }}>
-                        {siteConfig.ceremony.guestsTime ?? "1:30 PM"}
+                        {siteConfig.ceremony.guestsTime ?? "2:30 PM"}
                       </span>{" "}
                       to allow ample time to settle in before the ceremony, which will begin promptly at{" "}
                       <span className="font-semibold" style={{ color: GUEST_DARK }}>
