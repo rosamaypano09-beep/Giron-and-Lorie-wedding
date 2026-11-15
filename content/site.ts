@@ -81,7 +81,7 @@ const TIMES = {
   entourageCall: "12:00 PM", // entourage assembly ⚠ check — not confirmed yet
   guestArrival: "2:30 PM", // guests arrival / assembly (shown in Event Details + reminders)
   ceremony: "3:00 PM",
-  reception: "4:00 PM", // start of program ⚠ check — not confirmed yet
+  reception: "5:00 PM", // start of program
 }
 
 // ── Venues ──────────────────────────────────────────────────────────────────
@@ -963,7 +963,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "4:20 PM", // ⚠ check
+        time: "5:20 PM",
         title: "Grand Entrance",
         description: "Welcome the newlyweds as husband and wife.",
         location: "{reception}",
@@ -972,7 +972,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "4:30 PM", // ⚠ check
+        time: "5:30 PM",
         title: "Wedding Feast",
         description: "Let's share a meal and celebrate together.",
         location: "{reception}",
@@ -981,7 +981,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "4:45 PM", // ⚠ check
+        time: "5:45 PM",
         title: "Cake Cutting",
         description: "",
         location: "{reception}",
@@ -990,7 +990,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "5:00 PM", // ⚠ check
+        time: "6:00 PM",
         title: "First Dance",
         description: "Our first dance as husband and wife.",
         location: "{reception}",
@@ -999,7 +999,7 @@ export const siteConfig = {
       },
       {
         show: true,
-        time: "9:00 PM", // ⚠ check
+        time: "10:00 PM",
         title: "Send-off",
         description: "Thank you for celebrating with us!",
         location: "{reception}",
