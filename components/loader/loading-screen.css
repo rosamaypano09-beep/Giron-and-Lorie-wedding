@@ -1668,7 +1668,6 @@
   to {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 
@@ -5158,7 +5157,6 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   to {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 
@@ -5227,7 +5225,6 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   to {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 
@@ -5240,7 +5237,6 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   to {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 
@@ -5259,7 +5255,6 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   to {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 
@@ -5880,7 +5875,6 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
   to {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 
@@ -8038,4 +8032,65 @@ html:has(.env-invite-screen:not(.is-hidden)) body::-webkit-scrollbar {
 
 .ls-couple--in {
   animation-duration: 1.4s;
+}
+
+/* ==========================================================================
+   Mobile: couple and corner florals are static (no entrance, sway or breathe).
+   The couple's upper bodies sit right of centre in coupleImage.png, so the
+   figure is nudged left to centre them on screen.
+   ========================================================================== */
+@media (max-width: 767px) {
+  .ls-couple,
+  .ls-couple--in,
+  .ls-couple--in .ls-couple__figure,
+  .ls-couple--in .ls-couple__halo {
+    animation: none !important;
+    opacity: 1;
+    translate: none;
+    scale: none;
+  }
+
+  .ls-couple__figure {
+    translate: -6% 0 !important;
+    /* Slightly larger; grows from the waist so heads stay clear of the headline */
+    scale: 1.2 !important;
+    transform-origin: 50% 65%;
+  }
+
+  .ls-photo-corner {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Corner florals sit behind the couple (and the text layer) */
+  .loading-screen--invitation .ls-photo-corners {
+    z-index: 2;
+  }
+
+  .loading-screen--invitation .loading-screen__save-date {
+    z-index: 4;
+  }
+
+  /* Headline, gold rule and diamond sit behind the couple (the couple comes
+     later in the DOM, so with the same z-index it paints on top) */
+  .loading-screen__save-date:has(.ls-couple-stage) .ls-photo-header {
+    z-index: 0;
+  }
+
+  /* "The wedding of" sits over the dark suit: larger, deeper ink, and a
+     solid cream glow so it reads on any part of the photo */
+  .loading-screen--invitation:not(.loading-screen--plain) .ls-poster-lead {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.26em;
+    margin-right: -0.26em;
+    margin-bottom: 0.3rem;
+    color: #6B4E1E;
+    text-shadow:
+      0 0 2px rgb(255 251 240 / 100%),
+      0 0 6px rgb(255 251 240 / 100%),
+      0 0 14px rgb(255 251 240 / 95%),
+      0 0 24px rgb(255 251 240 / 85%);
+  }
 }
